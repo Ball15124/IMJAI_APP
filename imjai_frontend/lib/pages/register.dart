@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:imjai_frontend/pages/login.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -32,7 +33,9 @@ class _RegisterState extends State<Register> {
             Row(
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all(const CircleBorder()),
                     backgroundColor: MaterialStateProperty.all(
@@ -79,7 +82,16 @@ class _RegisterState extends State<Register> {
                 Icons.phone_android_rounded, Colors.orange),
             const SizedBox(height: 20,),
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  String username = userCon.text;
+                  String email = emailCon.text;
+                  String Phonenumber = phoneCon.text;
+                  String passWord = passCon.text;
+                  print("Username : $username ");
+                  print("Email : $email ");
+                  print("Phone : $Phonenumber ");
+                  print("Password : $passWord ");
+                },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(screenWidth - 30, 60),
                   backgroundColor: Colors.orange,
@@ -95,7 +107,9 @@ class _RegisterState extends State<Register> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text("Already have account ?", style: TextStyle(color: Colors.grey),),
-                TextButton(onPressed: () {}, child: const Text("Login here !", style: TextStyle(color: Colors.orange),)
+                TextButton(onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Login(),));
+                }, child: const Text("Login here !", style: TextStyle(color: Colors.orange),)
                 )
               ],
             )

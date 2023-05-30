@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:imjai_frontend/pages/register.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -77,6 +78,7 @@ class _LoginState extends State<Login> {
                 minimumSize: const Size(double.infinity, 50),
               ),
               onPressed: () {
+                
                 // Perform login logic here
                 String username = _usernameController.text;
                 String password = _passwordController.text;
@@ -101,7 +103,9 @@ class _LoginState extends State<Login> {
                       side: const BorderSide(color: Colors.orange, width: 2),
                       minimumSize: const Size(double.infinity, 50),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Register(),));
+                    },
                     child: const Text(
                       'Register',
                       style: TextStyle(

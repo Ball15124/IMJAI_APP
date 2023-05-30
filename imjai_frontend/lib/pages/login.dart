@@ -17,13 +17,14 @@ class _LoginState extends State<Login> {
   final TextEditingController _passwordController = TextEditingController();
   double screenHeight = 0;
   double screenWidth = 0;
+  Color primary = Color.fromARGB(255, 255, 255, 255);
 
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: primary,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -50,31 +51,20 @@ class _LoginState extends State<Login> {
                 color: Colors.black,
               ),
             ),
-            const TextField(
-              decoration: InputDecoration(
-                //border: OutlineInputBorder(),
-                labelText: 'Username',
-                prefixIcon: Icon(Icons.person),
-                filled: true,
-                fillColor: Color.fromARGB(245, 249, 255, 255),
-              ),
-            ),
+            SizedBox(height: screenHeight / 15),
+            customField('Username', _usernameController, false,
+                Icons.account_circle_outlined, Colors.orange),
             const SizedBox(height: 16.0),
-            const TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                //border: OutlineInputBorder(),
-                labelText: 'Password',
-                prefixIcon: Icon(Icons.key_rounded),
-                filled: true,
-                fillColor: Color.fromARGB(245, 249, 255, 255),
-              ),
-            ),
-            const SizedBox(height: 30.0),
+            customField('Password', _usernameController, false,
+                Icons.key_rounded, Colors.orange),
+            SizedBox(height: screenHeight / 25),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
                 minimumSize: const Size(double.infinity, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
               onPressed: () {
                 // Perform login logic here
@@ -115,6 +105,56 @@ class _LoginState extends State<Login> {
             ))
           ],
         ),
+      ),
+    );
+  }
+
+  Widget customField(String hint, TextEditingController controller,
+      bool obscure, IconData icon, Color color) {
+    return Container(
+      width: screenWidth - 35,
+      margin: const EdgeInsets.only(bottom: 5),
+      decoration: const BoxDecoration(
+          color: Color.fromARGB(255, 232, 242, 251),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(5, 7),
+            )
+          ]),
+      child: Row(
+        children: [
+          SizedBox(
+            width: screenWidth / 6,
+            child: Icon(
+              icon,
+              size: screenWidth / 15,
+              color: color,
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(right: screenWidth / 12),
+              child: TextFormField(
+                controller: controller,
+                enableSuggestions: false,
+                autocorrect: false,
+                decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: screenHeight / 40,
+                    ),
+                    hintText: hint,
+                    border: InputBorder.none),
+                maxLines: 1,
+                obscureText: obscure,
+                onSaved: (String? email) {},
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

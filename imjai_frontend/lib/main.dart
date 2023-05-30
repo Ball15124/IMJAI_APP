@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imjai_frontend/pages/home.dart';
 import 'package:imjai_frontend/pages/login.dart';
 
 void main() {

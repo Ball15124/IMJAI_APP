@@ -190,7 +190,7 @@ class _ProfileState extends State<Profile> {
                             data: "14 Febuary 2002",
                             enable: false),
                         const SizedBox(
-                          height: 230,
+                          height: 200,
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(

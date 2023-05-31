@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:imjai_frontend/pages/home.dart';
 import 'package:imjai_frontend/pages/login.dart';
 import 'package:imjai_frontend/pages/register.dart';
@@ -18,8 +19,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: NavigationbarWidget());
+            primarySwatch: Colors.blue,
+            textTheme: GoogleFonts.poppinsTextTheme()),
+        home: Login());
   }
 }

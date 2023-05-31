@@ -4,7 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:imjai_frontend/pages/home.dart';
 import 'package:imjai_frontend/pages/register.dart';
+import 'package:imjai_frontend/widget/navigationbarwidget.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -37,21 +40,21 @@ class _LoginState extends State<Login> {
               width: 200,
               height: 200,
             ),
-            Text(
-              "Hi, there!",
-              style: TextStyle(
-                fontSize: screenWidth / 25,
-                color: Colors.black,
-              ),
-            ),
-            Text(
-              "Let's Get Started",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: screenWidth / 25,
-                color: Colors.black,
-              ),
-            ),
+            Text("Hi, there!",
+                style: GoogleFonts.poppins(
+                  textStyle: TextStyle(
+                    fontSize: screenWidth / 25,
+                    color: Colors.black,
+                  ),
+                )),
+            Text("Let's Get Started",
+                style: GoogleFonts.poppins(
+                  textStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: screenWidth / 25,
+                    color: Colors.black,
+                  ),
+                )),
             SizedBox(height: screenHeight / 20),
             customField('Username', _usernameController, false,
                 Icons.account_circle_outlined, Colors.orange),
@@ -73,11 +76,18 @@ class _LoginState extends State<Login> {
                 String password = _passwordController.text;
                 print('Username: $username');
                 print('Password: $password');
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NavigationbarWidget()));
               },
-              child: const Text(
-                'Login',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
+              child: Text('Login',
+                  style: GoogleFonts.poppins(
+                    textStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  )),
             ),
             SizedBox(
               height: screenHeight / 5,
@@ -99,13 +109,13 @@ class _LoginState extends State<Login> {
                             builder: (context) => const Register(),
                           ));
                     },
-                    child: const Text(
-                      'Register',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.orange),
-                    ),
+                    child: Text('Register',
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.orange),
+                        )),
                   ),
                 ),
               ],

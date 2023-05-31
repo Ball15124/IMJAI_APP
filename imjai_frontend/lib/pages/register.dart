@@ -93,6 +93,82 @@ class _RegisterState extends State<Register> {
                   print("Email : $email ");
                   print("Phone : $Phonenumber ");
                   print("Password : $passWord ");
+
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        backgroundColor: Color.fromARGB(255, 255, 142, 50),
+                        title: Column(
+                          children: [
+                            Center(
+                              child: Icon(
+                                Icons.email_rounded,
+                                color: Colors.white,
+                                size: 130,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Thank you for your\nregistration!',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 27,
+                                      color:
+                                          Color.fromARGB(255, 255, 255, 255)),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        content: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'We’re glad you’re here !\n before you start exploring, we\njust sent you the email\nconfirmation.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                          ],
+                        ),
+                        actions: [
+                          Center(
+                            child: TextButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Color.fromARGB(255, 238, 199, 168)),
+                                    shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                    ))),
+                                onPressed: () {},
+                                child: Text(
+                                  "Resend email confirmation",
+                                  style: TextStyle(
+                                      color: Colors.black.withOpacity(0.5),
+                                      fontSize: 18),
+                                )),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          )
+                        ],
+                      );
+                    },
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(screenWidth - 30, 60),

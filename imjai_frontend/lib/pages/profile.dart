@@ -56,12 +56,10 @@ class _ProfileState extends State<Profile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.only(top: 60, left: 10),
-                    color: primary,
+                    padding: EdgeInsets.only(top: 60),
                     child: Row(
-                      children: <Widget>[
+                      children: [
                         Container(
-                          margin: const EdgeInsets.only(left: 10, bottom: 4),
                           child: IconButton(
                             onPressed: () {
                               Navigator.pop((context));
@@ -73,138 +71,150 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                         ),
-                        const Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 50),
-                            child: Text(
-                              "Create Product",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                              ),
+                        Spacer(),
+                        Container(
+                          margin: EdgeInsets.only(right: 50),
+                          child: Text(
+                            "Profile",
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        SizedBox(height: screenHeight / 35),
+                        Spacer()
                       ],
                     ),
                   ),
-                  SizedBox(height: screenHeight / 45),
-                  Row(
-                    children: [
-                      Stack(
-                        children: [
-                          CircleAvatar(
-                            radius: 47,
-                            backgroundImage: AssetImage("Images/profile.jpg"),
-                          ),
-                          Positioned(
-                            bottom: -8,
-                            right: -10,
-                            child: ElevatedButton(
-                                onPressed: () {},
-                                style: ButtonStyle(
-                                  shape: MaterialStateProperty.all(
-                                      const CircleBorder()),
-                                  minimumSize: MaterialStateProperty.all(
-                                    const Size(30,
-                                        30), // Adjust the size to make the button smaller
-                                  ),
-                                  backgroundColor: MaterialStateProperty.all(
-                                      const Color.fromARGB(255, 237, 158,
-                                          2)), // <-- Button color
+                  Container(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    color: primary,
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(height: screenHeight / 45),
+                        Row(
+                          children: [
+                            Stack(
+                              children: [
+                                CircleAvatar(
+                                  radius: 47,
+                                  backgroundImage:
+                                      AssetImage("Images/profile.jpg"),
                                 ),
-                                child: const Icon(
-                                  Icons.edit,
-                                  size: 18,
-                                )),
+                                Positioned(
+                                  bottom: -8,
+                                  right: -10,
+                                  child: ElevatedButton(
+                                      onPressed: () {},
+                                      style: ButtonStyle(
+                                        shape: MaterialStateProperty.all(
+                                            const CircleBorder()),
+                                        minimumSize: MaterialStateProperty.all(
+                                          const Size(30,
+                                              30), // Adjust the size to make the button smaller
+                                        ),
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                const Color.fromARGB(
+                                                    255,
+                                                    237,
+                                                    158,
+                                                    2)), // <-- Button color
+                                      ),
+                                      child: const Icon(
+                                        Icons.edit,
+                                        size: 18,
+                                      )),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  "Gwen Camiron",
+                                  style: TextStyle(fontSize: 23),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                        SizedBox(height: screenHeight / 65),
+                        Info(
+                          title: "First name",
+                          data: "Gwen",
+                          color: Colors.black,
+                          enable: false,
+                        ),
+                        Info(
+                          title: "Last name",
+                          data: "Camiron",
+                          enable: false,
+                          color: Colors.black,
+                        ),
+                        Info(
+                            title: "Email",
+                            data: "gwen.cami@gmail.com",
+                            color: Colors.black,
+                            enable: false),
+                        Stack(
+                          children: [
+                            Info(
+                              title: "Contact",
+                              data: labelText,
+                              enable: isEditable,
+                              color: Colors.black,
+                              controller: _controller,
+                            ),
+                            Positioned(
+                                bottom: 3,
+                                right: -10,
+                                child: TextButton(
+                                    onPressed: () {
+                                      toggleEditable();
+                                    },
+                                    child: Text(
+                                      isEditable ? "Done" : "Edit",
+                                      style: TextStyle(color: Colors.grey),
+                                    ))),
+                          ],
+                        ),
+                        Info(
+                            title: "Birth Day",
+                            color: Colors.black,
+                            data: "14 Febuary 2002",
+                            enable: false),
+                        const SizedBox(
+                          height: 230,
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange,
+                            side: const BorderSide(
+                                color: Colors.orange, width: 2),
+                            minimumSize: const Size(double.infinity, 50),
                           ),
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            "Gwen Camiron",
-                            style: TextStyle(fontSize: 23),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Login(),
+                                ));
+                          },
+                          child: const Text(
+                            'Logout',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30,
+                                color: Color.fromARGB(255, 255, 255, 255)),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBox(height: screenHeight / 65),
-                  Info(
-                    title: "First name",
-                    data: "Gwen",
-                    color: Colors.black,
-                    enable: false,
-                  ),
-                  Info(
-                    title: "Last name",
-                    data: "Camiron",
-                    enable: false,
-                    color: Colors.black,
-                  ),
-                  Info(
-                      title: "Email",
-                      data: "gwen.cami@gmail.com",
-                      color: Colors.black,
-                      enable: false),
-                  Stack(
-                    children: [
-                      Info(
-                        title: "Contact",
-                        data: labelText,
-                        enable: isEditable,
-                        color: Colors.black,
-                        controller: _controller,
-                      ),
-                      Positioned(
-                          bottom: 3,
-                          right: -10,
-                          child: TextButton(
-                              onPressed: () {
-                                toggleEditable();
-                              },
-                              child: Text(
-                                isEditable ? "Done" : "Edit",
-                                style: TextStyle(color: Colors.grey),
-                              ))),
-                    ],
-                  ),
-                  Info(
-                      title: "Birth Day",
-                      color: Colors.black,
-                      data: "14 Febuary 2002",
-                      enable: false),
-                  const SizedBox(
-                    height: 230,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
-                      side: const BorderSide(color: Colors.orange, width: 2),
-                      minimumSize: const Size(double.infinity, 50),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Login(),
-                          ));
-                    },
-                    child: const Text(
-                      'Logout',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                          color: Color.fromARGB(255, 255, 255, 255)),
+                        ),
+                      ],
                     ),
                   ),
                 ],

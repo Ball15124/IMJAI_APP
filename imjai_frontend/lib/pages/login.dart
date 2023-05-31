@@ -52,13 +52,13 @@ class _LoginState extends State<Login> {
                 color: Colors.black,
               ),
             ),
-            SizedBox(height: screenHeight / 15),
+            SizedBox(height: screenHeight / 20),
             customField('Username', _usernameController, false,
                 Icons.account_circle_outlined, Colors.orange),
             const SizedBox(height: 16.0),
             customField('Password', _usernameController, false,
                 Icons.key_rounded, Colors.orange),
-            SizedBox(height: screenHeight / 25),
+            SizedBox(height: screenHeight / 45),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
@@ -68,7 +68,6 @@ class _LoginState extends State<Login> {
                 ),
               ),
               onPressed: () {
-                
                 // Perform login logic here
                 String username = _usernameController.text;
                 String password = _passwordController.text;
@@ -94,7 +93,11 @@ class _LoginState extends State<Login> {
                       minimumSize: const Size(double.infinity, 50),
                     ),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Register(),));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Register(),
+                          ));
                     },
                     child: const Text(
                       'Register',

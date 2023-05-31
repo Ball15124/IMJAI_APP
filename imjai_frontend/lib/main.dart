@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:imjai_frontend/pages/home.dart';
 import 'package:imjai_frontend/pages/login.dart';
+import 'package:imjai_frontend/widget/navigationbarwidget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +19,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: Login());
+        home: NavigationbarWidget());
   }
 }

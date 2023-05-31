@@ -66,6 +66,18 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
       - Images/ImJai Logo.png
+      - Images/profile.jpg
+      - Images/Categories/Meat.png
+      - Images/Categories/Veget&Fruit.png
+      - Images/Categories/Food.png
+      - Images/Categories/Flavoring.png
+      - Images/Categories/Drink.png
+      - Images/Categories/Snack.png
+      - Images/Categories/Dessert.png
+      - Images/Categories/Food Waste.png
+      - Images/Food/wagyu.jpg
+      - Images/Food/cabbage.jpg
+      - Images/Food/curry.jpg
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

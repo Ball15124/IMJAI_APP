@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:imjai_frontend/pages/home.dart';
-import 'package:imjai_frontend/pages/order.dart';
+
+import 'package:imjai_frontend/pages/product.dart';
 import 'package:imjai_frontend/pages/reserve.dart';
 
 class NavigationbarWidget extends StatefulWidget {
@@ -13,7 +14,7 @@ class NavigationbarWidget extends StatefulWidget {
 }
 
 class _NavigationbarWidgetState extends State<NavigationbarWidget> {
-  final pages = const [Order(), Home(), Reserve()];
+  final pages = const [Product(), Home(), Reserve()];
   List<IconData> data = [
     Icons.history_rounded,
     Icons.home_rounded,
@@ -41,7 +42,7 @@ class _NavigationbarWidgetState extends State<NavigationbarWidget> {
               itemCount: 3,
               padding: EdgeInsets.symmetric(horizontal: 10),
               itemBuilder: (ctx, i) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 51),
+                padding: const EdgeInsets.symmetric(horizontal: 42),
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
@@ -86,7 +87,7 @@ class _NavigationbarWidgetState extends State<NavigationbarWidget> {
                         Text(
                           data2[i],
                           style: TextStyle(
-                            fontSize: 11,
+                            fontSize: 10,
                             color: i == _selectedTab
                                 ? Color.fromARGB(255, 255, 136, 0)
                                 : Colors.grey.shade800,

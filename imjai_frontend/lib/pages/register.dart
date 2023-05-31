@@ -26,30 +26,23 @@ class _RegisterState extends State<Register> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Padding(
-        padding:
-            const EdgeInsets.only(top: 30, left: 10, right: 10, bottom: 20),
+        padding: EdgeInsets.only(top: 60),
         child: Column(
           children: [
             Row(
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(const CircleBorder()),
-                    backgroundColor: MaterialStateProperty.all(
-                        const Color.fromARGB(
-                            255, 237, 158, 2)), // <-- Button color
-                    overlayColor:
-                        MaterialStateProperty.resolveWith<Color?>((states) {
-                      if (states.contains(MaterialState.pressed)) {
-                        return Colors.red;
-                      }
-                      // <-- Splash color
-                    }),
+                Container(
+                  margin: const EdgeInsets.only(left: 10, bottom: 4),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pop((context));
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      size: 35,
+                      color: Colors.orange,
+                    ),
                   ),
-                  child: const Icon(Icons.arrow_back_ios_new_rounded),
                 ),
               ],
             ),
@@ -72,13 +65,12 @@ class _RegisterState extends State<Register> {
             const SizedBox(
               height: 20,
             ),
-            customFieldEmail(
-                'Email', emailCon, false, Icons.email, Colors.orange),
-            customFieldEmail(
+            customField('Email', emailCon, false, Icons.email, Colors.orange),
+            customField(
                 'Username', userCon, false, Icons.person, Colors.orange),
-            customFieldEmail(
+            customField(
                 'Password', passCon, true, Icons.key_rounded, Colors.orange),
-            customFieldEmail('Phone number', phoneCon, false,
+            customField('Phone number', phoneCon, false,
                 Icons.phone_android_rounded, Colors.orange),
             const SizedBox(
               height: 20,
@@ -132,7 +124,7 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  Widget customFieldEmail(String hint, TextEditingController controller,
+  Widget customField(String hint, TextEditingController controller,
       bool obscure, IconData icon, Color color) {
     return Container(
       width: screenWidth - 35,

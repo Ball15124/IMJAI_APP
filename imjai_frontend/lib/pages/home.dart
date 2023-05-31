@@ -15,7 +15,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   var currentIndex = 0;
-
   double screenHeight = 0;
   double screenWidth = 0;
   Color primary = Color.fromARGB(255, 255, 255, 255);
@@ -121,14 +120,6 @@ class _HomeState extends State<Home> {
                                 style: TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.bold),
                               ),
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                  textStyle: const TextStyle(
-                                      fontSize: 17, color: Colors.black),
-                                ),
-                                onPressed: () {},
-                                child: const Text('See all'),
-                              ),
                             ],
                           ),
                         ),
@@ -144,6 +135,4 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-  
-
 }

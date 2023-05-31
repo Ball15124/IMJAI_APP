@@ -15,8 +15,10 @@ class _ListOrderWidgetState extends State<ListOrderWidget> {
   double screenWidth = 0;
   @override
   Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      height: 500,
+      height: screenHeight,
       child: Column(
         children: <Widget>[
           List(
@@ -39,6 +41,20 @@ class _ListOrderWidgetState extends State<ListOrderWidget> {
             imageUrl: 'curry',
             owner: 'Mctominay',
             range: '0.8 km',
+          ),
+          List(
+            title: 'Kurobuta',
+            tag: 'Meat',
+            imageUrl: 'kurobuta',
+            owner: 'Nawat Sujjaritrat',
+            range: '1.8 km',
+          ),
+          List(
+            title: 'Swensen',
+            tag: 'Dessert',
+            imageUrl: 'swensen',
+            owner: 'Panusorn Roeksukrungrueang',
+            range: '3.2 km',
           ),
         ],
       ),

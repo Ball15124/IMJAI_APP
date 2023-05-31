@@ -130,7 +130,7 @@ class _RegisterState extends State<Register> {
         boxShadow: [
           BoxShadow(
             color: Colors.grey,
-            spreadRadius: 2,
+            spreadRadius: 0,
             blurRadius: 5,
             offset: Offset(5, 7),
           )

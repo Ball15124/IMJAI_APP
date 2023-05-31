@@ -69,57 +69,72 @@ class List extends StatelessWidget {
         onTap: () {
           Navigator.pushNamed(context, '/second');
         },
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10), // Adjust the border radius
-          ),
-          child: Row(
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                ),
-                child: Container(
-                  width: 110,
-                  height: 110,
-                  child: Image.asset(
-                    'Images/Food/' + imageUrl + ".jpg",
-                    fit: BoxFit.cover,
+        child: Container(
+          margin: EdgeInsets.only(bottom: 5),
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(4, 5),
+            )
+          ]),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.circular(10), // Adjust the border radius
+            ),
+            child: Row(
+              children: <Widget>[
+                ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
+                  child: Container(
+                    width: 110,
+                    height: 110,
+                    child: Image.asset(
+                      'Images/Food/' + imageUrl + ".jpg",
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        title,
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        tag,
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        range,
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        owner,
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                      ),
-                    ],
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          title,
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          tag,
+                          style:
+                              TextStyle(fontSize: 12, color: Colors.grey[600]),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          range,
+                          style:
+                              TextStyle(fontSize: 12, color: Colors.grey[600]),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          owner,
+                          style:
+                              TextStyle(fontSize: 12, color: Colors.grey[600]),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

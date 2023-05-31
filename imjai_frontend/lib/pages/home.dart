@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:imjai_frontend/pages/profile.dart';
 import 'package:imjai_frontend/widget/categorieswidget.dart';
 import 'package:imjai_frontend/widget/listorderwidget.dart';
 import 'package:imjai_frontend/widget/navigationbarwidget.dart';
@@ -69,10 +70,19 @@ class _HomeState extends State<Home> {
                                 shape: BoxShape.circle,
                                 color: Colors.transparent,
                               ),
-                              child: CircleAvatar(
-                                radius: 30,
-                                backgroundImage:
-                                    AssetImage("Images/profile.jpg"),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const Profile()));
+                                },
+                                child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage:
+                                      AssetImage("Images/profile.jpg"),
+                                ),
                               ),
                             ),
                           ],

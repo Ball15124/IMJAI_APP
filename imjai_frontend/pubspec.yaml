@@ -88,6 +88,7 @@ flutter:
       - Images/Food/curry.jpg
       - Images/Food/kurobuta.jpg
       - Images/Food/swensen.jpg
+      
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

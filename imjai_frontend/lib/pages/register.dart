@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:imjai_frontend/pages/login.dart';
 
 class Register extends StatefulWidget {
@@ -57,11 +58,11 @@ class _RegisterState extends State<Register> {
             const SizedBox(
               height: 30,
             ),
-            Text(
-              "REGISTER",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: screenWidth / 20),
-            ),
+            Text("REGISTER",
+                style: GoogleFonts.poppins(
+                  textStyle: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: screenWidth / 20),
+                )),
             const SizedBox(
               height: 20,
             ),
@@ -109,15 +110,15 @@ class _RegisterState extends State<Register> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  'Thank you for your\nregistration!',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 27,
-                                      color:
-                                          Color.fromARGB(255, 255, 255, 255)),
-                                ),
+                                Text('Thank you for your\nregistration!',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 27,
+                                          color: Color.fromARGB(
+                                              255, 255, 255, 255)),
+                                    )),
                               ],
                             ),
                           ],
@@ -126,12 +127,14 @@ class _RegisterState extends State<Register> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'We’re glad you’re here !\n before you start exploring, we\njust sent you the email\nconfirmation.',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Color.fromARGB(255, 255, 255, 255)),
-                            ),
+                                'We’re glad you’re here !\n before you start exploring, we\njust sent you the email\nconfirmation.',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                      fontSize: 20,
+                                      color:
+                                          Color.fromARGB(255, 255, 255, 255)),
+                                )),
                           ],
                         ),
                         actions: [
@@ -147,12 +150,12 @@ class _RegisterState extends State<Register> {
                                       borderRadius: BorderRadius.circular(18.0),
                                     ))),
                                 onPressed: () {},
-                                child: Text(
-                                  "Resend email confirmation",
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.5),
-                                      fontSize: 18),
-                                )),
+                                child: Text("Resend email confirmation",
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                          color: Colors.black.withOpacity(0.5),
+                                          fontSize: 18),
+                                    ))),
                           ),
                           const SizedBox(
                             height: 20,
@@ -169,17 +172,18 @@ class _RegisterState extends State<Register> {
                     borderRadius: BorderRadius.circular(12), // <-- Radius
                   ),
                 ),
-                child: const Text(
-                  "Register",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                )),
+                child: Text("Register",
+                    style: GoogleFonts.poppins(
+                      textStyle:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    ))),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  "Already have account ?",
-                  style: TextStyle(color: Colors.grey),
-                ),
+                Text("Already have account ?",
+                    style: GoogleFonts.poppins(
+                      textStyle: TextStyle(color: Colors.grey),
+                    )),
                 TextButton(
                     onPressed: () {
                       Navigator.push(
@@ -188,10 +192,10 @@ class _RegisterState extends State<Register> {
                             builder: (context) => const Login(),
                           ));
                     },
-                    child: const Text(
-                      "Login here !",
-                      style: TextStyle(color: Colors.orange),
-                    ))
+                    child: Text("Login here !",
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyle(color: Colors.orange),
+                        )))
               ],
             )
           ],

@@ -51,9 +51,9 @@ class _CreateproductState extends State<Createproduct> {
                         ),
                         const Center(
                           child: Padding(
-                            padding: EdgeInsets.only(left: 50),
+                            padding: EdgeInsets.only(left: 70),
                             child: Text(
-                              "Create Product",
+                              "Product",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 25,

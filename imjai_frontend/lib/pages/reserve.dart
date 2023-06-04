@@ -3,7 +3,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:imjai_frontend/widget/categorieswidget.dart';
 import 'package:imjai_frontend/widget/listorderwidget.dart';
-import 'package:imjai_frontend/widget/listreservewidget.dart';
 import 'package:imjai_frontend/widget/navigationbarwidget.dart';
 import 'package:imjai_frontend/widget/searchwidget.dart';
 
@@ -60,7 +59,7 @@ class _ReserveState extends State<Reserve> {
                           ],
                         ),
                         SizedBox(height: screenHeight / 65),
-                        ListReserveWidget(),
+                        ListOrderWidget(),
                       ],
                     ),
                   )

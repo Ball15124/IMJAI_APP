@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:imjai_frontend/pages/createproduct.dart';
-import 'package:imjai_frontend/widget/listproductwidget.dart';
 
 import '../widget/listorderwidget.dart';
 
@@ -72,7 +71,7 @@ class _ProductState extends State<Product> {
                           ],
                         ),
                         SizedBox(height: screenHeight / 65),
-                        ListProductWidget(),
+                        ListOrderWidget(),
                       ],
                     ),
                   )

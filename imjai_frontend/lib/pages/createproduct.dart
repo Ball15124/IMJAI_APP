@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:imjai_frontend/widget/createProductwidget.dart';
 
 class Createproduct extends StatefulWidget {
   const Createproduct({super.key});
@@ -66,7 +65,19 @@ class _CreateproductState extends State<Createproduct> {
                       ],
                     ),
                   ),
-                  CreateProductWidget(),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 150,
+                          width: 150,
+                          color: Colors.grey[200],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: screenHeight / 30),
                 ],
               ),
             )

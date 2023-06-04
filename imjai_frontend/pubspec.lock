@@ -49,14 +49,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
-  chips_choice_null_safety:
-    dependency: "direct main"
-    description:
-      name: chips_choice_null_safety
-      sha256: "3133fb94869b788ba3cabab0c76c6ffc86de0bd47df6543b06ca9b144338b9c4"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.6"
   cli_util:
     dependency: transitive
     description:
@@ -126,32 +118,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.13.1"
-  flutter_phone_direct_caller:
-    dependency: "direct main"
-    description:
-      name: flutter_phone_direct_caller
-      sha256: a50abfb49656d39e777278348742d0d09ecfa5d4918bbc4e0b19df46e8dfd858
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_web_plugins:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
-  fluttertagselector:
-    dependency: "direct main"
-    description:
-      name: fluttertagselector
-      sha256: f9c3939cf407ab3ee0a20b5c8d44c9cba899260f6fdd48419c0c4e825cf253cb
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.3"
   image:
     dependency: transitive
     description:
@@ -216,14 +187,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.0"
-  plugin_platform_interface:
-    dependency: transitive
-    description:
-      name: plugin_platform_interface
-      sha256: "6a2128648c854906c53fa8e33986fc0247a1116122f9534dd20e3ab9e16a32bc"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.4"
   pointycastle:
     dependency: transitive
     description:
@@ -293,70 +256,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.2"
-  url_launcher:
-    dependency: "direct main"
-    description:
-      name: url_launcher
-      sha256: eb1e00ab44303d50dd487aab67ebc575456c146c6af44422f9c13889984c00f3
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.1.11"
-  url_launcher_android:
-    dependency: transitive
-    description:
-      name: url_launcher_android
-      sha256: eed4e6a1164aa9794409325c3b707ff424d4d1c2a785e7db67f8bbda00e36e51
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.0.35"
-  url_launcher_ios:
-    dependency: transitive
-    description:
-      name: url_launcher_ios
-      sha256: "9af7ea73259886b92199f9e42c116072f05ff9bea2dcb339ab935dfc957392c2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.1.4"
-  url_launcher_linux:
-    dependency: transitive
-    description:
-      name: url_launcher_linux
-      sha256: "207f4ddda99b95b4d4868320a352d374b0b7e05eefad95a4a26f57da413443f5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.5"
-  url_launcher_macos:
-    dependency: transitive
-    description:
-      name: url_launcher_macos
-      sha256: "91ee3e75ea9dadf38036200c5d3743518f4a5eb77a8d13fda1ee5764373f185e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.5"
-  url_launcher_platform_interface:
-    dependency: transitive
-    description:
-      name: url_launcher_platform_interface
-      sha256: "6c9ca697a5ae218ce56cece69d46128169a58aa8653c1b01d26fcd4aad8c4370"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.2"
-  url_launcher_web:
-    dependency: transitive
-    description:
-      name: url_launcher_web
-      sha256: "6bb1e5d7fe53daf02a8fee85352432a40b1f868a81880e99ec7440113d5cfcab"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.17"
-  url_launcher_windows:
-    dependency: transitive
-    description:
-      name: url_launcher_windows
-      sha256: "254708f17f7c20a9c8c471f67d86d76d4a3f9c1591aad1e15292008aceb82771"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.6"
   vector_math:
     dependency: transitive
     description:
@@ -382,5 +281,4 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=2.19.0 <3.0.0"
-  flutter: ">=3.3.0"
+  dart: ">=2.19.0 <4.0.0"

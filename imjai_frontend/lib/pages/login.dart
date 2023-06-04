@@ -93,34 +93,33 @@ class _LoginState extends State<Login> {
               height: screenHeight / 5,
             ),
             Container(
-              child: Column(
-                children: [
-                  SizedBox(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        side: const BorderSide(color: Colors.orange, width: 2),
-                        minimumSize: const Size(double.infinity, 50),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Register(),
-                            ));
-                      },
-                      child: const Text(
-                        'Register',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.orange),
-                      ),
+                child: Column(
+              children: [
+                SizedBox(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      side: const BorderSide(color: Colors.orange, width: 2),
+                      minimumSize: const Size(double.infinity, 50),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Register(),
+                          ));
+                    },
+                    child: const Text(
+                      'Register',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.orange),
                     ),
                   ),
-                ],
-              ),
-            ),
+                ),
+              ],
+            ))
           ],
         ),
       ),

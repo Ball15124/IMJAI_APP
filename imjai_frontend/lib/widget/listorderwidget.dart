@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:imjai_frontend/pages/InsideOrder.dart';
 
 class ListOrderWidget extends StatefulWidget {
   const ListOrderWidget({super.key});
@@ -37,7 +36,7 @@ class _ListOrderWidgetState extends State<ListOrderWidget> {
             range: '1.3 km',
           ),
           List(
-            title: 'Pork Curry',
+            title: 'Prok Curry',
             tag: 'Food',
             imageUrl: 'curry',
             owner: 'Mctominay',
@@ -84,8 +83,7 @@ class List extends StatelessWidget {
     return Center(
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const InsideOrder()));
+          Navigator.pushNamed(context, '/second');
         },
         child: Container(
           margin: EdgeInsets.only(bottom: 5),

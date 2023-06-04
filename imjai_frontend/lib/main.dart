@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:flutter/material.dart';
 import 'package:imjai_frontend/pages/home.dart';
 import 'package:imjai_frontend/pages/login.dart';
@@ -9,7 +11,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({key});
 
   // This widget is the root of your application.
   @override
@@ -20,6 +22,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: Login());
+        home: NavigationbarWidget());
   }
 }

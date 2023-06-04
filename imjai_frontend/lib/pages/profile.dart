@@ -115,11 +115,8 @@ class _ProfileState extends State<Profile> {
                                         ),
                                         backgroundColor:
                                             MaterialStateProperty.all(
-                                                const Color.fromARGB(
-                                                    255,
-                                                    237,
-                                                    158,
-                                                    2)), // <-- Button color
+                                                Color.fromARGB(
+                                                    255, 246, 146, 32)),
                                       ),
                                       child: const Icon(
                                         Icons.edit,

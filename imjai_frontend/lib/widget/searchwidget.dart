@@ -9,7 +9,7 @@ class SearchWidget extends StatelessWidget {
       child: TextField(
         controller: _searchController,
         decoration: InputDecoration(
-          hintText: 'Search for your interest',
+          hintText: 'Search for your Interest',
           prefixIcon: IconButton(
             icon: Icon(Icons.search),
             onPressed: () {},

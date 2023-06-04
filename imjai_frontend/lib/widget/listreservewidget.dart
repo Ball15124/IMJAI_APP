@@ -2,16 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:imjai_frontend/pages/InsideOrder.dart';
 
-class ListOrderWidget extends StatefulWidget {
-  const ListOrderWidget({super.key});
+import '../pages/InsideOrder.dart';
+
+class ListReserveWidget extends StatefulWidget {
+  const ListReserveWidget({super.key});
 
   @override
-  State<ListOrderWidget> createState() => _ListOrderWidgetState();
+  State<ListReserveWidget> createState() => _ListReserveWidgetState();
 }
 
-class _ListOrderWidgetState extends State<ListOrderWidget> {
+class _ListReserveWidgetState extends State<ListReserveWidget> {
   double screenHeight = 0;
   double screenWidth = 0;
   @override
@@ -22,40 +23,13 @@ class _ListOrderWidgetState extends State<ListOrderWidget> {
       height: screenHeight,
       child: Column(
         children: <Widget>[
-          List(
-            title: 'Premium Wagyu A5',
-            tag: 'Meat',
-            imageUrl: 'wagyu',
-            owner: 'Peter Parker',
-            range: '2.5 km',
-          ),
-          List(
-            title: 'Chinese Cabbage',
-            tag: 'Veget&Fruit',
-            imageUrl: 'cabbage',
-            owner: 'MJ',
-            range: '1.3 km',
-          ),
-          List(
+          ReserveList(
             title: 'Pork Curry',
             tag: 'Food',
             imageUrl: 'curry',
-            owner: 'Mctominay',
-            range: '0.8 km',
-          ),
-          List(
-            title: 'Kurobuta',
-            tag: 'Meat',
-            imageUrl: 'kurobuta',
-            owner: 'Nawat Sujjaritrat',
-            range: '1.8 km',
-          ),
-          List(
-            title: 'Swensen',
-            tag: 'Dessert',
-            imageUrl: 'swensen',
-            owner: 'Panusorn Roeksukrungrueang',
-            range: '3.2 km',
+            owner: 'Nelson',
+            range: '2.7 km',
+            status: 'Preparing',
           ),
         ],
       ),
@@ -63,21 +37,23 @@ class _ListOrderWidgetState extends State<ListOrderWidget> {
   }
 }
 
-class List extends StatelessWidget {
+class ReserveList extends StatelessWidget {
   String title;
   String imageUrl;
   String tag;
   String range;
   String owner;
+  String status;
 
-  List(
-      {Key? key,
-      required this.title,
-      required this.imageUrl,
-      required this.tag,
-      required this.range,
-      required this.owner})
-      : super(key: key);
+  ReserveList({
+    Key? key,
+    required this.title,
+    required this.imageUrl,
+    required this.tag,
+    required this.range,
+    required this.owner,
+    required this.status,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -110,8 +86,8 @@ class List extends StatelessWidget {
                     bottomLeft: Radius.circular(10),
                   ),
                   child: Container(
-                    width: 110,
-                    height: 110,
+                    width: 130,
+                    height: 130,
                     child: Image.asset(
                       'Images/Food/' + imageUrl + ".jpg",
                       fit: BoxFit.cover,
@@ -146,6 +122,11 @@ class List extends StatelessWidget {
                           owner,
                           style:
                               TextStyle(fontSize: 12, color: Colors.grey[600]),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          status,
+                          style: TextStyle(fontSize: 12, color: Colors.yellow),
                         ),
                       ],
                     ),

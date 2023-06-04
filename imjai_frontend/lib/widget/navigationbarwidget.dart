@@ -42,7 +42,7 @@ class _NavigationbarWidgetState extends State<NavigationbarWidget> {
               itemCount: 3,
               padding: EdgeInsets.symmetric(horizontal: 10),
               itemBuilder: (ctx, i) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 33),
+                padding: const EdgeInsets.symmetric(horizontal: 42),
                 child: GestureDetector(
                   onTap: () {
                     setState(() {

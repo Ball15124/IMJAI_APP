@@ -2,17 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:imjai_frontend/pages/InsideOrder.dart';
 
-import '../pages/InsideOrder.dart';
+import 'package:imjai_frontend/widget/orderDetail.dart';
 
-class ListOrderWidget extends StatefulWidget {
-  const ListOrderWidget({super.key});
+class ListReserveWidget extends StatefulWidget {
+  const ListReserveWidget({super.key});
 
   @override
-  State<ListOrderWidget> createState() => _ListOrderWidgetState();
+  State<ListReserveWidget> createState() => _ListReserveWidgetState();
 }
 
-class _ListOrderWidgetState extends State<ListOrderWidget> {
+class _ListReserveWidgetState extends State<ListReserveWidget> {
   double screenHeight = 0;
   double screenWidth = 0;
   @override

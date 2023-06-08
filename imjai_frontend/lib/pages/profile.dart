@@ -4,7 +4,6 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:imjai_frontend/pages/login.dart';
 import 'package:imjai_frontend/widget/categorieswidget.dart';
 import 'package:imjai_frontend/widget/infoProfile.dart';
-import 'package:imjai_frontend/widget/listorderwidget.dart';
 import 'package:imjai_frontend/widget/navigationbarwidget.dart';
 import 'package:imjai_frontend/widget/searchwidget.dart';
 
@@ -190,7 +189,7 @@ class _ProfileState extends State<Profile> {
                             data: "14 Febuary 2002",
                             enable: false),
                         const SizedBox(
-                          height: 200,
+                          height: 140,
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(

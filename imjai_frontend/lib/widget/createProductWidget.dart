@@ -8,8 +8,6 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:fluttertagselector/tag_class.dart';
 import 'package:imjai_frontend/widget/chiptag.dart';
 
-import 'listorderwidget.dart';
-
 class CreateProductWidget extends StatefulWidget {
   const CreateProductWidget({super.key});
 

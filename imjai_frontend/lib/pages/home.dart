@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:imjai_frontend/pages/location.dart';
 import 'package:imjai_frontend/pages/profile.dart';
 import 'package:imjai_frontend/widget/categorieswidget.dart';
 import 'package:imjai_frontend/widget/listorderwidget.dart';
+
 import 'package:imjai_frontend/widget/navigationbarwidget.dart';
 import 'package:imjai_frontend/widget/searchwidget.dart';
 
@@ -104,7 +106,12 @@ class _HomeState extends State<Home> {
                             'Current Location',
                             style: TextStyle(fontSize: 15),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Location()));
+                          },
                         ),
                         SizedBox(height: screenHeight / 65),
                         SearchWidget(),

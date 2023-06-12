@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:imjai_frontend/pages/recieverStatus.dart';
 
 class OrderDetail extends StatefulWidget {
   const OrderDetail({super.key});
@@ -195,7 +196,12 @@ class _OrderDetailState extends State<OrderDetail> {
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.orange,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => recieverStatus()));
+                        },
                       ),
                     ],
                   );

@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:im_stepper/stepper.dart';
 import 'package:imjai_frontend/pages/profile.dart';
+import 'package:imjai_frontend/widget/giverStatusDetail.dart';
 import 'package:imjai_frontend/widget/orderDetail.dart';
 import 'package:imjai_frontend/widget/orderStatusDetail.dart';
 
-class recieverStatus extends StatefulWidget {
-  const recieverStatus({super.key});
+class giverStatus extends StatefulWidget {
+  const giverStatus({super.key});
 
   @override
-  State<recieverStatus> createState() => _recieverStatusState();
+  State<giverStatus> createState() => _giverStatusState();
 }
 
-class _recieverStatusState extends State<recieverStatus> {
+class _giverStatusState extends State<giverStatus> {
   double screenHeight = 0;
   double screenWidth = 0;
+
   Color primary = Color.fromARGB(255, 255, 255, 255);
   @override
   Widget build(BuildContext context) {
@@ -31,27 +34,11 @@ class _recieverStatusState extends State<recieverStatus> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Stack(
-                    alignment: Alignment.topLeft,
                     children: [
-                      Container(
-                        padding: EdgeInsets.only(top: 30),
-                        child: Column(children: [
-                          Container(
-                            height: 400,
-                            width: 600,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(
-                                    "Images/ReserveStatus/OrderTrackingImage.gif"),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          )
-                        ]),
-                      ),
+                      giverStatusDetail(),
                       Positioned(
-                        top: 40,
-                        left: 5,
+                        top: 50,
+                        left: 10,
                         child: IconButton(
                           onPressed: () {
                             Navigator.pop((context));
@@ -63,11 +50,8 @@ class _recieverStatusState extends State<recieverStatus> {
                           ),
                         ),
                       ),
-                      Container(
-                          margin: EdgeInsets.only(top: 350),
-                          child: OrderStatusDetail())
                     ],
-                  ),
+                  )
                 ],
               ),
             )

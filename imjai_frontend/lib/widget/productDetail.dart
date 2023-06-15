@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:imjai_frontend/pages/giverStatus.dart';
+import 'package:imjai_frontend/widget/giverStatusDetail.dart';
 
 class ProductDetail extends StatefulWidget {
   const ProductDetail({super.key});
@@ -143,6 +145,24 @@ class _ProductDetailState extends State<ProductDetail> {
             ),
           ),
           SizedBox(height: 140),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.orange,
+              side: const BorderSide(color: Colors.orange, width: 2),
+              minimumSize: const Size(double.infinity, 50),
+            ),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => giverStatus())));
+            },
+            child: const Text(
+              'Check Order',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                  color: Color.fromARGB(255, 255, 255, 255)),
+            ),
+          ),
         ],
       ),
     );

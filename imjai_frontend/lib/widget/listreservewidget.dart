@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:imjai_frontend/pages/InsideOrder.dart';
+import 'package:imjai_frontend/pages/recieverStatus.dart';
 
 import 'package:imjai_frontend/widget/orderDetail.dart';
 
@@ -87,7 +88,7 @@ class List extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: ((context) => InsideOrder())));
+              MaterialPageRoute(builder: ((context) => recieverStatus())));
         },
         child: Container(
           margin: EdgeInsets.only(bottom: 5),

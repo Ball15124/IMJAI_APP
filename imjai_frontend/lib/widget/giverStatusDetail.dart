@@ -26,7 +26,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
         Stack(
           children: [
             Container(
-              padding: EdgeInsets.only(top: 180),
+              padding: EdgeInsets.only(top: 150, left: 10, right: 10),
               child: Column(
                 children: [
                   Row(
@@ -35,8 +35,8 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                         width: 35,
                       ),
                       Container(
-                        width: 50.0,
-                        height: 50.0,
+                        width: 30.0,
+                        height: 30.0,
                         padding: EdgeInsets.all(0),
                         decoration: new BoxDecoration(
                           color: Colors.orange,
@@ -54,8 +54,8 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                         color: Colors.orange,
                       ),
                       Container(
-                        width: 50.0,
-                        height: 50.0,
+                        width: 30.0,
+                        height: 30.0,
                         padding: EdgeInsets.all(0),
                         decoration: new BoxDecoration(
                           color: activeStep >= 1 ? Colors.orange : Colors.grey,
@@ -74,8 +74,8 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                         color: activeStep >= 1 ? Colors.orange : Colors.grey,
                       ),
                       Container(
-                        width: 50.0,
-                        height: 50.0,
+                        width: 30.0,
+                        height: 30.0,
                         padding: EdgeInsets.all(0),
                         decoration: new BoxDecoration(
                           color: activeStep >= 2 ? Colors.orange : Colors.grey,
@@ -94,8 +94,8 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                         color: activeStep >= 2 ? Colors.orange : Colors.grey,
                       ),
                       Container(
-                        width: 50.0,
-                        height: 50.0,
+                        width: 30.0,
+                        height: 30.0,
                         padding: EdgeInsets.all(0),
                         decoration: new BoxDecoration(
                           color: activeStep >= 3 ? Colors.orange : Colors.grey,
@@ -116,44 +116,44 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                   Row(
                     children: [
                       SizedBox(
-                        width: 27,
+                        width: 22,
                       ),
                       Text(
                         "Waiting",
                         style: TextStyle(
                             color:
                                 activeStep >= 0 ? Colors.orange : Colors.grey,
-                            fontSize: 20),
+                            fontSize: 15),
                       ),
                       SizedBox(
-                        width: 45,
+                        width: 42,
                       ),
                       Text(
                         "Preparing",
                         style: TextStyle(
                             color:
                                 activeStep >= 1 ? Colors.orange : Colors.grey,
-                            fontSize: 20),
+                            fontSize: 15),
                       ),
                       SizedBox(
-                        width: 50,
+                        width: 43,
                       ),
                       Text(
                         "Ready",
                         style: TextStyle(
                             color:
                                 activeStep >= 2 ? Colors.orange : Colors.grey,
-                            fontSize: 20),
+                            fontSize: 15),
                       ),
                       SizedBox(
-                        width: 50,
+                        width: 45,
                       ),
                       Text(
                         "Complete",
                         style: TextStyle(
                             color:
                                 activeStep >= 3 ? Colors.orange : Colors.grey,
-                            fontSize: 20),
+                            fontSize: 15),
                       ),
                     ],
                   ),
@@ -403,7 +403,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                   ),
                 ),
               ),
-              SizedBox(height: 80),
+              SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

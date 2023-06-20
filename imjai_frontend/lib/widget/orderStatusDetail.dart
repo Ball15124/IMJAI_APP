@@ -137,7 +137,7 @@ class _OrderStatusDetailState extends State<OrderStatusDetail> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 100),
+                    padding: EdgeInsets.only(left: 90),
                     child: Row(
                       children: [
                         Container(
@@ -259,7 +259,7 @@ class _OrderStatusDetailState extends State<OrderStatusDetail> {
               ),
             ),
           ),
-          SizedBox(height: 100),
+          SizedBox(height: 20),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,

@@ -51,7 +51,7 @@ class _LocationState extends State<Location> {
                         ),
                         const Center(
                           child: Padding(
-                            padding: EdgeInsets.only(left: 93),
+                            padding: EdgeInsets.only(left: 65),
                             child: Text(
                               "Location",
                               textAlign: TextAlign.center,

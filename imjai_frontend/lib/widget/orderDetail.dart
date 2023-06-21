@@ -112,7 +112,7 @@ class _OrderDetailState extends State<OrderDetail> {
                   backgroundImage: AssetImage("Images/profile.jpg"),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 15),
+                  padding: EdgeInsets.only(left: 10),
                   child: Row(
                     children: [
                       Text(
@@ -124,7 +124,7 @@ class _OrderDetailState extends State<OrderDetail> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 100),
+                  padding: EdgeInsets.only(left: 50),
                   child: Row(
                     children: [
                       Container(
@@ -132,7 +132,7 @@ class _OrderDetailState extends State<OrderDetail> {
                           onPressed: () {},
                           icon: const Icon(
                             Icons.phone,
-                            size: 35,
+                            size: 30,
                             color: Colors.orange,
                           ),
                         ),
@@ -143,7 +143,7 @@ class _OrderDetailState extends State<OrderDetail> {
               ],
             ),
           ),
-          SizedBox(height: 140),
+          SizedBox(height: 20),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,

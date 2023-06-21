@@ -1,16 +1,18 @@
-import 'package:flutter/material.dart';
+import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:imjai_frontend/widget/mapScreen.dart';
 
-class LocationWidget extends StatefulWidget {
-  const LocationWidget({super.key});
+import 'mapScreen.dart';
+
+class LocationProductWidget extends StatefulWidget {
+  const LocationProductWidget({super.key});
 
   @override
-  State<LocationWidget> createState() => _LocationWidgetState();
+  State<LocationProductWidget> createState() => _LocationProductWidgetState();
 }
 
-class _LocationWidgetState extends State<LocationWidget> {
+class _LocationProductWidgetState extends State<LocationProductWidget> {
   double screenHeight = 0;
   double screenWidth = 0;
   Color primary = Color.fromARGB(255, 255, 255, 255);

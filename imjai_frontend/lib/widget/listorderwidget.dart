@@ -23,35 +23,35 @@ class _ListOrderWidgetState extends State<ListOrderWidget> {
       height: screenHeight,
       child: Column(
         children: <Widget>[
-          List(
+          ListOrder(
             title: 'Premium Wagyu A5',
             tag: 'Meat',
             imageUrl: 'wagyu',
             owner: 'Peter Parker',
             range: '2.5 km',
           ),
-          List(
+          ListOrder(
             title: 'Chinese Cabbage',
             tag: 'Veget&Fruit',
             imageUrl: 'cabbage',
             owner: 'MJ',
             range: '1.3 km',
           ),
-          List(
+          ListOrder(
             title: 'Prok Curry',
             tag: 'Food',
             imageUrl: 'curry',
             owner: 'Mctominay',
             range: '0.8 km',
           ),
-          List(
+          ListOrder(
             title: 'Kurobuta',
             tag: 'Meat',
             imageUrl: 'kurobuta',
             owner: 'Nawat Sujjaritrat',
             range: '1.8 km',
           ),
-          List(
+          ListOrder(
             title: 'Swensen',
             tag: 'Dessert',
             imageUrl: 'swensen',
@@ -64,14 +64,14 @@ class _ListOrderWidgetState extends State<ListOrderWidget> {
   }
 }
 
-class List extends StatelessWidget {
+class ListOrder extends StatelessWidget {
   String title;
   String imageUrl;
   String tag;
   String range;
   String owner;
 
-  List(
+  ListOrder(
       {Key? key,
       required this.title,
       required this.imageUrl,

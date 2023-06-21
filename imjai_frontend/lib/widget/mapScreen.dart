@@ -3,8 +3,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:imjai_frontend/widget/locations.dart' as locations;
-import 'directions_model.dart';
-import 'directions_repository.dart';
 import 'package:geocoding/geocoding.dart';
 
 class MapScreen extends StatefulWidget {
@@ -19,6 +17,7 @@ class _MapScreenState extends State<MapScreen> {
   GoogleMapController? mapController; //contrller for Google map
   LatLng startLocation = LatLng(27.6602292, 85.308027);
   String location = "Location Name:";
+  String locationAd = "Address:";
   CameraPosition? cameraPosition;
 
   @override
@@ -48,9 +47,12 @@ class _MapScreenState extends State<MapScreen> {
                 cameraPosition!.target.longitude);
             setState(() {
               //get place name from lat and lang
-              location = placemarks.first.administrativeArea.toString() +
+              location = placemarks.first.name.toString();
+              locationAd = placemarks.first.administrativeArea.toString() +
                   ", " +
-                  placemarks.first.street.toString();
+                  placemarks.first.street.toString() +
+                  ", " +
+                  placemarks.first.country.toString();
             });
           },
         ),
@@ -68,7 +70,8 @@ class _MapScreenState extends State<MapScreen> {
               padding: EdgeInsets.all(15),
               child: Card(
                 child: Container(
-                    height: 100,
+                    height: 150,
+                    padding: EdgeInsets.only(top: 10),
                     width: MediaQuery.of(context).size.width - 80,
                     child: Column(
                       children: [
@@ -79,10 +82,13 @@ class _MapScreenState extends State<MapScreen> {
                             color: Colors.orange,
                           ),
                           title: Text(
-                            location,
+                            locationAd,
                             style: TextStyle(fontSize: 18),
                           ),
                           dense: true,
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -91,7 +97,13 @@ class _MapScreenState extends State<MapScreen> {
                                 backgroundColor: Colors.orange,
                                 minimumSize: Size(
                                     MediaQuery.of(context).size.width / 3, 40)),
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog();
+                                  });
+                            },
                             child: Text(
                               'Confirm',
                               style: TextStyle(),

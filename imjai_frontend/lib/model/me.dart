@@ -14,7 +14,7 @@ class meProfile {
   final String username;
 
   @JsonKey(name: "phone_number")
-  final int phone_number;
+  final String phone_number;
 
   @JsonKey(name: "profile_url")
   final String profile_url;

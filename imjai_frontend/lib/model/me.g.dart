@@ -10,7 +10,7 @@ meProfile _$meProfileFromJson(Map<String, dynamic> json) => meProfile(
       id: json['id'] as int,
       email: json['email'] as String,
       username: json['username'] as String,
-      phone_number: json['phone_number'] as int,
+      phone_number: json['phone_number'] as String,
       profile_url: json['profile_url'] as String,
       birthdate: json['birthdate'] as String,
       firstname: json['firstname'] as String,

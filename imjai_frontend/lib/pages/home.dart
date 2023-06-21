@@ -24,7 +24,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<mainProduct> mainproduct = [];
-  int phone_number = 0;
+  String phone_number = '';
   String fname = '';
   String lastname = '';
   String email = '';

@@ -45,7 +45,7 @@ class _OrderStatusDetailState extends State<OrderStatusDetail> {
                     children: [
                       Text(
                         "Order# XXXXXXXX",
-                        style: TextStyle(color: Colors.grey, fontSize: 17),
+                        style: TextStyle(color: Colors.grey, fontSize: 15),
                       )
                     ],
                   ),
@@ -57,7 +57,9 @@ class _OrderStatusDetailState extends State<OrderStatusDetail> {
                       Text(
                         "Waiting giver to confirm",
                         style: TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0), fontSize: 23),
+                            color: Color.fromARGB(255, 0, 0, 0),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
@@ -69,11 +71,11 @@ class _OrderStatusDetailState extends State<OrderStatusDetail> {
                     children: [
                       Text(
                         "Location",
-                        style: TextStyle(color: Colors.grey, fontSize: 17),
+                        style: TextStyle(color: Colors.grey, fontSize: 15),
                       ),
                       Text(
                         "Time",
-                        style: TextStyle(color: Colors.grey, fontSize: 17),
+                        style: TextStyle(color: Colors.grey, fontSize: 15),
                       )
                     ],
                   ),
@@ -86,12 +88,12 @@ class _OrderStatusDetailState extends State<OrderStatusDetail> {
                       Text(
                         "King Mongkut's institute of\ntechnology Thonburi",
                         style: TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0), fontSize: 17),
+                            color: Color.fromARGB(255, 0, 0, 0), fontSize: 15),
                       ),
                       Text(
                         ". . .",
                         style: TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0), fontSize: 30),
+                            color: Color.fromARGB(255, 0, 0, 0), fontSize: 13),
                       )
                     ],
                   ),
@@ -131,13 +133,13 @@ class _OrderStatusDetailState extends State<OrderStatusDetail> {
                         Text(
                           "Mr. Gwen Camiron",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
+                              fontWeight: FontWeight.bold, fontSize: 15),
                         ),
                       ],
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 90),
+                    padding: EdgeInsets.only(left: 40),
                     child: Row(
                       children: [
                         Container(
@@ -145,7 +147,7 @@ class _OrderStatusDetailState extends State<OrderStatusDetail> {
                             onPressed: () {},
                             icon: const Icon(
                               Icons.phone,
-                              size: 35,
+                              size: 30,
                               color: Colors.orange,
                             ),
                           ),

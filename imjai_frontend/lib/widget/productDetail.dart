@@ -113,7 +113,7 @@ class _ProductDetailState extends State<ProductDetail> {
                   backgroundImage: AssetImage("Images/profile.jpg"),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 15),
+                  padding: EdgeInsets.only(left: 10),
                   child: Row(
                     children: [
                       Text(
@@ -125,7 +125,7 @@ class _ProductDetailState extends State<ProductDetail> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 100),
+                  padding: EdgeInsets.only(left: 50),
                   child: Row(
                     children: [
                       Container(
@@ -133,7 +133,7 @@ class _ProductDetailState extends State<ProductDetail> {
                           onPressed: () {},
                           icon: const Icon(
                             Icons.phone,
-                            size: 35,
+                            size: 30,
                             color: Colors.orange,
                           ),
                         ),
@@ -144,7 +144,7 @@ class _ProductDetailState extends State<ProductDetail> {
               ],
             ),
           ),
-          SizedBox(height: 140),
+          SizedBox(height: 20),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,

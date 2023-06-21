@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:fluttertagselector/tag_class.dart';
 import 'package:imjai_frontend/widget/chiptag.dart';
+import 'package:imjai_frontend/widget/mapScreen.dart';
 
 class CreateProductWidget extends StatefulWidget {
   const CreateProductWidget({super.key});
@@ -38,6 +39,10 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.grey[200]),
+              child: Icon(
+                Icons.file_upload_outlined,
+                size: 50,
+              ),
             ),
             SizedBox(height: screenHeight / 35),
             Container(
@@ -93,12 +98,26 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
                 ),
               ),
             ),
-            Container(
-              height: 100,
-              width: screenWidth - 35,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.grey[200]),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                backgroundColor: Colors.white,
+                minimumSize: Size(screenWidth - 30, 50),
+              ),
+              icon: const Icon(
+                Icons.location_on_rounded,
+                color: Colors.orange,
+                size: 20.0,
+              ),
+              label: const Text(
+                'Location for your Product',
+                style: TextStyle(fontSize: 15, color: Colors.orange),
+              ),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const MapScreen()));
+              },
             ),
             SizedBox(height: screenHeight / 60),
             Container(

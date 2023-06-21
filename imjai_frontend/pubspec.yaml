@@ -39,11 +39,20 @@ dependencies:
   fluttertagselector: ^0.1.0
   im_stepper: ^1.0.1+1
   timelines: ^0.1.0
+  dio: ^4.0.4
+  google_map_polyline_new: ^0.3.0+2
+  google_maps_flutter: ^2.3.0
+  flutter_polyline_points: ^1.0.0
+  http: ^0.13.6
+  json_serializable: ^6.6.2
+  json_annotation: ^4.8.1
+  geocoding: ^2.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: "^0.13.1"
+  build_runner: ^2.3.3
 
 flutter_icons:
   android: true
@@ -85,6 +94,8 @@ flutter:
       - Images/Food/kurobuta.jpg
       - Images/Food/swensen.jpg
       - Images/ReserveStatus/OrderTrackingImage.gif
+      - assets/locations.json
+      - Images/picker.png
       
   
 

@@ -1,6 +1,12 @@
+import 'package:dio/dio.dart';
+import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:imjai_frontend/model/mainproduct.dart';
+// import 'package:imjai_frontend/model/mainproduct.dart';
+import 'package:imjai_frontend/model/me.dart';
+import 'package:imjai_frontend/pages/caller.dart';
 import 'package:imjai_frontend/pages/location.dart';
 import 'package:imjai_frontend/pages/profile.dart';
 import 'package:imjai_frontend/widget/categorieswidget.dart';
@@ -17,6 +23,50 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<mainProduct> mainproduct = [];
+  String phone_number = '';
+  String fname = '';
+  String lastname = '';
+  String email = '';
+  // String faculty = '';
+  // String department = '';
+  String profileUrl = '';
+  String birthdate = '';
+  // double screenHeight = 0;
+  // double screenWidth = 0;
+  // final users = FirebaseAuth.instance.currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  void fetchData() async {
+    try {
+      Response response = await Caller.dio.get("/home/me");
+      Response productResponse = await Caller.dio.get("/home/list");
+      setState(() {
+        final data = meProfile.fromJson(response.data);
+        fname = data.firstname;
+        lastname = data.lastname;
+        email = data.email;
+        phone_number = data.phone_number;
+        birthdate = data.birthdate;
+        this.profileUrl = data.profile_url;
+        print(data.firstname);
+
+        final List<dynamic> productRes = productResponse.data;
+        for (var productResponse in productRes) {
+          mainproduct.add(mainProduct.fromJson(productResponse));
+        }
+        print(mainproduct);
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   var currentIndex = 0;
   double screenHeight = 0;
   double screenWidth = 0;

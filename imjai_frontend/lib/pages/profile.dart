@@ -1,6 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:imjai_frontend/model/me.dart';
+import 'package:imjai_frontend/pages/caller.dart';
 import 'package:imjai_frontend/pages/login.dart';
 import 'package:imjai_frontend/widget/categorieswidget.dart';
 import 'package:imjai_frontend/widget/infoProfile.dart';
@@ -22,6 +25,43 @@ class _ProfileState extends State<Profile> {
   double screenHeight = 0;
   double screenWidth = 0;
   Color primary = Color.fromARGB(255, 255, 255, 255);
+
+  String phone_number = '';
+  String fname = '';
+  String lastname = '';
+  String email = '';
+  // String faculty = '';
+  // String department = '';
+  String profileUrl = '';
+  String birthdate = '';
+  // double screenHeight = 0;
+  // double screenWidth = 0;
+  // final users = FirebaseAuth.instance.currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  void fetchData() async {
+    try {
+      Response response = await Caller.dio.get("/me");
+      // Response productResponse = await Caller.dio.get("/home/list");
+      setState(() {
+        final data = meProfile.fromJson(response.data);
+        fname = data.firstname;
+        lastname = data.lastname;
+        email = data.email;
+        phone_number = data.phone_number;
+        birthdate = data.birthdate;
+        this.profileUrl = data.profile_url;
+        print(data.firstname);
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   void dispose() {

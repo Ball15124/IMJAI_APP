@@ -39,11 +39,17 @@ dependencies:
   fluttertagselector: ^0.1.0
   im_stepper: ^1.0.1+1
   timelines: ^0.1.0
+  dio: ^5.2.1+1
+  json_annotation: ^4.8.1
+  flutter_platform_alert: ^0.4.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: "^0.13.1"
+  json_serializable: ^6.6.2
+  build_runner: ^2.3.3
 
 flutter_icons:
   android: true

@@ -32,7 +32,7 @@ class meProfile {
   final String location_latitude;
 
   @JsonKey(name: "location_longtitude")
-  final DateTime location_longtitude;
+  final String location_longtitude;
 
   @JsonKey(name: "updatedAt")
   final DateTime updatedAt;

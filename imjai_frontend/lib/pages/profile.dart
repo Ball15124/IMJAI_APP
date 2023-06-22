@@ -11,6 +11,7 @@ import 'package:imjai_frontend/widget/infoProfile.dart';
 import 'package:imjai_frontend/widget/navigationbarwidget.dart';
 import 'package:imjai_frontend/widget/searchwidget.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -264,7 +265,7 @@ class _ProfileState extends State<Profile> {
                             Column(
                               children: [
                                 Text(
-                                  "Gwen Camiron",
+                                  fname + " " + lastname,
                                   style: TextStyle(fontSize: 23),
                                 ),
                                 const SizedBox(
@@ -277,19 +278,19 @@ class _ProfileState extends State<Profile> {
                         SizedBox(height: screenHeight / 65),
                         Info(
                           title: "First name",
-                          data: "Gwen",
+                          data: fname,
                           color: Colors.black,
                           enable: false,
                         ),
                         Info(
                           title: "Last name",
-                          data: "Camiron",
+                          data: lastname,
                           enable: false,
                           color: Colors.black,
                         ),
                         Info(
                             title: "Email",
-                            data: "gwen.cami@gmail.com",
+                            data: email,
                             color: Colors.black,
                             enable: false),
                         Stack(
@@ -317,7 +318,8 @@ class _ProfileState extends State<Profile> {
                         Info(
                             title: "Birth Day",
                             color: Colors.black,
-                            data: "14 Febuary 2002",
+                            data: DateFormat('E, d MMM yyyy')
+                                .format(DateTime.parse(birthdate)),
                             enable: false),
                         const SizedBox(
                           height: 20,

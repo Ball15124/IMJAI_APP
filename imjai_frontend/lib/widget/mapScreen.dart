@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:imjai_frontend/widget/locations.dart' as locations;
+// import 'package:imjai_frontend/widget/locations.dart' as locations;
 import 'package:geocoding/geocoding.dart';
 
 class MapScreen extends StatefulWidget {

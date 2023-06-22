@@ -1,3 +1,4 @@
+import 'package:imjai_frontend/widget/listorderwidget.dart';
 import 'package:json_annotation/json_annotation.dart';
 // import 'package:mamaimakhrap/model/courseRound.dart';
 // import 'package:mamaimakhrap/model/enrollUser.dart';
@@ -62,4 +63,6 @@ class mainProduct {
       _$mainProductFromJson(json);
 
   Map<String, dynamic> toJson() => _$mainProductToJson(this);
+
+  static map(ListOrderWidget Function(dynamic e) param0) {}
 }

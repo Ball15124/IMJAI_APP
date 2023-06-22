@@ -46,8 +46,12 @@ class _HomeState extends State<Home> {
     try {
       Response response = await Caller.dio.get("/home/me");
       Response productResponse = await Caller.dio.get("/home/list");
+      // Response listResponse = await Caller.dio.get("/list");
       setState(() {
+        print("111");
+        print(response.data);
         final data = meProfile.fromJson(response.data);
+        print("222");
         fname = data.firstname;
         lastname = data.lastname;
         email = data.email;
@@ -61,11 +65,36 @@ class _HomeState extends State<Home> {
           mainproduct.add(mainProduct.fromJson(productResponse));
         }
         print(mainproduct);
+
+        // final List<dynamic> products = response.data["created_products"];
+        // for (var product in products) {
+        //   print(products);
+        //   mainproduct.add(mainProduct.fromJson(product));
+        // }
+        // print(mainproduct);
       });
     } catch (e) {
       print(e);
     }
   }
+
+  // void fetchData() async {
+  //   try {
+  //     Response response = await Caller.dio.get("/list");
+  //     setState(() {
+  //       print(response.data);
+  //       final List<dynamic> products = response.data["created_products"];
+  //       for (var product in products) {
+  //         print(products);
+  //         mainproduct.add(mainProduct.fromJson(product));
+  //       }
+  //       print(mainproduct);
+
+  //     });
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   var currentIndex = 0;
   double screenHeight = 0;
@@ -105,7 +134,7 @@ class _HomeState extends State<Home> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  "Gwen Camiron",
+                                  fname + " " + lastname,
                                   style: TextStyle(fontSize: 20),
                                 ),
                               ],
@@ -189,7 +218,20 @@ class _HomeState extends State<Home> {
                             ],
                           ),
                         ),
-                        ListOrderWidget(),
+                        Container(
+                          margin: EdgeInsets.only(top: 20),
+                          child: Column(
+                              children: mainproduct
+                                  .map((e) => ListOrder(
+                                        title: e.name!,
+                                        imageUrl: e.picture_url!,
+                                        tag: e.category_id.toString(),
+                                        owner: "Not yet",
+                                        range: "23 km",
+                                      ))
+                                  .toList()),
+                        )
+                        //ListOrderWidget(),
                       ],
                     ),
                   ),

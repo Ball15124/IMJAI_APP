@@ -8,6 +8,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:fluttertagselector/tag_class.dart';
 import 'package:imjai_frontend/pages/location.dart';
+import 'package:imjai_frontend/pages/caller.dart';
+import 'package:imjai_frontend/pages/product.dart';
 import 'package:imjai_frontend/widget/chiptag.dart';
 import 'package:imjai_frontend/widget/mapScreen.dart';
 import 'package:image_picker/image_picker.dart';
@@ -89,6 +91,30 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
   }
 
   @override
+  void saveInfo() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    Caller.dio
+        .post("/products", data: {
+          "product_name": proname.text,
+          "product_picture": "",
+          "product_description": description.text,
+          "product_time": time.text,
+          "category_id": "",
+          "locate_latitude": "",
+          "locate_longtitude": "",
+          "status": "",
+          "reserved_yet": "",
+        })
+        .then((response) {})
+        // .onError((DioError error, _) {
+        //   Caller.handle(context, error);
+        // })
+        .whenComplete(() {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => (Product())));
+        });
+  }
+
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;

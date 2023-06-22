@@ -1,7 +1,12 @@
+import 'dart:ffi';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:imjai_frontend/model/mainproduct.dart';
+import 'package:imjai_frontend/pages/caller.dart';
 import 'package:imjai_frontend/pages/createproduct.dart';
 import 'package:imjai_frontend/widget/listProductwidget.dart';
 import 'package:imjai_frontend/widget/listreservewidget.dart';
@@ -17,7 +22,30 @@ class _ProductState extends State<Product> {
   double screenHeight = 0;
   double screenWidth = 0;
   Color primary = Color.fromARGB(255, 255, 255, 255);
+  List<mainProduct> list_product = [];
   @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  void fetchData() async {
+    try {
+      Response response = await Caller.dio.get("/products/getproducts");
+      setState(() {
+        print(response.data);
+        final List<dynamic> products = response.data["created_products"];
+        for (var product in products) {
+          print(products);
+          list_product.add(mainProduct.fromJson(product));
+        }
+        print(list_product);
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
@@ -71,7 +99,21 @@ class _ProductState extends State<Product> {
                           ],
                         ),
                         SizedBox(height: screenHeight / 65),
-                        ListProductWidget(),
+                        Container(
+                          margin: EdgeInsets.only(top: 20),
+                          child: Column(
+                              children: list_product
+                                  .map((e) => ProductList(
+                                      title: e.name!,
+                                      imageUrl: e.picture_url!,
+                                      tag: e.category_id.toString(),
+                                      range: "23 km",
+                                      owner: "Not yet",
+                                      status: e.status.toString()))
+                                  .toList()),
+                        )
+                        // ProductList(title: title, imageUrl: imageUrl, tag: tag, range: range, owner: owner, status: status)
+                        // ListProductWidget(),
                       ],
                     ),
                   )

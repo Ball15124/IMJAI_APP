@@ -6,7 +6,13 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import '../pages/InsideOrder.dart';
 
 class ListOrderWidget extends StatefulWidget {
-  const ListOrderWidget({super.key});
+  const ListOrderWidget(
+      {super.key,
+      required title,
+      required imageUrl,
+      required String tag,
+      required String range,
+      required String owner});
 
   @override
   State<ListOrderWidget> createState() => _ListOrderWidgetState();

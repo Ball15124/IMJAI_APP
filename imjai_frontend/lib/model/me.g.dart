@@ -16,8 +16,7 @@ meProfile _$meProfileFromJson(Map<String, dynamic> json) => meProfile(
       firstname: json['firstname'] as String,
       lastname: json['lastname'] as String,
       location_latitude: json['location_latitude'] as String,
-      location_longtitude:
-          DateTime.parse(json['location_longtitude'] as String),
+      location_longtitude: json['location_longtitude'] as String,
       updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
 
@@ -31,6 +30,6 @@ Map<String, dynamic> _$meProfileToJson(meProfile instance) => <String, dynamic>{
       'firstname': instance.firstname,
       'lastname': instance.lastname,
       'location_latitude': instance.location_latitude,
-      'location_longtitude': instance.location_longtitude.toIso8601String(),
+      'location_longtitude': instance.location_longtitude,
       'updatedAt': instance.updatedAt.toIso8601String(),
     };

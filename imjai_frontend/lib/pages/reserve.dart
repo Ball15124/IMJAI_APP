@@ -1,6 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:imjai_frontend/model/reservetoproduct.dart';
+import 'package:imjai_frontend/pages/caller.dart';
 import 'package:imjai_frontend/widget/categorieswidget.dart';
 import 'package:imjai_frontend/widget/listreservewidget.dart';
 import 'package:imjai_frontend/widget/navigationbarwidget.dart';
@@ -19,8 +22,40 @@ class _ReserveState extends State<Reserve> {
   double screenHeight = 0;
   double screenWidth = 0;
   Color primary = Color.fromARGB(255, 255, 255, 255);
+  List<reserveToProduct> reserved_product = [];
 
   @override
+  void initState() {
+    super.initState();
+    // selectedDateTime = DateTime.now().toString();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      fetchData(context);
+    });
+  }
+
+  void fetchData(BuildContext context) async {
+    try {
+      final id = ModalRoute.of(context)!.settings.arguments as int;
+      Response response = await Caller.dio.get("/products/getreserves");
+
+      setState(() {
+        print('test');
+        List<dynamic> reserved = response.data["reserved_products"];
+        print(1212);
+        print(reserved);
+        reserved_product = reserved
+            .map<reserveToProduct>((json) => reserveToProduct.fromJson(json))
+            .toList();
+
+        print(reserved_product);
+        print(111111);
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
@@ -60,6 +95,22 @@ class _ReserveState extends State<Reserve> {
                         ),
                         SizedBox(height: screenHeight / 65),
                         ListReserveWidget(),
+                        Container(
+                          margin: EdgeInsets.only(top: 20),
+                          child: Column(
+                              children: reserved_product
+                                  .map((e) => reserveList(
+                                        title:
+                                            e.reserved_product?.name as String,
+                                        imageUrl: e.reserved_product
+                                            ?.picture_url as String,
+                                        tag: e.reserved_product?.category_id
+                                            .toString() as String,
+                                        owner: "Not yet",
+                                        range: "23 km",
+                                      ))
+                                  .toList()),
+                        )
                       ],
                     ),
                   )

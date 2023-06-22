@@ -84,6 +84,33 @@ class reserveList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (this.tag == "1") {
+      tag = "Meat";
+    } else if (this.tag == "2") {
+      // Handle other cases if needed
+      tag = "Vegetable & Fruit";
+    } else if (this.tag == "3") {
+      // Handle other cases if needed
+      tag = "Food";
+    } else if (this.tag == "4") {
+      // Handle other cases if needed
+      tag = "Flavoring";
+    } else if (this.tag == "5") {
+      // Handle other cases if needed
+      tag = "Drink";
+    } else if (this.tag == "6") {
+      // Handle other cases if needed
+      tag = "Snack";
+    } else if (this.tag == "7") {
+      // Handle other cases if needed
+      tag = "Dessert";
+    } else if (this.tag == "8") {
+      // Handle other cases if needed
+      tag = "Food Waste";
+    } else {
+      tag = "No Categories";
+    }
+
     return Center(
       child: GestureDetector(
         onTap: () {

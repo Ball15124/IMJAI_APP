@@ -25,6 +25,7 @@ class _ListProductWidgetState extends State<ListProductWidget> {
       child: Column(
         children: <Widget>[
           ProductList(
+            id: 1,
             title: 'Premium Wagyu A5',
             tag: 'Meat',
             imageUrl: 'wagyu',
@@ -39,6 +40,7 @@ class _ListProductWidgetState extends State<ListProductWidget> {
 }
 
 class ProductList extends StatelessWidget {
+  int id;
   String title;
   String imageUrl;
   String tag;
@@ -48,6 +50,7 @@ class ProductList extends StatelessWidget {
 
   ProductList({
     Key? key,
+    required this.id,
     required this.title,
     required this.imageUrl,
     required this.tag,
@@ -101,8 +104,13 @@ class ProductList extends StatelessWidget {
     return Center(
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const InsideProduct()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const InsideProduct(),
+                  settings: RouteSettings(
+                    arguments: id,
+                  )));
         },
         child: Container(
           margin: EdgeInsets.only(bottom: 5),

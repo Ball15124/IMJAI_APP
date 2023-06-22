@@ -1,9 +1,12 @@
 import 'dart:ui';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:imjai_frontend/model/mainproduct.dart';
+import 'package:imjai_frontend/pages/caller.dart';
 import 'package:imjai_frontend/widget/productDetail.dart';
 
 class InsideProduct extends StatefulWidget {
@@ -14,9 +17,45 @@ class InsideProduct extends StatefulWidget {
 }
 
 class _InsideProductState extends State<InsideProduct> {
+  late int id;
   double screenHeight = 0;
   double screenWidth = 0;
+  String productName = '';
+  String ownerName = '';
   Color primary = Color.fromARGB(255, 255, 255, 255);
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      fetchData(context);
+    });
+  }
+
+  void fetchData(BuildContext context) async {
+    try {
+      final id = ModalRoute.of(context)!.settings.arguments as int;
+      Response response = await Caller.dio.get("/products/products/$id");
+      print(response.data);
+      setState(() {
+        print(1);
+        final productData = mainProduct.fromJson(response.data["product"]);
+        print(productData);
+        productName = productData.name!;
+        print(productName);
+        ownerName = productData.created_by_user!.firstname;
+        print(ownerName);
+        // Map<String, dynamic> productInfo = response.data;
+        // print(55555555);
+        // print(productInfo);
+        // print(2);
+        // print('awdwadwad');
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;

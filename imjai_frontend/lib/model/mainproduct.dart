@@ -1,3 +1,4 @@
+import 'package:imjai_frontend/model/me.dart';
 import 'package:imjai_frontend/widget/listorderwidget.dart';
 import 'package:json_annotation/json_annotation.dart';
 // import 'package:mamaimakhrap/model/courseRound.dart';
@@ -40,24 +41,28 @@ class mainProduct {
   @JsonKey(name: 'is_reserved')
   final bool? is_reserved;
 
+  @JsonKey(name: 'created_by_user')
+  final meProfile? created_by_user;
+
   //  @JsonKey(name: 'available_time')
   // final String? available_time;
 
-  mainProduct({
-    required this.id,
-    required this.userId,
-    required this.name,
-    required this.picture_url,
-    required this.description,
-    required this.available_time,
-    required this.category_id,
-    required this.location_latitude,
-    required this.location_longtitude,
-    required this.status,
-    required this.is_reserved,
-    // this.courseRound,
-    // this.enrollUser
-  });
+  mainProduct(
+      {required this.id,
+      required this.userId,
+      required this.name,
+      required this.picture_url,
+      required this.description,
+      required this.available_time,
+      required this.category_id,
+      required this.location_latitude,
+      required this.location_longtitude,
+      required this.status,
+      required this.is_reserved,
+      this.created_by_user
+      // this.courseRound,
+      // this.enrollUser
+      });
 
   factory mainProduct.fromJson(Map<String, dynamic> json) =>
       _$mainProductFromJson(json);

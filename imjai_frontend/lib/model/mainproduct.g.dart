@@ -18,6 +18,9 @@ mainProduct _$mainProductFromJson(Map<String, dynamic> json) => mainProduct(
       location_longtitude: json['location_longtitude'] as String?,
       status: json['status'] as int?,
       is_reserved: json['is_reserved'] as bool?,
+      created_by_user: json['created_by_user'] == null
+          ? null
+          : meProfile.fromJson(json['created_by_user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$mainProductToJson(mainProduct instance) =>
@@ -33,4 +36,5 @@ Map<String, dynamic> _$mainProductToJson(mainProduct instance) =>
       'location_longtitude': instance.location_longtitude,
       'status': instance.status,
       'is_reserved': instance.is_reserved,
+      'created_by_user': instance.created_by_user,
     };

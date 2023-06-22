@@ -21,6 +21,7 @@ class Product extends StatefulWidget {
 class _ProductState extends State<Product> {
   double screenHeight = 0;
   double screenWidth = 0;
+
   Color primary = Color.fromARGB(255, 255, 255, 255);
   List<mainProduct> list_product = [];
   @override
@@ -104,6 +105,7 @@ class _ProductState extends State<Product> {
                           child: Column(
                               children: list_product
                                   .map((e) => ProductList(
+                                      id: e.id,
                                       title: e.name!,
                                       imageUrl: e.picture_url!,
                                       tag: e.category_id.toString(),

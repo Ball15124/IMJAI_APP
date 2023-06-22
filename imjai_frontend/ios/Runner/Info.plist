@@ -12,6 +12,19 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>NSCameraUsageDescription</key>
+      <string>This app requires to access your photo library to show image on profile and send via chat</string>
+	  <key>NSPhotoLibraryUsageDescription</key>
+      <string>This app requires to access your photo library to show image on profile and send via chat</string>
+	  <key>NSLocationWhenInUseUsageDescription</key>
+<string>This app needs access to location when open.</string>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>This app needs access to location when in the background.</string>
+<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+<dict>
+  <key>YourPurposeKey</key>
+  <string>The example App requires temporary access to the device&apos;s precise location.</string>
+</dict>
 	<key>CFBundleName</key>
 	<string>Imjai</string>
 	<key>CFBundlePackageType</key>

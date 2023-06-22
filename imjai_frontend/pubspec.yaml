@@ -49,6 +49,7 @@ dependencies:
   flutter_platform_alert: ^0.4.0
   intl: ^0.18.1
   image_picker: ^0.8.9
+  geolocator: ^9.0.2
 
 dev_dependencies:
   flutter_test:

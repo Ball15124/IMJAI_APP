@@ -15,6 +15,8 @@ class _RegisterState extends State<Register> {
   TextEditingController userCon = TextEditingController();
   TextEditingController passCon = TextEditingController();
   TextEditingController phoneCon = TextEditingController();
+  TextEditingController fname = TextEditingController();
+  TextEditingController lname = TextEditingController();
 
   double screenHeight = 0;
   double screenWidth = 0;
@@ -47,13 +49,13 @@ class _RegisterState extends State<Register> {
               ],
             ),
             const SizedBox(
-              height: 60,
+              height: 10,
             ),
-            Image.asset(
-              'Images/ImJai Logo.png', // Replace with your logo image path
-              width: 100,
-              height: 100,
-            ),
+            // Image.asset(
+            //   'Images/ImJai Logo.png', // Replace with your logo image path
+            //   width: 90,
+            //   height: 90,
+            // ),
             const SizedBox(
               height: 30,
             ),
@@ -65,11 +67,16 @@ class _RegisterState extends State<Register> {
             const SizedBox(
               height: 20,
             ),
-            customField('Email', emailCon, false, Icons.email, Colors.orange),
+            customField(
+              'Email', emailCon, false, Icons.email, Colors.orange),
             customField(
                 'Username', userCon, false, Icons.person, Colors.orange),
             customField(
                 'Password', passCon, true, Icons.key_rounded, Colors.orange),
+            customField('First Name', fname, false,
+                Icons.person, Colors.orange),
+            customField('Last Name', lname, false,
+                Icons.person, Colors.orange),
             customField('Phone number', phoneCon, false,
                 Icons.phone_android_rounded, Colors.orange),
             const SizedBox(
@@ -79,10 +86,14 @@ class _RegisterState extends State<Register> {
                 onPressed: () {
                   String username = userCon.text;
                   String email = emailCon.text;
+                  String firstname = fname.text;;
+                  String lastname = lname.text;
                   String Phonenumber = phoneCon.text;
                   String passWord = passCon.text;
                   print("Username : $username ");
                   print("Email : $email ");
+                  print("Fname : $firstname ");
+                  print("Lname : $lastname ");
                   print("Phone : $Phonenumber ");
                   print("Password : $passWord ");
 
@@ -154,16 +165,16 @@ class _RegisterState extends State<Register> {
                                       fontSize: 18),
                                 )),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          )
+                          // const SizedBox(
+                          //   height: 10,
+                          // )
                         ],
                       );
                     },
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(screenWidth - 30, 60),
+                  minimumSize: Size(screenWidth - 30, 50),
                   backgroundColor: Colors.orange,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12), // <-- Radius
@@ -171,7 +182,7 @@ class _RegisterState extends State<Register> {
                 ),
                 child: Text(
                   "Register",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 )),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -18,10 +18,28 @@ class _RegisterState extends State<Register> {
   TextEditingController fname = TextEditingController();
   TextEditingController lname = TextEditingController();
   TextEditingController bdate = TextEditingController();
-
+  String birthDateInString = "";
+  DateTime? birthDate;
   double screenHeight = 0;
   double screenWidth = 0;
   Color primary = Color.fromARGB(255, 255, 255, 255);
+  void getDatetime() async {
+    final datePick = await showDatePicker(
+        context: context,
+        initialDate: new DateTime.now(),
+        firstDate: new DateTime(1900),
+        lastDate: new DateTime(2100));
+    if (datePick != null && datePick != birthDate) {
+      setState(() {
+        birthDate = datePick;
+
+        // put it here
+        birthDateInString =
+            "${birthDate?.day}/${birthDate?.month}/${birthDate?.year}"; // 08/14/2019
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -33,41 +51,40 @@ class _RegisterState extends State<Register> {
         padding: EdgeInsets.only(top: 60),
         child: Column(
           children: [
-                Container(
-                    
-                    color: primary,
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          margin: const EdgeInsets.only(left: 10, bottom: 4),
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.pop((context));
-                            },
-                            icon: const Icon(
-                              Icons.arrow_back_ios_new_rounded,
-                              size: 35,
-                              color: Colors.orange,
-                            ),
-                          ),
-                        ),
-                        const Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 67),
-                            child: Text(
-                              "Categories",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: screenHeight / 35),
-                      ],
+            Container(
+              color: primary,
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.only(left: 10, bottom: 4),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop((context));
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        size: 35,
+                        color: Colors.orange,
+                      ),
                     ),
                   ),
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 100),
+                      child: Text(
+                        "Register",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: screenHeight / 35),
+                ],
+              ),
+            ),
             // const SizedBox(
             //   height: 10,
             // ),
@@ -88,19 +105,24 @@ class _RegisterState extends State<Register> {
               height: 20,
             ),
             customField(
-              'Email', emailCon, false, Icons.email, Colors.orange),
+                'Email', emailCon, false, Icons.email, Colors.orange, null),
             customField(
-                'Username', userCon, false, Icons.person, Colors.orange),
+                'Username', userCon, false, Icons.person, Colors.orange, null),
+            customField('Password', passCon, true, Icons.key_rounded,
+                Colors.orange, null),
             customField(
-                'Password', passCon, true, Icons.key_rounded, Colors.orange),
-            customField('First Name', fname, false,
-                Icons.person, Colors.orange),
-            customField('Last Name', lname, false,
-                Icons.person, Colors.orange),
+                'First Name', fname, false, Icons.person, Colors.orange, null),
             customField(
-              'Birthdate', bdate, false, Icons.calendar_month_rounded, Colors.orange),
+                'Last Name', lname, false, Icons.person, Colors.orange, null),
+            customField(
+                birthDateInString == "" ? "BirthDate" : birthDateInString,
+                bdate,
+                false,
+                Icons.calendar_month_rounded,
+                Colors.orange,
+                getDatetime),
             customField('Phone number', phoneCon, false,
-                Icons.phone_android_rounded, Colors.orange),
+                Icons.phone_android_rounded, Colors.orange, null),
             const SizedBox(
               height: 20,
             ),
@@ -108,7 +130,7 @@ class _RegisterState extends State<Register> {
                 onPressed: () {
                   String username = userCon.text;
                   String email = emailCon.text;
-                  String firstname = fname.text;;
+                  String firstname = fname.text;
                   String lastname = lname.text;
                   String Phonenumber = phoneCon.text;
                   String birthdate = bdate.text;
@@ -236,7 +258,7 @@ class _RegisterState extends State<Register> {
   }
 
   Widget customField(String hint, TextEditingController controller,
-      bool obscure, IconData icon, Color color) {
+      bool obscure, IconData icon, Color color, void Function()? ff) {
     return Container(
       width: screenWidth - 35,
       margin: const EdgeInsets.only(bottom: 20),
@@ -268,6 +290,7 @@ class _RegisterState extends State<Register> {
                 controller: controller,
                 enableSuggestions: false,
                 autocorrect: false,
+                onTap: ff,
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(
                       vertical: screenHeight / 45,

@@ -193,23 +193,47 @@ class _RegisterState extends State<Register> {
                         ),
                         actions: [
                           Center(
-                            child: TextButton(
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Color.fromARGB(255, 238, 199, 168)),
-                                    shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.0),
-                                    ))),
-                                onPressed: () {},
-                                child: Text(
-                                  "Resend email confirmation",
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.5),
-                                      fontSize: 18),
-                                )),
+                            child: Column(
+                              children: [
+                                TextButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Color.fromARGB(255, 238, 199, 168)),
+                                        shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(18.0),
+                                        ))),
+                                    onPressed: () {},
+                                    child: Text(
+                                      "Resend email confirmation",
+                                      style: TextStyle(
+                                          color: Colors.black.withOpacity(0.5),
+                                          fontSize: 18),
+                                    )),
+                                    TextButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.white),
+                                        shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(18.0),
+                                        ))),
+                                    onPressed: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: ((context) => Login())));
+                                    },
+                                    child: Text(
+                                      "Login",
+                                      style: TextStyle(
+                                          color: Colors.orange,
+                                          fontSize: 18),
+                                    )),
+                              ],
+                            ),
+                                
                           ),
                           // const SizedBox(
                           //   height: 10,

@@ -3,7 +3,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:imjai_frontend/widget/locations.dart' as locations;
 import 'package:geocoding/geocoding.dart';
 
 class MapScreen extends StatefulWidget {
@@ -21,6 +20,8 @@ class _MapScreenState extends State<MapScreen> {
   String locationAd = "Address:";
   CameraPosition? cameraPosition;
   LatLng? _currentPosition;
+  String finalLatitude = "";
+  String finalLongtitude = "";
   bool _isLoading = true;
   @override
   void initState() {
@@ -41,6 +42,7 @@ class _MapScreenState extends State<MapScreen> {
 
     setState(() {
       _currentPosition = location;
+      print(_currentPosition);
       _isLoading = false;
     });
   }
@@ -72,8 +74,9 @@ class _MapScreenState extends State<MapScreen> {
                   onCameraIdle: () async {
                     //when map drag stops
                     List<Placemark> placemarks = await placemarkFromCoordinates(
-                        cameraPosition!.target.latitude,
-                        cameraPosition!.target.longitude);
+                      cameraPosition!.target.latitude,
+                      cameraPosition!.target.longitude,
+                    );
                     setState(() {
                       //get place name from lat and lang
                       location = placemarks.first.name.toString();
@@ -130,7 +133,23 @@ class _MapScreenState extends State<MapScreen> {
                                       MediaQuery.of(context).size.width / 3,
                                       40)),
                               onPressed: () {
-                                Navigator.pop((context));
+                                print(
+                                    cameraPosition!.target.latitude.toString() +
+                                        ", " +
+                                        cameraPosition!.target.longitude
+                                            .toString());
+                                setState(() {
+                                  finalLatitude = cameraPosition!
+                                      .target.latitude
+                                      .toString();
+                                  finalLongtitude = cameraPosition!
+                                      .target.longitude
+                                      .toString();
+                                  print("This is your final location " +
+                                      finalLatitude +
+                                      ", " +
+                                      finalLongtitude);
+                                });
                               },
                               child: Text(
                                 'Confirm',

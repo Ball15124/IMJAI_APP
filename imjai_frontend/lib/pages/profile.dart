@@ -138,7 +138,7 @@ class _ProfileState extends State<Profile> {
       isEditable = !isEditable;
       if (!isEditable) {
         // Save the edited text when editing is complete
-        labelText = _controller.text;
+        phone_number = _controller.text;
         _controller.clear();
       }
     });
@@ -297,8 +297,9 @@ class _ProfileState extends State<Profile> {
                           children: [
                             Info(
                               title: "Contact",
-                              data: labelText,
+                              data: phone_number,
                               enable: isEditable,
+                              text: TextInputType.phone,
                               color: Colors.black,
                               controller: _controller,
                             ),

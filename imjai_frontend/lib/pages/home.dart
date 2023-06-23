@@ -156,12 +156,11 @@ class _HomeState extends State<Home> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Profile()));
+                                          builder: (context) => Profile()));
                                 },
                                 child: CircleAvatar(
                                   radius: 30,
-                                  backgroundImage: AssetImage(""),
+                                  backgroundImage: AssetImage(profileUrl),
                                 ),
                               ),
                             ),
@@ -221,16 +220,17 @@ class _HomeState extends State<Home> {
                         Container(
                           margin: EdgeInsets.only(top: 20),
                           child: Column(
-                              children: mainproduct
-                                  .map((e) => ListOrder(
-                                        title: e.name!,
-                                        imageUrl: e.picture_url!,
-                                        tag: e.category_id.toString(),
-                                        owner: "Not yet",
-                                        range: "23 km",
-                                      ))
-                                  .toList()),
-                        )
+                            children: mainproduct
+                                .map((e) => ListOrder(
+                                      title: e.name!,
+                                      imageUrl: e.picture_url!,
+                                      tag: e.category_id.toString(),
+                                      owner: "Not yet",
+                                      range: "23 km",
+                                    ))
+                                .toList(),
+                          ),
+                        ),
                         //ListOrderWidget(),
                       ],
                     ),

@@ -17,9 +17,11 @@ class _RegisterState extends State<Register> {
   TextEditingController phoneCon = TextEditingController();
   TextEditingController fname = TextEditingController();
   TextEditingController lname = TextEditingController();
+  TextEditingController bdate = TextEditingController();
 
   double screenHeight = 0;
   double screenWidth = 0;
+  Color primary = Color.fromARGB(255, 255, 255, 255);
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -31,39 +33,57 @@ class _RegisterState extends State<Register> {
         padding: EdgeInsets.only(top: 60),
         child: Column(
           children: [
-            Row(
-              children: [
                 Container(
-                  margin: const EdgeInsets.only(left: 10, bottom: 4),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop((context));
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      size: 35,
-                      color: Colors.orange,
+                    
+                    color: primary,
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          margin: const EdgeInsets.only(left: 10, bottom: 4),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.pop((context));
+                            },
+                            icon: const Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              size: 35,
+                              color: Colors.orange,
+                            ),
+                          ),
+                        ),
+                        const Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 67),
+                            child: Text(
+                              "Categories",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: screenHeight / 35),
+                      ],
                     ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            // Image.asset(
-            //   'Images/ImJai Logo.png', // Replace with your logo image path
-            //   width: 90,
-            //   height: 90,
+            // const SizedBox(
+            //   height: 10,
             // ),
-            const SizedBox(
-              height: 30,
-            ),
-            Text(
-              "REGISTER",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: screenWidth / 20),
-            ),
+            // // Image.asset(
+            // //   'Images/ImJai Logo.png', // Replace with your logo image path
+            // //   width: 90,
+            // //   height: 90,
+            // // ),
+            // const SizedBox(
+            //   height: 30,
+            // ),
+            // Text(
+            //   "REGISTER",
+            //   style: TextStyle(
+            //       fontWeight: FontWeight.bold, fontSize: screenWidth / 20),
+            // ),
             const SizedBox(
               height: 20,
             ),
@@ -77,6 +97,8 @@ class _RegisterState extends State<Register> {
                 Icons.person, Colors.orange),
             customField('Last Name', lname, false,
                 Icons.person, Colors.orange),
+            customField(
+              'Birthdate', bdate, false, Icons.calendar_month_rounded, Colors.orange),
             customField('Phone number', phoneCon, false,
                 Icons.phone_android_rounded, Colors.orange),
             const SizedBox(
@@ -89,11 +111,13 @@ class _RegisterState extends State<Register> {
                   String firstname = fname.text;;
                   String lastname = lname.text;
                   String Phonenumber = phoneCon.text;
+                  String birthdate = bdate.text;
                   String passWord = passCon.text;
                   print("Username : $username ");
                   print("Email : $email ");
                   print("Fname : $firstname ");
                   print("Lname : $lastname ");
+                  print("Bdate : $birthdate ");
                   print("Phone : $Phonenumber ");
                   print("Password : $passWord ");
 
@@ -246,7 +270,7 @@ class _RegisterState extends State<Register> {
                 autocorrect: false,
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(
-                      vertical: screenHeight / 40,
+                      vertical: screenHeight / 45,
                     ),
                     hintText: hint,
                     border: InputBorder.none),

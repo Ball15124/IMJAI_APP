@@ -8,34 +8,34 @@ class meProfile {
   final int id;
 
   @JsonKey(name: 'email')
-  final String email;
+  final String? email;
 
   @JsonKey(name: 'username')
-  final String username;
+  final String? username;
 
   @JsonKey(name: "phone_number")
-  final String phone_number;
+  final String? phone_number;
 
   @JsonKey(name: "profile_url")
-  final String profile_url;
+  final String? profile_url;
 
   @JsonKey(name: "birthdate")
-  final String birthdate;
+  final String? birthdate;
 
   @JsonKey(name: "firstname")
-  final String firstname;
+  final String? firstname;
 
   @JsonKey(name: "lastname")
-  final String lastname;
+  final String? lastname;
 
   @JsonKey(name: "location_latitude")
-  final String location_latitude;
+  final String? location_latitude;
 
   @JsonKey(name: "location_longtitude")
-  final String location_longtitude;
+  final String? location_longtitude;
 
   @JsonKey(name: "updatedAt")
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
 
   meProfile(
       {required this.id,

@@ -1,13 +1,17 @@
 import 'dart:math';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:imjai_frontend/model/authen.dart';
+import 'package:imjai_frontend/pages/caller.dart';
 
 import 'package:imjai_frontend/pages/home.dart';
 import 'package:imjai_frontend/pages/register.dart';
 import 'package:imjai_frontend/widget/navigationbarwidget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -24,6 +28,32 @@ class _LoginState extends State<Login> {
   Color primary = Color.fromARGB(255, 255, 255, 255);
 
   @override
+  void saveInfo() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    try {
+      Response token = await Caller.dio.get(
+        "/login",
+        data: {
+          "username": _usernameController.text,
+          "password": _passwordController.text,
+        },
+      );
+      CallbackResponse cb = CallbackResponse.fromJson(token.data);
+      print(cb.token);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', cb.token);
+      Caller.setToken(cb.token);
+      // .whenComplete(() {
+      //   Navigator.push(
+      //       context, MaterialPageRoute(builder: (context) => (Home())));
+      // });
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const NavigationbarWidget()));
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
@@ -59,7 +89,7 @@ class _LoginState extends State<Login> {
             customField('Username', _usernameController, false,
                 Icons.account_circle_outlined, Colors.orange),
             const SizedBox(height: 16.0),
-            customField('Password', _usernameController, false,
+            customField('Password', _passwordController, false,
                 Icons.key_rounded, Colors.orange),
             SizedBox(height: screenHeight / 45),
             ElevatedButton(
@@ -76,6 +106,7 @@ class _LoginState extends State<Login> {
                 String password = _passwordController.text;
                 print('Username: $username');
                 print('Password: $password');
+                saveInfo();
                 Navigator.push(
                     context,
                     MaterialPageRoute(

@@ -89,16 +89,19 @@ class ProductList extends StatelessWidget {
     }
 
     if (this.status == "0") {
-      status = "Waiting";
+      status = "Not reserved yet";
     } else if (this.status == "1") {
       // Handle other cases if needed
-      status = "Preparing";
+      status = "Waiting to confirm";
     } else if (this.status == "2") {
       // Handle other cases if needed
-      status = "Ready";
+      status = "Preparing Order";
     } else if (this.status == "3") {
       // Handle other cases if needed
-      status = "Complete";
+      status = "Waiting for pick-up";
+    } else if (this.status == "4") {
+      // Handle other cases if needed
+      status = "Completed";
     }
 
     return Center(

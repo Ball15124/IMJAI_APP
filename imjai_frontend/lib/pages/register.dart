@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:imjai_frontend/pages/caller.dart';
 import 'package:imjai_frontend/pages/login.dart';
 
 class Register extends StatefulWidget {
@@ -32,7 +34,7 @@ class _RegisterState extends State<Register> {
     if (datePick != null && datePick != birthDate) {
       setState(() {
         birthDate = datePick;
-
+        print(birthDate);
         // put it here
         birthDateInString =
             "${birthDate?.day}/${birthDate?.month}/${birthDate?.year}"; // 08/14/2019
@@ -42,6 +44,27 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    void saveInfo() async {
+      FocusManager.instance.primaryFocus?.unfocus();
+      try {
+        Response register = await Caller.dio.post(
+          "/verifySignup",
+          data: {
+            "email": emailCon.text,
+            "username": userCon.text,
+            "password": passCon.text,
+            "phone_number": phoneCon.text,
+            "firstname": fname.text,
+            "lastname": lname.text,
+            "birthdate": birthDate.toString()
+          },
+        );
+        print(register.data);
+      } catch (e) {
+        print(e);
+      }
+    }
+
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -133,7 +156,7 @@ class _RegisterState extends State<Register> {
                   String firstname = fname.text;
                   String lastname = lname.text;
                   String Phonenumber = phoneCon.text;
-                  String birthdate = bdate.text;
+                  String birthdate = birthDate.toString();
                   String passWord = passCon.text;
                   print("Username : $username ");
                   print("Email : $email ");
@@ -142,7 +165,7 @@ class _RegisterState extends State<Register> {
                   print("Bdate : $birthdate ");
                   print("Phone : $Phonenumber ");
                   print("Password : $passWord ");
-
+                  saveInfo();
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -199,11 +222,13 @@ class _RegisterState extends State<Register> {
                                     style: ButtonStyle(
                                         backgroundColor:
                                             MaterialStateProperty.all<Color>(
-                                                Color.fromARGB(255, 238, 199, 168)),
+                                                Color.fromARGB(
+                                                    255, 238, 199, 168)),
                                         shape: MaterialStateProperty.all<
                                                 RoundedRectangleBorder>(
                                             RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(18.0),
+                                          borderRadius:
+                                              BorderRadius.circular(18.0),
                                         ))),
                                     onPressed: () {},
                                     child: Text(
@@ -212,7 +237,7 @@ class _RegisterState extends State<Register> {
                                           color: Colors.black.withOpacity(0.5),
                                           fontSize: 18),
                                     )),
-                                    TextButton(
+                                TextButton(
                                     style: ButtonStyle(
                                         backgroundColor:
                                             MaterialStateProperty.all<Color>(
@@ -220,20 +245,22 @@ class _RegisterState extends State<Register> {
                                         shape: MaterialStateProperty.all<
                                                 RoundedRectangleBorder>(
                                             RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(18.0),
+                                          borderRadius:
+                                              BorderRadius.circular(18.0),
                                         ))),
                                     onPressed: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: ((context) => Login())));
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: ((context) => Login())));
                                     },
                                     child: Text(
                                       "Login",
                                       style: TextStyle(
-                                          color: Colors.orange,
-                                          fontSize: 18),
+                                          color: Colors.orange, fontSize: 18),
                                     )),
                               ],
                             ),
-                                
                           ),
                           // const SizedBox(
                           //   height: 10,

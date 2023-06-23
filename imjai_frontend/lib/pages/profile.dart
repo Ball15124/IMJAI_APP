@@ -114,12 +114,12 @@ class _ProfileState extends State<Profile> {
       // Response productResponse = await Caller.dio.get("/home/list");
       setState(() {
         final data = meProfile.fromJson(response.data);
-        fname = data.firstname;
-        lastname = data.lastname;
-        email = data.email;
-        phone_number = data.phone_number;
-        birthdate = data.birthdate;
-        this.profileUrl = data.profile_url;
+        fname = data.firstname!;
+        lastname = data.lastname!;
+        email = data.email!;
+        phone_number = data.phone_number!;
+        birthdate = data.birthdate!;
+        this.profileUrl = data.profile_url!;
         print(data.firstname);
       });
     } catch (e) {

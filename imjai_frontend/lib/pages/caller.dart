@@ -4,9 +4,9 @@ import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 
 class Caller {
   static BaseOptions options = BaseOptions(
-    baseUrl: "http://192.168.1.51:3306/",
-    connectTimeout: Duration(seconds: 5),
-    receiveTimeout: Duration(seconds: 8),
+    baseUrl: "http://localhost:3306/",
+    connectTimeout: Duration(seconds: 10),
+    receiveTimeout: Duration(seconds: 15),
   );
 
   static Dio dio = Dio(options);

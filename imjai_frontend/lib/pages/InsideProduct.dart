@@ -43,7 +43,7 @@ class _InsideProductState extends State<InsideProduct> {
         print(productData);
         productName = productData.name!;
         print(productName);
-        ownerName = productData.created_by_user!.firstname;
+        ownerName = productData.created_by_user!.firstname!;
         print(ownerName);
         // Map<String, dynamic> productInfo = response.data;
         // print(55555555);

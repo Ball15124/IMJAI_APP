@@ -8,16 +8,18 @@ part of 'me.dart';
 
 meProfile _$meProfileFromJson(Map<String, dynamic> json) => meProfile(
       id: json['id'] as int,
-      email: json['email'] as String,
-      username: json['username'] as String,
-      phone_number: json['phone_number'] as String,
-      profile_url: json['profile_url'] as String,
-      birthdate: json['birthdate'] as String,
-      firstname: json['firstname'] as String,
-      lastname: json['lastname'] as String,
-      location_latitude: json['location_latitude'] as String,
-      location_longtitude: json['location_longtitude'] as String,
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
+      email: json['email'] as String?,
+      username: json['username'] as String?,
+      phone_number: json['phone_number'] as String?,
+      profile_url: json['profile_url'] as String?,
+      birthdate: json['birthdate'] as String?,
+      firstname: json['firstname'] as String?,
+      lastname: json['lastname'] as String?,
+      location_latitude: json['location_latitude'] as String?,
+      location_longtitude: json['location_longtitude'] as String?,
+      updatedAt: json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
     );
 
 Map<String, dynamic> _$meProfileToJson(meProfile instance) => <String, dynamic>{
@@ -31,5 +33,5 @@ Map<String, dynamic> _$meProfileToJson(meProfile instance) => <String, dynamic>{
       'lastname': instance.lastname,
       'location_latitude': instance.location_latitude,
       'location_longtitude': instance.location_longtitude,
-      'updatedAt': instance.updatedAt.toIso8601String(),
+      'updatedAt': instance.updatedAt?.toIso8601String(),
     };

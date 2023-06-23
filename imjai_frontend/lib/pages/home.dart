@@ -52,12 +52,15 @@ class _HomeState extends State<Home> {
         print(response.data);
         final data = meProfile.fromJson(response.data);
         print("222");
-        fname = data.firstname;
-        lastname = data.lastname;
-        email = data.email;
-        phone_number = data.phone_number;
-        birthdate = data.birthdate;
-        this.profileUrl = data.profile_url;
+        fname = data.firstname!;
+        lastname = data.lastname!;
+        email = data.email!;
+        print(email);
+        phone_number = data.phone_number!;
+        print(phone_number);
+        birthdate = data.birthdate!;
+        print(birthdate);
+        this.profileUrl = data.profile_url!;
         print(data.firstname);
 
         final List<dynamic> productRes = productResponse.data;
@@ -156,7 +159,8 @@ class _HomeState extends State<Home> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => Profile()));
+                                          builder: (context) =>
+                                              const Profile()));
                                 },
                                 child: CircleAvatar(
                                   radius: 30,
@@ -220,17 +224,16 @@ class _HomeState extends State<Home> {
                         Container(
                           margin: EdgeInsets.only(top: 20),
                           child: Column(
-                            children: mainproduct
-                                .map((e) => ListOrder(
-                                      title: e.name!,
-                                      imageUrl: e.picture_url!,
-                                      tag: e.category_id.toString(),
-                                      owner: "Not yet",
-                                      range: "23 km",
-                                    ))
-                                .toList(),
-                          ),
-                        ),
+                              children: mainproduct
+                                  .map((e) => ListOrder(
+                                        title: e.name!,
+                                        imageUrl: e.picture_url!,
+                                        tag: e.category_id.toString(),
+                                        owner: "Not yet",
+                                        range: "23 km",
+                                      ))
+                                  .toList()),
+                        )
                         //ListOrderWidget(),
                       ],
                     ),

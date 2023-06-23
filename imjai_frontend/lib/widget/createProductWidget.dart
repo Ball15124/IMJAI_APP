@@ -102,7 +102,7 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
           "category_id": "",
           "locate_latitude": "",
           "locate_longtitude": "",
-          "status": "",
+          "status": 0,
           "reserved_yet": "",
         })
         .then((response) {})

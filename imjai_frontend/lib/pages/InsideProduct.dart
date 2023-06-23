@@ -21,7 +21,13 @@ class _InsideProductState extends State<InsideProduct> {
   double screenHeight = 0;
   double screenWidth = 0;
   String productName = '';
+  String productPicture = '';
   String ownerName = '';
+  String productDetail = '';
+  String availableTime = '';
+  String category = '';
+  String locationLatitude = '';
+  String locationLongtitude = '';
   Color primary = Color.fromARGB(255, 255, 255, 255);
 
   @override
@@ -43,8 +49,18 @@ class _InsideProductState extends State<InsideProduct> {
         print(productData);
         productName = productData.name!;
         print(productName);
+        productPicture = productData.picture_url!;
+        print(productPicture);
         ownerName = productData.created_by_user!.firstname!;
         print(ownerName);
+        productDetail = productData.description!;
+        print(productDetail);
+        availableTime = productData.available_time!;
+        print(availableTime);
+        category = productData.category_id as String;
+        print(category);
+        locationLatitude = productData.location_latitude!;
+        locationLongtitude = productData.location_longtitude!;
         // Map<String, dynamic> productInfo = response.data;
         // print(55555555);
         // print(productInfo);
@@ -60,6 +76,12 @@ class _InsideProductState extends State<InsideProduct> {
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
+    final routeArguments = ModalRoute.of(context)!.settings.arguments as Map<String, int>;
+    final id = routeArguments["id"];
+    final productId = routeArguments["productId"];  // test define productId to delete the post
+    print("Id of product post " + id.toString());
+    print('arguments');
+    print(routeArguments);
     return Scaffold(
       backgroundColor: primary,
       body: SingleChildScrollView(
@@ -139,7 +161,11 @@ class _InsideProductState extends State<InsideProduct> {
                                             style: TextButton.styleFrom(
                                               backgroundColor: Colors.orange,
                                             ),
-                                            onPressed: () {},
+                                            onPressed: () async {
+                                              print(productId);
+                                              await Caller.dio.delete("/products/$productId", data: {"uid": id});
+                                              Navigator.pop(context);
+                                            },
                                           ),
                                         ],
                                       );

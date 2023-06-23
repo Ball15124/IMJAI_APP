@@ -4,7 +4,7 @@ import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 
 class Caller {
   static BaseOptions options = BaseOptions(
-    baseUrl: "http://localhost:3306/",
+    baseUrl: "http://192.168.1.51:3306/",
     connectTimeout: Duration(seconds: 5),
     receiveTimeout: Duration(seconds: 8),
   );

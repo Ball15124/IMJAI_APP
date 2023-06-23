@@ -100,7 +100,7 @@ flutter:
       - Images/ReserveStatus/OrderTrackingImage.gif
       - assets/locations.json
       - Images/picker.png
-      
+      - Images/ReserveStatus/Chicken.avif
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

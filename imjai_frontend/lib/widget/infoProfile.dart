@@ -6,6 +6,7 @@ class Info extends StatelessWidget {
   bool enable;
   TextEditingController? controller;
   Color? color;
+  TextInputType? text;
 
   Info(
       {Key? key,
@@ -13,7 +14,8 @@ class Info extends StatelessWidget {
       required this.data,
       required this.enable,
       this.color,
-      this.controller})
+      this.controller,
+      this.text})
       : super(key: key);
 
   @override
@@ -40,6 +42,7 @@ class Info extends StatelessWidget {
                 color: color,
               )),
           enabled: enable,
+          keyboardType: text,
           style: TextStyle(
             color: color,
           ),

@@ -149,7 +149,7 @@ class _RegisterState extends State<Register> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 27,
+                                      fontSize: 20,
                                       color:
                                           Color.fromARGB(255, 255, 255, 255)),
                                 ),
@@ -164,7 +164,7 @@ class _RegisterState extends State<Register> {
                               'We’re glad you’re here !\n before you start exploring, we\njust sent you the email\nconfirmation.',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 15,
                                   color: Color.fromARGB(255, 255, 255, 255)),
                             ),
                           ],

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:imjai_frontend/pages/home.dart';
-
 import 'package:imjai_frontend/pages/product.dart';
 import 'package:imjai_frontend/pages/reserve.dart';
 
@@ -40,7 +39,7 @@ class _NavigationbarWidgetState extends State<NavigationbarWidget> {
             width: double.infinity,
             child: ListView.builder(
               itemCount: 3,
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 36),
               itemBuilder: (ctx, i) => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 33),
                 child: GestureDetector(

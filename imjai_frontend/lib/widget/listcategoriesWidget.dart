@@ -10,7 +10,7 @@ class ListCategoriesWidget extends StatefulWidget {
 }
 
 class _ListCategoriesWidgetState extends State<ListCategoriesWidget> {
- double screenHeight = 0;
+  double screenHeight = 0;
   double screenWidth = 0;
   @override
   Widget build(BuildContext context) {

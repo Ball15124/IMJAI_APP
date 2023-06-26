@@ -149,6 +149,7 @@ class _MapScreenState extends State<MapScreen> {
                                       finalLatitude +
                                       ", " +
                                       finalLongtitude);
+                                  Navigator.pop(context);
                                 });
                               },
                               child: Text(

@@ -2,6 +2,7 @@ import 'package:chips_choice_null_safety/chips_choice_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChipTag extends StatefulWidget {
   const ChipTag({super.key});
@@ -30,7 +31,16 @@ class _ChipTagState extends State<ChipTag> {
         children: [
           ChipsChoice.single(
             value: tag,
-            onChanged: (val) => setState(() => tag = val),
+            onChanged: (val) async {
+              setState(() {
+                tag = val;
+              });
+              SharedPreferences productTag =
+                  await SharedPreferences.getInstance();
+              await productTag.setInt('tag', tag + 1);
+              int proTag = productTag.getInt('tag')!;
+              print(proTag);
+            },
             choiceItems: C2Choice.listFrom(
               source: options,
               value: (i, v) => i,

@@ -20,6 +20,7 @@ class _InsideProductState extends State<InsideProduct> {
   late int id;
   double screenHeight = 0;
   double screenWidth = 0;
+  int productId = 0;
   String productName = '';
   String productPicture = '';
   String ownerName = '';
@@ -57,8 +58,9 @@ class _InsideProductState extends State<InsideProduct> {
         print(productDetail);
         availableTime = productData.available_time!;
         print(availableTime);
-        category = productData.category_id as String;
+        category = productData.category_id.toString();
         print(category);
+        productId = productData.id;
         locationLatitude = productData.location_latitude!;
         locationLongtitude = productData.location_longtitude!;
         // Map<String, dynamic> productInfo = response.data;
@@ -76,9 +78,10 @@ class _InsideProductState extends State<InsideProduct> {
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
-    final routeArguments = ModalRoute.of(context)!.settings.arguments as Map<String, int>;
-    final id = routeArguments["id"];
-    final productId = routeArguments["productId"];  // test define productId to delete the post
+    final routeArguments = ModalRoute.of(context)!.settings.arguments as int;
+    final id = routeArguments;
+    // final productId =
+    //     routeArguments["productId"]; // test define productId to delete the post
     print("Id of product post " + id.toString());
     print('arguments');
     print(routeArguments);
@@ -162,8 +165,9 @@ class _InsideProductState extends State<InsideProduct> {
                                               backgroundColor: Colors.orange,
                                             ),
                                             onPressed: () async {
-                                              print(productId);
-                                              await Caller.dio.delete("/products/$productId", data: {"uid": id});
+                                              // print(productId);
+                                              await Caller.dio.delete(
+                                                  "/products/$productId");
                                               Navigator.pop(context);
                                             },
                                           ),

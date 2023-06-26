@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -138,7 +139,7 @@ class _MapScreenState extends State<MapScreen> {
                                         ", " +
                                         cameraPosition!.target.longitude
                                             .toString());
-                                setState(() {
+                                setState(() async {
                                   finalLatitude = cameraPosition!
                                       .target.latitude
                                       .toString();
@@ -149,6 +150,15 @@ class _MapScreenState extends State<MapScreen> {
                                       finalLatitude +
                                       ", " +
                                       finalLongtitude);
+                                  SharedPreferences productLocation =
+                                      await SharedPreferences.getInstance();
+                                  productLocation.setString(
+                                      'productLatitude', finalLatitude);
+                                  productLocation.setString(
+                                      'productLongtitude', finalLongtitude);
+                                  // String testLati = productLatitude
+                                  //     .getString('productLatitude')!;
+                                  // print(testLati);
                                 });
                               },
                               child: Text(

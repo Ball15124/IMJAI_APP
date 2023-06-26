@@ -226,6 +226,7 @@ class _HomeState extends State<Home> {
                           child: Column(
                               children: mainproduct
                                   .map((e) => ListOrder(
+                                        id: e.id,
                                         title: e.name!,
                                         imageUrl: e.picture_url!,
                                         tag: e.category_id.toString(),

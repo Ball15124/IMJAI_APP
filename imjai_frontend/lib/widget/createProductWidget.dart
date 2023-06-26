@@ -13,6 +13,7 @@ import 'package:imjai_frontend/pages/product.dart';
 import 'package:imjai_frontend/widget/chiptag.dart';
 import 'package:imjai_frontend/widget/mapScreen.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateProductWidget extends StatefulWidget {
   const CreateProductWidget({super.key});
@@ -91,19 +92,27 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
   }
 
   @override
-  void saveInfo() {
+  void saveInfo() async {
     FocusManager.instance.primaryFocus?.unfocus();
+    SharedPreferences productLocation = await SharedPreferences.getInstance();
+    String productLatitude = productLocation.getString('productLatitude')!;
+    print(productLatitude);
+    String productLongtitude = productLocation.getString('productLongtitude')!;
+    print(productLongtitude);
+    SharedPreferences productTag = await SharedPreferences.getInstance();
+    int productCategory = productTag.getInt('tag')!;
+    print(productCategory);
     Caller.dio
         .post("/products", data: {
           "product_name": proname.text,
           "product_picture": "",
           "product_description": description.text,
           "product_time": time.text,
-          "category_id": "",
-          "locate_latitude": "",
-          "locate_longtitude": "",
+          "category_id": productCategory,
+          "locate_latitude": productLatitude,
+          "locate_longtitude": productLongtitude,
           "status": 0,
-          "reserved_yet": "",
+          "reserved_yet": false,
         })
         .then((response) {})
         // .onError((DioError error, _) {
@@ -276,7 +285,8 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
                         backgroundColor: Colors.orange,
                         minimumSize: const Size(double.infinity, 50),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        saveInfo();
                         Navigator.pop((context));
                       },
                       child: const Text(

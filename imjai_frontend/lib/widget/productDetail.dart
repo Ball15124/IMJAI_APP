@@ -28,6 +28,7 @@ class _ProductDetailState extends State<ProductDetail> {
   String category = '';
   String locationLatitude = '';
   String locationLongtitude = '';
+  String phone_number = '';
 
   @override
   void initState() {
@@ -47,16 +48,20 @@ class _ProductDetailState extends State<ProductDetail> {
         final productData = mainProduct.fromJson(response.data["product"]);
         print(productData);
         productName = productData.name!;
+        phone_number = productData.created_by_user!.phone_number!;
+        print(phone_number);
         print(productName);
         productPicture = productData.picture_url!;
         print(productPicture);
-        ownerName = productData.created_by_user!.firstname! +" "+ productData.created_by_user!.lastname!;
+        ownerName = productData.created_by_user!.firstname! +
+            " " +
+            productData.created_by_user!.lastname!;
         print(ownerName);
         productDetail = productData.description!;
         print(productDetail);
         availableTime = productData.available_time!;
         print(availableTime);
-        category = productData.category_id as String;
+        category = productData.category_id.toString();
         print(category);
         locationLatitude = productData.location_latitude!;
         locationLongtitude = productData.location_longtitude!;
@@ -70,13 +75,41 @@ class _ProductDetailState extends State<ProductDetail> {
       print(e);
     }
   }
+
   Widget build(BuildContext context) {
+    if (this.category == "1") {
+      category = "Meat";
+    } else if (this.category == "2") {
+      // Handle other cases if needed
+      category = "Vegetable & Fruit";
+    } else if (this.category == "3") {
+      // Handle other cases if needed
+      category = "Food";
+    } else if (this.category == "4") {
+      // Handle other cases if needed
+      category = "Flavoring";
+    } else if (this.category == "5") {
+      // Handle other cases if needed
+      category = "Drink";
+    } else if (this.category == "6") {
+      // Handle other cases if needed
+      category = "Snack";
+    } else if (this.category == "7") {
+      // Handle other cases if needed
+      category = "Dessert";
+    } else if (this.category == "8") {
+      // Handle other cases if needed
+      category = "Food Waste";
+    } else {
+      category = "No Categories";
+    }
+
     return Container(
       padding: EdgeInsets.only(top: 20, left: 20, right: 20),
       child: Column(
         children: [
           Row(
-            children: [ 
+            children: [
               Text(
                 productName,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),

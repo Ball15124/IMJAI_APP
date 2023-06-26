@@ -30,6 +30,7 @@ class _ListOrderWidgetState extends State<ListOrderWidget> {
       child: Column(
         children: <Widget>[
           ListOrder(
+            id: 0,
             title: 'Premium Wagyu A5',
             tag: 'Meat',
             imageUrl: 'wagyu',
@@ -37,6 +38,7 @@ class _ListOrderWidgetState extends State<ListOrderWidget> {
             range: '2.5 km',
           ),
           ListOrder(
+            id: 0,
             title: 'Chinese Cabbage',
             tag: 'Veget&Fruit',
             imageUrl: 'cabbage',
@@ -44,6 +46,7 @@ class _ListOrderWidgetState extends State<ListOrderWidget> {
             range: '1.3 km',
           ),
           ListOrder(
+            id: 0,
             title: 'Prok Curry',
             tag: 'Food',
             imageUrl: 'curry',
@@ -51,6 +54,7 @@ class _ListOrderWidgetState extends State<ListOrderWidget> {
             range: '0.8 km',
           ),
           ListOrder(
+            id: 0,
             title: 'Kurobuta',
             tag: 'Meat',
             imageUrl: 'kurobuta',
@@ -58,6 +62,7 @@ class _ListOrderWidgetState extends State<ListOrderWidget> {
             range: '1.8 km',
           ),
           ListOrder(
+            id: 0,
             title: 'Swensen',
             tag: 'Dessert',
             imageUrl: 'swensen',
@@ -71,6 +76,7 @@ class _ListOrderWidgetState extends State<ListOrderWidget> {
 }
 
 class ListOrder extends StatelessWidget {
+  int id;
   String title;
   String imageUrl;
   String tag;
@@ -79,6 +85,7 @@ class ListOrder extends StatelessWidget {
 
   ListOrder(
       {Key? key,
+      required this.id,
       required this.title,
       required this.imageUrl,
       required this.tag,
@@ -91,8 +98,14 @@ class ListOrder extends StatelessWidget {
     return Center(
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: ((context) => InsideOrder())));
+          print(id);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: ((context) => InsideOrder()),
+                  settings: RouteSettings(
+                    arguments: id,
+                  )));
         },
         child: Container(
           margin: EdgeInsets.only(bottom: 5),

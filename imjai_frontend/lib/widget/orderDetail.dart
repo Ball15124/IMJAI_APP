@@ -1,7 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:imjai_frontend/model/mainproduct.dart';
+import 'package:imjai_frontend/pages/caller.dart';
 import 'package:imjai_frontend/pages/recieverStatus.dart';
 
 class OrderDetail extends StatefulWidget {
@@ -12,11 +15,94 @@ class OrderDetail extends StatefulWidget {
 }
 
 class _OrderDetailState extends State<OrderDetail> {
+  late int id;
   double screenHeight = 0;
   double screenWidth = 0;
+  String productName = '';
+  String productPicture = '';
+  String ownerName = '';
+  String productDetail = '';
+  String availableTime = '';
+  String category = '';
+  String locationLatitude = '';
+  String locationLongtitude = '';
+  String phone_number = '';
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      fetchData(context);
+    });
+  }
+
+  void fetchData(BuildContext context) async {
+    try {
+      final id = ModalRoute.of(context)!.settings.arguments as int;
+      Response response = await Caller.dio.get("/products/products/$id");
+      print(response.data);
+      setState(() {
+        print(1);
+        final productData = mainProduct.fromJson(response.data["product"]);
+        print(productData);
+        productName = productData.name!;
+        phone_number = productData.created_by_user!.phone_number!;
+        print(phone_number);
+        print(productName);
+        productPicture = productData.picture_url!;
+        print(productPicture);
+        ownerName = productData.created_by_user!.firstname! +
+            " " +
+            productData.created_by_user!.lastname!;
+        print(ownerName);
+        productDetail = productData.description!;
+        print(productDetail);
+        availableTime = productData.available_time!;
+        print(availableTime);
+        category = productData.category_id.toString();
+        print(category);
+        locationLatitude = productData.location_latitude!;
+        locationLongtitude = productData.location_longtitude!;
+        // Map<String, dynamic> productInfo = response.data;
+        // print(55555555);
+        // print(productInfo);
+        // print(2);
+        // print('awdwadwad');
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (this.category == "1") {
+      category = "Meat";
+    } else if (this.category == "2") {
+      // Handle other cases if needed
+      category = "Vegetable & Fruit";
+    } else if (this.category == "3") {
+      // Handle other cases if needed
+      category = "Food";
+    } else if (this.category == "4") {
+      // Handle other cases if needed
+      category = "Flavoring";
+    } else if (this.category == "5") {
+      // Handle other cases if needed
+      category = "Drink";
+    } else if (this.category == "6") {
+      // Handle other cases if needed
+      category = "Snack";
+    } else if (this.category == "7") {
+      // Handle other cases if needed
+      category = "Dessert";
+    } else if (this.category == "8") {
+      // Handle other cases if needed
+      category = "Food Waste";
+    } else {
+      category = "No Categories";
+    }
+
     return Container(
       padding: EdgeInsets.only(top: 20, left: 20, right: 20),
       child: Column(
@@ -24,7 +110,7 @@ class _OrderDetailState extends State<OrderDetail> {
           Row(
             children: [
               Text(
-                "Premium Wagyu A5",
+                productName,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
             ],
@@ -58,10 +144,10 @@ class _OrderDetailState extends State<OrderDetail> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "16.00",
+                  availableTime,
                   textAlign: TextAlign.center,
                 ),
-                Text("Meat", textAlign: TextAlign.center),
+                Text(category, textAlign: TextAlign.center),
                 Text("2.5 km", textAlign: TextAlign.center)
               ],
             ),
@@ -84,7 +170,7 @@ class _OrderDetailState extends State<OrderDetail> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Wagyu for sukiyaki 350 g.",
+                  productDetail,
                   style: TextStyle(fontSize: 15),
                 ),
               ],
@@ -116,7 +202,7 @@ class _OrderDetailState extends State<OrderDetail> {
                   child: Row(
                     children: [
                       Text(
-                        "Mrs. Gwen Camiron",
+                        ownerName,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 15),
                       ),

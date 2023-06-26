@@ -94,20 +94,27 @@ class _ReserveState extends State<Reserve> {
                           ],
                         ),
                         SizedBox(height: screenHeight / 65),
-                        ListReserveWidget(),
+                        // ListReserveWidget(),
                         Container(
                           margin: EdgeInsets.only(top: 20),
                           child: Column(
                               children: reserved_product
                                   .map((e) => reserveList(
+                                        id: e.reserved_product!.id,
                                         title:
                                             e.reserved_product?.name as String,
                                         imageUrl: e.reserved_product
                                             ?.picture_url as String,
                                         tag: e.reserved_product?.category_id
                                             .toString() as String,
-                                        owner: "Not yet",
+                                        owner: e.reserved_product!
+                                                .created_by_user!.firstname! +
+                                            " " +
+                                            e.reserved_product!.created_by_user!
+                                                .lastname!,
                                         range: "23 km",
+                                        status: e.reserved_product!.status!
+                                            .toString(),
                                       ))
                                   .toList()),
                         )

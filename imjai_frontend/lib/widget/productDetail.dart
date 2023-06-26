@@ -29,6 +29,7 @@ class _ProductDetailState extends State<ProductDetail> {
   String locationLatitude = '';
   String locationLongtitude = '';
   String phone_number = '';
+  int productId = 0;
 
   @override
   void initState() {
@@ -48,6 +49,7 @@ class _ProductDetailState extends State<ProductDetail> {
         final productData = mainProduct.fromJson(response.data["product"]);
         print(productData);
         productName = productData.name!;
+        productId = productData.id;
         phone_number = productData.created_by_user!.phone_number!;
         print(phone_number);
         print(productName);
@@ -238,8 +240,11 @@ class _ProductDetailState extends State<ProductDetail> {
               minimumSize: const Size(double.infinity, 50),
             ),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => giverStatus())));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => giverStatus()),
+                      settings: RouteSettings(arguments: productId)));
             },
             child: const Text(
               'Check Order',

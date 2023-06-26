@@ -26,39 +26,49 @@ class _ListReserveWidgetState extends State<ListReserveWidget> {
       child: Column(
         children: <Widget>[
           reserveList(
+            id: 0,
             title: 'Premium Wagyu A5',
             tag: 'Meat',
             imageUrl: 'wagyu',
             owner: 'Peter Parker',
             range: '2.5 km',
+            status: '0',
           ),
           reserveList(
+            id: 0,
             title: 'Chinese Cabbage',
             tag: 'Veget&Fruit',
             imageUrl: 'cabbage',
             owner: 'MJ',
             range: '1.3 km',
+            status: '0',
           ),
           reserveList(
+            id: 0,
             title: 'Prok Curry',
             tag: 'Food',
             imageUrl: 'curry',
             owner: 'Mctominay',
             range: '0.8 km',
+            status: '0',
           ),
           reserveList(
+            id: 0,
             title: 'Kurobuta',
             tag: 'Meat',
             imageUrl: 'kurobuta',
             owner: 'Nawat Sujjaritrat',
             range: '1.8 km',
+            status: '0',
           ),
           reserveList(
+            id: 0,
             title: 'Swensen',
             tag: 'Dessert',
             imageUrl: 'swensen',
             owner: 'Panusorn Roeksukrungrueang',
             range: '3.2 km',
+            status: '0',
           ),
         ],
       ),
@@ -67,19 +77,23 @@ class _ListReserveWidgetState extends State<ListReserveWidget> {
 }
 
 class reserveList extends StatelessWidget {
+  int id;
   String title;
   String imageUrl;
   String tag;
   String range;
   String owner;
+  String status;
 
   reserveList(
       {Key? key,
+      required this.id,
       required this.title,
       required this.imageUrl,
       required this.tag,
       required this.range,
-      required this.owner})
+      required this.owner,
+      required this.status})
       : super(key: key);
 
   @override
@@ -111,11 +125,30 @@ class reserveList extends StatelessWidget {
       tag = "No Categories";
     }
 
+    if (this.status == "0") {
+      status = "Not reserved yet";
+    } else if (this.status == "1") {
+      // Handle other cases if needed
+      status = "Waiting for giver to confirm";
+    } else if (this.status == "2") {
+      // Handle other cases if needed
+      status = "Preparing Order";
+    } else if (this.status == "3") {
+      // Handle other cases if needed
+      status = "Waiting for you to pick-up";
+    } else if (this.status == "4") {
+      // Handle other cases if needed
+      status = "Completed";
+    }
+
     return Center(
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: ((context) => recieverStatus())));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: ((context) => recieverStatus()),
+                  settings: RouteSettings(arguments: id)));
         },
         child: Container(
           margin: EdgeInsets.only(bottom: 5),
@@ -176,6 +209,12 @@ class reserveList extends StatelessWidget {
                           owner,
                           style:
                               TextStyle(fontSize: 12, color: Colors.grey[600]),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          status,
+                          style:
+                              TextStyle(fontSize: 12, color: Colors.green[600]),
                         ),
                       ],
                     ),

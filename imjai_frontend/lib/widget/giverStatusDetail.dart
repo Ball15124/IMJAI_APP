@@ -1,8 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:im_stepper/stepper.dart';
+import 'package:imjai_frontend/model/mainproduct.dart';
+import 'package:imjai_frontend/pages/caller.dart';
 import 'package:imjai_frontend/widget/orderDetail.dart';
 
 class giverStatusDetail extends StatefulWidget {
@@ -13,14 +16,102 @@ class giverStatusDetail extends StatefulWidget {
 }
 
 class _giverStatusDetailState extends State<giverStatusDetail> {
+  late int id;
   double screenHeight = 0;
   double screenWidth = 0;
+  String productName = '';
+  String productPicture = '';
+  String ownerName = '';
+  String productDetail = '';
+  String availableTime = '';
+  String category = '';
+  String locationLatitude = '';
+  String locationLongtitude = '';
+  String phone_number = '';
+  int status = 0;
+  int productId = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      fetchData(context);
+    });
+  }
+
+  void fetchData(BuildContext context) async {
+    try {
+      final id = ModalRoute.of(context)!.settings.arguments as int;
+      Response response = await Caller.dio.get("/products/products/$id");
+      print(response.data);
+      setState(() {
+        print("change status page");
+        final productData = mainProduct.fromJson(response.data["product"]);
+        print(productData);
+        productName = productData.name!;
+        phone_number = productData.created_by_user!.phone_number!;
+        productId = productData.id;
+        status = productData.status!;
+        print(phone_number);
+        print(productName);
+        productPicture = productData.picture_url!;
+        print(productPicture);
+        ownerName = productData.created_by_user!.firstname! +
+            " " +
+            productData.created_by_user!.lastname!;
+        print(ownerName);
+        productDetail = productData.description!;
+        print(productDetail);
+        availableTime = productData.available_time!;
+        print(availableTime);
+        category = productData.category_id.toString();
+        print(category);
+        locationLatitude = productData.location_latitude!;
+        locationLongtitude = productData.location_longtitude!;
+        // Map<String, dynamic> productInfo = response.data;
+        // print(55555555);
+        // print(productInfo);
+        // print(2);
+        // print('awdwadwad');
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   int activeStep = 0; // Initial step set to 5.
   bool isPass = false;
   final dotCount = [0, 1, 2, 3];
 
   @override
   Widget build(BuildContext context) {
+    if (this.category == "1") {
+      category = "Meat";
+    } else if (this.category == "2") {
+      // Handle other cases if needed
+      category = "Vegetable & Fruit";
+    } else if (this.category == "3") {
+      // Handle other cases if needed
+      category = "Food";
+    } else if (this.category == "4") {
+      // Handle other cases if needed
+      category = "Flavoring";
+    } else if (this.category == "5") {
+      // Handle other cases if needed
+      category = "Drink";
+    } else if (this.category == "6") {
+      // Handle other cases if needed
+      category = "Snack";
+    } else if (this.category == "7") {
+      // Handle other cases if needed
+      category = "Dessert";
+    } else if (this.category == "8") {
+      // Handle other cases if needed
+      category = "Food Waste";
+    } else {
+      category = "No Categories";
+    }
+
     return Column(
       children: [
         Stack(
@@ -56,12 +147,11 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                         height: 25.0,
                         padding: EdgeInsets.all(0),
                         decoration: new BoxDecoration(
-                          color: activeStep >= 1 ? Colors.orange : Colors.grey,
+                          color: status >= 2 ? Colors.orange : Colors.grey,
                           borderRadius:
                               new BorderRadius.all(new Radius.circular(25.0)),
                           border: new Border.all(
-                            color:
-                                activeStep >= 1 ? Colors.orange : Colors.grey,
+                            color: status >= 2 ? Colors.orange : Colors.grey,
                             width: 2.0,
                           ),
                         ),
@@ -69,19 +159,18 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                       Container(
                         width: 65,
                         height: 5,
-                        color: activeStep >= 1 ? Colors.orange : Colors.grey,
+                        color: status >= 2 ? Colors.orange : Colors.grey,
                       ),
                       Container(
                         width: 25.0,
                         height: 25.0,
                         padding: EdgeInsets.all(0),
                         decoration: new BoxDecoration(
-                          color: activeStep >= 2 ? Colors.orange : Colors.grey,
+                          color: status >= 3 ? Colors.orange : Colors.grey,
                           borderRadius:
                               new BorderRadius.all(new Radius.circular(25.0)),
                           border: new Border.all(
-                            color:
-                                activeStep >= 2 ? Colors.orange : Colors.grey,
+                            color: status >= 3 ? Colors.orange : Colors.grey,
                             width: 2.0,
                           ),
                         ),
@@ -89,19 +178,18 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                       Container(
                         width: 70,
                         height: 5,
-                        color: activeStep >= 2 ? Colors.orange : Colors.grey,
+                        color: status >= 3 ? Colors.orange : Colors.grey,
                       ),
                       Container(
                         width: 25.0,
                         height: 25.0,
                         padding: EdgeInsets.all(0),
                         decoration: new BoxDecoration(
-                          color: activeStep >= 3 ? Colors.orange : Colors.grey,
+                          color: status >= 4 ? Colors.orange : Colors.grey,
                           borderRadius:
                               new BorderRadius.all(new Radius.circular(25.0)),
                           border: new Border.all(
-                            color:
-                                activeStep >= 3 ? Colors.orange : Colors.grey,
+                            color: status >= 4 ? Colors.orange : Colors.grey,
                             width: 2.0,
                           ),
                         ),
@@ -117,8 +205,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                       Text(
                         "Waiting",
                         style: TextStyle(
-                            color:
-                                activeStep >= 0 ? Colors.orange : Colors.grey,
+                            color: status >= 1 ? Colors.orange : Colors.grey,
                             fontSize: 13),
                       ),
                       SizedBox(
@@ -127,8 +214,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                       Text(
                         "Preparing",
                         style: TextStyle(
-                            color:
-                                activeStep >= 1 ? Colors.orange : Colors.grey,
+                            color: status >= 2 ? Colors.orange : Colors.grey,
                             fontSize: 13),
                       ),
                       SizedBox(
@@ -137,8 +223,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                       Text(
                         "Ready",
                         style: TextStyle(
-                            color:
-                                activeStep >= 2 ? Colors.orange : Colors.grey,
+                            color: status >= 3 ? Colors.orange : Colors.grey,
                             fontSize: 13),
                       ),
                       SizedBox(
@@ -147,8 +232,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                       Text(
                         "Complete",
                         style: TextStyle(
-                            color:
-                                activeStep >= 3 ? Colors.orange : Colors.grey,
+                            color: status >= 4 ? Colors.orange : Colors.grey,
                             fontSize: 13),
                       ),
                     ],
@@ -188,7 +272,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                       Row(
                         children: [
                           Text(
-                            "Order# XXXXXXXX",
+                            "Order# " + productId.toString(),
                             style: TextStyle(color: Colors.grey, fontSize: 15),
                           )
                         ],
@@ -199,12 +283,12 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                       Row(
                         children: [
                           Text(
-                            (activeStep == 0)
+                            (status == 1)
                                 ? "Waiting you to confirm"
-                                : (activeStep == 1)
+                                : (status == 2)
                                     ? "Order Preparing"
-                                    : (activeStep == 2)
-                                        ? "We have received your order"
+                                    : (status == 3)
+                                        ? "Waiting for reciever to pick up"
                                         : "Complete",
                             style: TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0),
@@ -242,7 +326,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                                 fontSize: 15),
                           ),
                           Text(
-                            "16:00 - 19:00",
+                            availableTime,
                             style: TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0),
                                 fontSize: 13),
@@ -285,7 +369,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                         child: Row(
                           children: [
                             Text(
-                              "Mr. Gwen Camiron",
+                              ownerName,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ),
@@ -329,7 +413,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Wagyu for sukiyaki 350 g.",
+                              productName,
                               style: TextStyle(fontSize: 15),
                             ),
                           ],
@@ -364,10 +448,10 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "16.00",
+                              availableTime,
                               textAlign: TextAlign.center,
                             ),
-                            Text("Meat", textAlign: TextAlign.center),
+                            Text(category, textAlign: TextAlign.center),
                             Text("2.5 km", textAlign: TextAlign.center)
                           ],
                         ),
@@ -537,7 +621,9 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                                     style: TextButton.styleFrom(
                                       backgroundColor: Colors.orange,
                                     ),
-                                    onPressed: () {
+                                    onPressed: () async {
+                                      await Caller.dio.post(
+                                          "/reserveReciever/reserves/update/$productId");
                                       if (activeStep <= 3) {
                                         setState(() {
                                           activeStep++;

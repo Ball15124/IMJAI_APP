@@ -4,16 +4,19 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:imjai_frontend/pages/caller.dart';
+import 'package:imjai_frontend/pages/home.dart';
+import 'package:imjai_frontend/widget/navigationbarwidget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MapScreen extends StatefulWidget {
-  const MapScreen({super.key});
+class MapScreenHome extends StatefulWidget {
+  const MapScreenHome({super.key});
 
   @override
-  State<MapScreen> createState() => _MapScreenState();
+  State<MapScreenHome> createState() => _MapScreenHomeState();
 }
 
-class _MapScreenState extends State<MapScreen> {
+class _MapScreenHomeState extends State<MapScreenHome> {
   String googleApikey = "AIzaSyDjP50OxuzlO0kIb6eAh3CKxEe0bDKho0A";
   late GoogleMapController? mapController; //contrller for Google map
   LatLng startLocation = LatLng(27.6602292, 85.308027);
@@ -141,12 +144,7 @@ class _MapScreenState extends State<MapScreen> {
                                         ", " +
                                         cameraPosition!.target.longitude
                                             .toString());
-                                SharedPreferences productLocation =
-                                    await SharedPreferences.getInstance();
-                                productLocation.setString(
-                                    'productLatitude', finalLatitude);
-                                productLocation.setString(
-                                    'productLongtitude', finalLongtitude);
+
                                 setState(() {
                                   finalLatitude = cameraPosition!
                                       .target.latitude
@@ -165,6 +163,22 @@ class _MapScreenState extends State<MapScreen> {
                                   //     .getString('productLatitude')!;
                                   // print(testLati);
                                   // Navigator.pop(context);
+                                  Caller.dio.post("/home/update", data: {
+                                    "location_latitude": finalLatitude,
+                                    "location_longtitude": finalLongtitude,
+                                  }).then((response) {
+                                    print("Success");
+                                  })
+                                      // .onError((DioError error, _) {
+                                      //   Caller.handle(context, error);
+                                      // })
+                                      .whenComplete(() {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                (NavigationbarWidget())));
+                                  });
                                 });
                               },
                               child: Text(

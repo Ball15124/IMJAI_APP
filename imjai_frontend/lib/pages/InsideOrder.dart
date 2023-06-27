@@ -126,7 +126,7 @@ class _InsideOrderState extends State<InsideOrder> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             image: DecorationImage(
-                              image: AssetImage("Images/Food/wagyu.jpg"),
+                              image: NetworkImage(productPicture),
                               fit: BoxFit.cover,
                             ),
                           ),

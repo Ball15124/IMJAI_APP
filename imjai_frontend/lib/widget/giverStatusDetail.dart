@@ -1,8 +1,12 @@
+// import 'dart:ffi';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:imjai_frontend/model/mainproduct.dart';
 import 'package:imjai_frontend/pages/caller.dart';
@@ -29,6 +33,13 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
   String locationLongtitude = '';
   String phone_number = '';
   String recieverName = '';
+  String ownerPicture = '';
+  String locationLat = '';
+  String locationLong = '';
+  double doubleLat = 0;
+  double doubleLong = 0;
+  String setlocation_street = '';
+  String setlocation_name = '';
   int status = 0;
   int productId = 0;
 
@@ -37,13 +48,46 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       fetchData(context);
+      // getLocation();
     });
+  }
+
+  getLocation() async {
+    final id = ModalRoute.of(context)!.settings.arguments as int;
+    Response locationRes = await Caller.dio.get("/products/location/$id");
+    Map<String, dynamic> fetchLocation = locationRes.data;
+    locationLat = fetchLocation['location_latitude'];
+    locationLong = fetchLocation['location_longtitude'];
+    print(locationLat);
+    print(locationLong);
+    if (locationLat == "") {
+      print("No location found, Please contact giver!");
+    } else {
+      doubleLat = double.parse(locationLat);
+      doubleLong = double.parse(locationLong);
+      print(doubleLat);
+      print(doubleLong);
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(doubleLat, doubleLong);
+
+      setlocation_street = placemarks.first.administrativeArea.toString() +
+          ", " +
+          placemarks.first.street.toString() +
+          ", " +
+          placemarks.first.country.toString();
+      setlocation_name = placemarks.first.name.toString();
+      print(setlocation_street);
+      print(setlocation_name);
+    }
+
+    // location_name = setlocation_name;
   }
 
   void fetchData(BuildContext context) async {
     try {
       final id = ModalRoute.of(context)!.settings.arguments as int;
       Response response = await Caller.dio.get("/products/products/$id");
+      await getLocation();
       print(response.data);
       setState(() {
         print("change status page");
@@ -55,6 +99,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
         print(phone_number);
         productId = productData.id;
         print(productId);
+        ownerPicture = productData.reserved!.reserved_users!.profile_url!;
         status = productData.status!;
         print(status);
         if (productData.reserved == null ||
@@ -341,7 +386,15 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "King Mongkut's institute of\ntechnology Thonburi",
+                            () {
+                              if (setlocation_name == "") {
+                                return "No location found, \nPleace contact giver!";
+                              } else {
+                                return setlocation_name +
+                                    ", \n" +
+                                    setlocation_street;
+                              }
+                            }(),
                             style: TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0),
                                 fontSize: 15),
@@ -377,16 +430,16 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                 child: Container(
                   padding: EdgeInsets.only(top: 0, left: 20, right: 10),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CircleAvatar(
                         radius: 25,
-                        backgroundImage: AssetImage("Images/profile.jpg"),
+                        backgroundImage: NetworkImage(ownerPicture),
                       ),
                       SizedBox(
                         width: 20,
                       ),
                       Container(
-                        padding: EdgeInsets.only(left: 0),
                         child: Row(
                           children: [
                             Text(
@@ -399,6 +452,26 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                               }(),
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 40),
+                        child: Row(
+                          children: [
+                            Container(
+                              child: IconButton(
+                                onPressed: () async {
+                                  await FlutterPhoneDirectCaller.callNumber(
+                                      phone_number);
+                                },
+                                icon: const Icon(
+                                  Icons.phone,
+                                  size: 30,
+                                  color: Colors.orange,
+                                ),
+                              ),
                             ),
                           ],
                         ),

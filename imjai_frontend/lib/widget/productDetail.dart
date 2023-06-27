@@ -29,6 +29,7 @@ class _ProductDetailState extends State<ProductDetail> {
   String locationLatitude = '';
   String locationLongtitude = '';
   String phone_number = '';
+  String ownerPicture = '';
   int status = 0;
   int productId = 0;
 
@@ -65,6 +66,7 @@ class _ProductDetailState extends State<ProductDetail> {
         availableTime = productData.available_time!;
         print(availableTime);
         category = productData.category_id.toString();
+        ownerPicture = productData.created_by_user!.profile_url!;
         print(category);
         status = productData.status!;
         locationLatitude = productData.location_latitude!;
@@ -200,7 +202,7 @@ class _ProductDetailState extends State<ProductDetail> {
               children: [
                 CircleAvatar(
                   radius: 25,
-                  backgroundImage: AssetImage(productPicture),
+                  backgroundImage: NetworkImage(ownerPicture),
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 10),
@@ -210,23 +212,6 @@ class _ProductDetailState extends State<ProductDetail> {
                         ownerName,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 15),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 50),
-                  child: Row(
-                    children: [
-                      Container(
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.phone,
-                            size: 30,
-                            color: Colors.orange,
-                          ),
-                        ),
                       ),
                     ],
                   ),

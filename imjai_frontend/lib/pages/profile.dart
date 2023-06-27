@@ -8,6 +8,8 @@ import 'package:imjai_frontend/widget/infoProfile.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
+import '../widget/navigationbarwidget.dart';
+
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
 
@@ -24,6 +26,7 @@ class _ProfileState extends State<Profile> {
   double screenWidth = 0;
   Color primary = Color.fromARGB(255, 255, 255, 255);
   XFile? image;
+  int picCheck = 0;
 
   final ImagePicker picker = ImagePicker();
 
@@ -33,7 +36,48 @@ class _ProfileState extends State<Profile> {
 
     setState(() {
       image = img;
+      if (image != null) {
+        picCheck = 1;
+      } else {
+        picCheck = 0;
+      }
     });
+  }
+
+  Future<void> _uploadImage() async {
+    try {
+      String apiUrl = 'http://localhost:3306/image/upload';
+
+      if (image == null) {
+        print('No image selected');
+        return;
+      }
+
+      // Create Dio instance
+      Dio dio = Dio();
+
+      // Create form data
+      FormData formData = FormData.fromMap({
+        'image':
+            await MultipartFile.fromFile(image!.path, filename: 'image.jpg'),
+      });
+
+      // Send the image file to the backend
+      Response response =
+          await Caller.dio.post("/image/profile/upload", data: formData);
+      print("after submitted");
+      print(response.data);
+      if (response.statusCode == 200) {
+        Navigator.pop((context));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => (NavigationbarWidget())));
+        print('Image uploaded successfully');
+      } else {
+        print('Failed to upload image. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error uploading image: $error');
+    }
   }
 
   void myAlert() {
@@ -95,6 +139,7 @@ class _ProfileState extends State<Profile> {
   String email = '';
   String profileUrl = '';
   String birthdate = '';
+  // int picCheck = 0;
 
   @override
   void initState() {
@@ -113,7 +158,8 @@ class _ProfileState extends State<Profile> {
         email = data.email!;
         phone_number = data.phone_number!;
         birthdate = data.birthdate!;
-        this.profileUrl = data.profile_url!;
+        profileUrl = data.profile_url!;
+        print(profileUrl);
         print(data.firstname);
       });
     } catch (e) {
@@ -133,8 +179,27 @@ class _ProfileState extends State<Profile> {
       if (!isEditable) {
         // Save the edited text when editing is complete
         phone_number = _controller.text;
+        final phoneNumber = _controller.text;
+        print(phoneNumber);
+        print(phone_number);
+
+        Caller.dio.post("/me/update", data: {
+          "phone_number": phone_number,
+        }).then((response) {
+          print("Success");
+        }).catchError((error) {
+          print("Error: $error");
+        });
         _controller.clear();
       }
+      print(phone_number);
+      Caller.dio.post("/me/update", data: {
+        "phone_number": phone_number,
+      }).then((response) {
+        print("Success");
+      }).catchError((error) {
+        print("Error: $error");
+      });
     });
   }
 
@@ -153,8 +218,9 @@ class _ProfileState extends State<Profile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.only(top: 60),
+                    padding: EdgeInsets.only(top: 60, left: 20, right: 20),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           child: IconButton(
@@ -168,9 +234,9 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                         ),
-                        Spacer(),
+                        //Spacer(),
                         Container(
-                          margin: EdgeInsets.only(right: 50),
+                          //margin: EdgeInsets.only(right: 50),
                           child: Text(
                             "Profile",
                             style: TextStyle(
@@ -179,7 +245,20 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                         ),
-                        Spacer(),
+                        //Spacer(),
+                        Container(
+                          child: IconButton(
+                            onPressed: () {
+                              image != null ? _uploadImage() : null;
+                              // Navigator.pop(context);
+                            },
+                            icon: Icon(Icons.save_rounded,
+                                size: 35,
+                                color: image != null
+                                    ? Colors.orange
+                                    : Colors.grey),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -199,10 +278,15 @@ class _ProfileState extends State<Profile> {
                                         backgroundImage:
                                             FileImage(File(image!.path)),
                                       )
-                                    : CircleAvatar(
-                                        radius: 90,
-                                        backgroundColor: Colors.orange[200],
-                                      ),
+                                    : profileUrl != ''
+                                        ? CircleAvatar(
+                                            radius: 90,
+                                            backgroundImage:
+                                                NetworkImage(profileUrl),
+                                          )
+                                        : CircleAvatar(
+                                            radius: 90,
+                                          ),
                                 Positioned(
                                   bottom: -5,
                                   right: 13,

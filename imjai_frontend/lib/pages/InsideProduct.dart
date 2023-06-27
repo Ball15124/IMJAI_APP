@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:imjai_frontend/model/mainproduct.dart';
 import 'package:imjai_frontend/pages/caller.dart';
+import 'package:imjai_frontend/widget/navigationbarwidget.dart';
 import 'package:imjai_frontend/widget/productDetail.dart';
 
 class InsideProduct extends StatefulWidget {
@@ -26,6 +27,7 @@ class _InsideProductState extends State<InsideProduct> {
   String ownerName = '';
   String productDetail = '';
   String availableTime = '';
+  String imageUrl = '';
   String category = '';
   String locationLatitude = '';
   String locationLongtitude = '';
@@ -59,6 +61,7 @@ class _InsideProductState extends State<InsideProduct> {
         availableTime = productData.available_time!;
         print(availableTime);
         category = productData.category_id.toString();
+        imageUrl = productData.picture_url!;
         print(category);
         productId = productData.id;
         locationLatitude = productData.location_latitude!;
@@ -168,7 +171,11 @@ class _InsideProductState extends State<InsideProduct> {
                                               // print(productId);
                                               await Caller.dio.delete(
                                                   "/products/$productId");
-                                              Navigator.pop(context);
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: ((context) =>
+                                                          NavigationbarWidget())));
                                             },
                                           ),
                                         ],
@@ -198,7 +205,7 @@ class _InsideProductState extends State<InsideProduct> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             image: DecorationImage(
-                              image: AssetImage("Images/Food/wagyu.jpg"),
+                              image: NetworkImage(imageUrl),
                               fit: BoxFit.cover,
                             ),
                           ),

@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'dart:io';
 import 'dart:ui';
+import 'package:dio/dio.dart';
 import 'package:fluttertagselector/fluttertagselector.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,83 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
     setState(() {
       image = img;
     });
+  }
+
+  Future<void> _uploadImage() async {
+    try {
+      String apiUrl = 'http://localhost:3306/image/upload';
+
+      if (image == null) {
+        print('No image selected');
+        return;
+      }
+
+      // Create Dio instance
+      Dio dio = Dio();
+
+      // Create form data
+
+      FocusManager.instance.primaryFocus?.unfocus();
+      SharedPreferences productLocation = await SharedPreferences.getInstance();
+      String productLatitude = productLocation.getString('productLatitude')!;
+      print(productLatitude);
+      String productLongtitude =
+          productLocation.getString('productLongtitude')!;
+      print(productLongtitude);
+      SharedPreferences productTag = await SharedPreferences.getInstance();
+      int productCategory = productTag.getInt('tag')!;
+      print(productCategory);
+      FormData formData = FormData.fromMap({
+        'image':
+            await MultipartFile.fromFile(image!.path, filename: 'image.jpg'),
+        'productName': proname.text,
+        "product_name": proname.text,
+        "product_picture": "",
+        "product_description": description.text,
+        "product_time": time.text,
+        "category_id": productCategory,
+        "locate_latitude": productLatitude,
+        "locate_longtitude": productLongtitude,
+        "status": 0,
+        "reserved_yet": false,
+      });
+
+      // Send the image file to the backend
+      if (productLatitude == "") {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Location not found!'),
+              content: const Text('Please set your product current location!'),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        Response response =
+            await Caller.dio.post("/image/upload", data: formData);
+        print("after submitted");
+        print(response.data);
+        if (response.statusCode == 200) {
+          Navigator.pop((context));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => (NavigationbarWidget())));
+          print('Image uploaded successfully');
+        } else {
+          print('Failed to upload image. Status code: ${response.statusCode}');
+        }
+      }
+    } catch (error) {
+      print('Error uploading image: $error');
+    }
   }
 
   void myAlert() {
@@ -122,7 +200,7 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
         },
       );
     } else {
-      Caller.dio.post("/products", data: {
+      await Caller.dio.post("/products", data: {
         "product_name": proname.text,
         "product_picture": "",
         "product_description": description.text,
@@ -310,7 +388,8 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
                         minimumSize: const Size(double.infinity, 50),
                       ),
                       onPressed: () async {
-                        saveInfo();
+                        // saveInfo();
+                        _uploadImage();
                       },
                       child: const Text(
                         'Post',

@@ -231,7 +231,7 @@ class _HomeState extends State<Home> {
                                 },
                                 child: CircleAvatar(
                                   radius: 30,
-                                  backgroundImage: AssetImage(profileUrl),
+                                  backgroundImage: NetworkImage(profileUrl),
                                 ),
                               ),
                             ),

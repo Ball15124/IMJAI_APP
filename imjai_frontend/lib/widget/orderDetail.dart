@@ -27,6 +27,7 @@ class _OrderDetailState extends State<OrderDetail> {
   String availableTime = '';
   String category = '';
   String locationLatitude = '';
+  String ownerPicture = '';
 
   String locationLongtitude = '';
   String phone_number = '';
@@ -60,6 +61,7 @@ class _OrderDetailState extends State<OrderDetail> {
             productData.created_by_user!.lastname!;
         print(ownerName);
         productDetail = productData.description!;
+        ownerPicture = productData.created_by_user!.profile_url!;
         print(productDetail);
         availableTime = productData.available_time!;
         print(availableTime);
@@ -200,7 +202,7 @@ class _OrderDetailState extends State<OrderDetail> {
               children: [
                 CircleAvatar(
                   radius: 25,
-                  backgroundImage: AssetImage("Images/profile.jpg"),
+                  backgroundImage: NetworkImage(ownerPicture),
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 10),
@@ -215,7 +217,7 @@ class _OrderDetailState extends State<OrderDetail> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 120),
+                  padding: EdgeInsets.only(left: 110),
                   child: Row(
                     children: [
                       Container(

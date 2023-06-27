@@ -159,8 +159,8 @@ class ListOrder extends StatelessWidget {
                   child: Container(
                     width: 110,
                     height: 110,
-                    child: Image.asset(
-                      'Images/Food/' + imageUrl + ".jpg",
+                    child: Image.network(
+                      imageUrl,
                       fit: BoxFit.cover,
                     ),
                   ),

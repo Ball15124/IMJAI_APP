@@ -140,8 +140,8 @@ class ProductList extends StatelessWidget {
                   child: Container(
                     width: 130,
                     height: 130,
-                    child: Image.asset(
-                      'Images/Food/' + imageUrl + ".jpg",
+                    child: Image.network(
+                      imageUrl,
                       fit: BoxFit.cover,
                     ),
                   ),

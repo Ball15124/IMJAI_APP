@@ -1,15 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:imjai_frontend/model/mainproduct.dart';
 import 'package:imjai_frontend/pages/caller.dart';
-import 'package:imjai_frontend/pages/profile.dart';
 import 'package:imjai_frontend/widget/navigationbarwidget.dart';
-import 'package:imjai_frontend/widget/orderDetail.dart';
-import 'package:imjai_frontend/widget/orderStatusDetail.dart';
 
 class recieverStatus extends StatefulWidget {
   const recieverStatus({super.key});
@@ -38,6 +33,7 @@ class _recieverStatusState extends State<recieverStatus> {
   double doubleLong = 0;
   String setlocation_street = '';
   String setlocation_name = '';
+  String ownerPicture = '';
   String locationLat = '';
   String locationLong = '';
 
@@ -105,6 +101,7 @@ class _recieverStatusState extends State<recieverStatus> {
             productData.created_by_user!.lastname!;
         print(ownerName);
         productDetail = productData.description!;
+        ownerPicture = productData.created_by_user!.profile_url!;
         print(productDetail);
         availableTime = productData.available_time!;
         print(availableTime);
@@ -252,7 +249,11 @@ class _recieverStatusState extends State<recieverStatus> {
                         left: 5,
                         child: IconButton(
                           onPressed: () {
-                            Navigator.pop((context));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) =>
+                                        NavigationbarWidget())));
                           },
                           icon: const Icon(
                             Icons.close_rounded,
@@ -369,7 +370,8 @@ class _recieverStatusState extends State<recieverStatus> {
                                                   style: TextStyle(
                                                       color: Color.fromARGB(
                                                           255, 0, 0, 0),
-                                                      fontSize: 15),
+                                                      fontSize:
+                                                          screenHeight / 75),
                                                 ),
                                                 Text(
                                                   ". . .",
@@ -410,8 +412,8 @@ class _recieverStatusState extends State<recieverStatus> {
                                           children: [
                                             CircleAvatar(
                                               radius: 25,
-                                              backgroundImage: AssetImage(
-                                                  "Images/profile.jpg"),
+                                              backgroundImage:
+                                                  NetworkImage(ownerPicture),
                                             ),
                                             Container(
                                               padding: EdgeInsets.only(left: 0),

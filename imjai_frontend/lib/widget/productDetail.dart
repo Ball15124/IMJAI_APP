@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +33,9 @@ class _ProductDetailState extends State<ProductDetail> {
   String locationLongtitude = '';
   String phone_number = '';
   String ownerPicture = '';
+
+  String receiverLatitude = '';
+  String receiverLongtitude = '';
   int status = 0;
   int productId = 0;
 
@@ -39,6 +45,29 @@ class _ProductDetailState extends State<ProductDetail> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       fetchData(context);
     });
+  }
+
+  String calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+    const double earthRadius = 6371;
+
+    double lat1Radians = degreesToRadians(lat1);
+    double lon1Radians = degreesToRadians(lon1);
+    double lat2Radians = degreesToRadians(lat2);
+    double lon2Radians = degreesToRadians(lon2);
+    double latDiff = lat2Radians - lat1Radians;
+    double lonDiff = lon2Radians - lon1Radians;
+    double a = pow(sin(latDiff / 2), 2) +
+        cos(lat1Radians) * cos(lat2Radians) * pow(sin(lonDiff / 2), 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    double distance = earthRadius * c;
+
+    String formattedDistance = distance.toStringAsFixed(2);
+
+    return formattedDistance + ' km';
+  }
+
+  double degreesToRadians(double degrees) {
+    return degrees * pi / 180;
   }
 
   void fetchData(BuildContext context) async {
@@ -71,6 +100,11 @@ class _ProductDetailState extends State<ProductDetail> {
         status = productData.status!;
         locationLatitude = productData.location_latitude!;
         locationLongtitude = productData.location_longtitude!;
+        receiverLatitude =
+            productData.reserved!.reserved_users!.location_latitude!;
+        receiverLongtitude =
+            productData.reserved!.reserved_users!.location_longtitude!;
+        print(" reciever Latitude " + receiverLatitude);
         // Map<String, dynamic> productInfo = response.data;
         // print(55555555);
         // print(productInfo);
@@ -155,7 +189,15 @@ class _ProductDetailState extends State<ProductDetail> {
                   textAlign: TextAlign.center,
                 ),
                 Text(category, textAlign: TextAlign.center),
-                Text("2.0 km", textAlign: TextAlign.center)
+                Text(
+                    status >= 1
+                        ? calculateDistance(
+                            double.parse(locationLatitude),
+                            double.parse(locationLongtitude),
+                            double.parse(receiverLatitude),
+                            double.parse(receiverLongtitude))
+                        : "Waiting for \n reserve",
+                    textAlign: TextAlign.center)
               ],
             ),
           ),

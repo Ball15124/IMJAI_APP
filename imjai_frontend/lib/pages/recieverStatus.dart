@@ -96,9 +96,9 @@ class _recieverStatusState extends State<recieverStatus> {
 
   @override
   void dispose() {
-    _subscription.cancel();
-    super.dispose();
+    // _subscription.cancel();
     timer.cancel();
+    super.dispose();
   }
 
   void fetchData(BuildContext context) async {
@@ -115,6 +115,32 @@ class _recieverStatusState extends State<recieverStatus> {
         phone_number = productData.created_by_user!.phone_number!;
         productId = productData.id;
         status = productData.status!;
+        if (status == 0) {
+          timer.cancel();
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Order Cancelled'),
+                content:
+                    const Text('Sorry, the giver have cancelled your order.'),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const NavigationbarWidget()));
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
         print("status :" + status.toString());
         print(phone_number);
         print(productName);

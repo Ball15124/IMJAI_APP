@@ -59,96 +59,98 @@ class _LoginState extends State<Login> {
     screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: primary,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 60),
-            Image.asset(
-              'Images/ImJai Logo.png', // Replace with your logo image path
-              width: 200,
-              height: 200,
-            ),
-            Text(
-              "Hi, there!",
-              style: TextStyle(
-                fontSize: screenWidth / 25,
-                color: Colors.black,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 50),
+              Image.asset(
+                'Images/ImJai Logo.png', // Replace with your logo image path
+                width: 200,
+                height: 200,
               ),
-            ),
-            Text(
-              "Let's Get Started",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: screenWidth / 25,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(height: screenHeight / 20),
-            customField('Username', _usernameController, false,
-                Icons.account_circle_outlined, Colors.orange),
-            const SizedBox(height: 16.0),
-            customField('Password', _passwordController, false,
-                Icons.key_rounded, Colors.orange),
-            SizedBox(height: screenHeight / 45),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                minimumSize: const Size(double.infinity, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+              Text(
+                "Hi, there!",
+                style: TextStyle(
+                  fontSize: screenWidth / 25,
+                  color: Colors.black,
                 ),
               ),
-              onPressed: () {
-                // Perform login logic here
-                String username = _usernameController.text;
-                String password = _passwordController.text;
-                print('Username: $username');
-                print('Password: $password');
-                saveInfo();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const NavigationbarWidget()));
-              },
-              child: Text(
-                'Login',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              Text(
+                "Let's Get Started",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: screenWidth / 25,
+                  color: Colors.black,
+                ),
               ),
-            ),
-            SizedBox(
-              height: screenHeight / 5,
-            ),
-            Container(
-                child: Column(
-              children: [
-                SizedBox(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      side: const BorderSide(color: Colors.orange, width: 2),
-                      minimumSize: const Size(double.infinity, 50),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Register(),
-                          ));
-                    },
-                    child: const Text(
-                      'Register',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.orange),
-                    ),
+              SizedBox(height: screenHeight / 20),
+              customField('Username', _usernameController, false,
+                  Icons.account_circle_outlined, Colors.orange),
+              const SizedBox(height: 16.0),
+              customField('Password', _passwordController, true,
+                  Icons.key_rounded, Colors.orange),
+              SizedBox(height: screenHeight / 45),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange,
+                  minimumSize: const Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-              ],
-            ))
-          ],
+                onPressed: () {
+                  // Perform login logic here
+                  String username = _usernameController.text;
+                  String password = _passwordController.text;
+                  print('Username: $username');
+                  print('Password: $password');
+                  saveInfo();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const NavigationbarWidget()));
+                },
+                child: Text(
+                  'Login',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+              ),
+              SizedBox(
+                height: screenHeight / 5,
+              ),
+              Container(
+                  child: Column(
+                children: [
+                  SizedBox(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        side: const BorderSide(color: Colors.orange, width: 2),
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Register(),
+                            ));
+                      },
+                      child: const Text(
+                        'Register',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.orange),
+                      ),
+                    ),
+                  ),
+                ],
+              ))
+            ],
+          ),
         ),
       ),
     );

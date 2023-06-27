@@ -12,14 +12,9 @@ class NavigationbarWidget extends StatefulWidget {
 
 class _NavigationbarWidgetState extends State<NavigationbarWidget> {
   final pages = const [Product(), Home(), Reserve()];
-  List<IconData> data = [
-    Icons.history_rounded,
-    Icons.home_rounded,
-    Icons.format_list_bulleted_rounded,
-  ];
   List<String> data2 = ["Product", "Home", "Reserve"];
 
-  int _currentIndex = 0;
+  int _currentIndex = 1;
   double screenHeight = 0;
   double screenWidth = 0;
 

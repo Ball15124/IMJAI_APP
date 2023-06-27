@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,8 @@ class _recieverStatusState extends State<recieverStatus> {
   String ownerPicture = '';
   String locationLat = '';
   String locationLong = '';
+  String receiverLatitude = '';
+  String receiverLongtitude = '';
   late Timer timer;
   late StreamSubscription<int> _subscription;
 
@@ -101,6 +104,29 @@ class _recieverStatusState extends State<recieverStatus> {
     super.dispose();
   }
 
+  String calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+    const double earthRadius = 6371;
+
+    double lat1Radians = degreesToRadians(lat1);
+    double lon1Radians = degreesToRadians(lon1);
+    double lat2Radians = degreesToRadians(lat2);
+    double lon2Radians = degreesToRadians(lon2);
+    double latDiff = lat2Radians - lat1Radians;
+    double lonDiff = lon2Radians - lon1Radians;
+    double a = pow(sin(latDiff / 2), 2) +
+        cos(lat1Radians) * cos(lat2Radians) * pow(sin(lonDiff / 2), 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    double distance = earthRadius * c;
+
+    String formattedDistance = distance.toStringAsFixed(2);
+
+    return formattedDistance + ' km';
+  }
+
+  double degreesToRadians(double degrees) {
+    return degrees * pi / 180;
+  }
+
   void fetchData(BuildContext context) async {
     try {
       final id = ModalRoute.of(context)!.settings.arguments as int;
@@ -159,6 +185,10 @@ class _recieverStatusState extends State<recieverStatus> {
         print(category);
         locationLatitude = productData.location_latitude!;
         locationLongtitude = productData.location_longtitude!;
+        receiverLatitude =
+            productData.reserved!.reserved_users!.location_latitude!;
+        receiverLongtitude =
+            productData.reserved!.reserved_users!.location_longtitude!;
         // getLocation();
         // Map<String, dynamic> productInfo = response.data;
         // print(55555555);
@@ -584,7 +614,18 @@ class _recieverStatusState extends State<recieverStatus> {
                                           ),
                                           Text(category,
                                               textAlign: TextAlign.center),
-                                          Text("2.5 km",
+                                          Text(
+                                              status >= 1
+                                                  ? calculateDistance(
+                                                      double.parse(
+                                                          locationLatitude),
+                                                      double.parse(
+                                                          locationLongtitude),
+                                                      double.parse(
+                                                          receiverLatitude),
+                                                      double.parse(
+                                                          receiverLongtitude))
+                                                  : "Waiting for \n confirm",
                                               textAlign: TextAlign.center)
                                         ],
                                       ),
@@ -723,586 +764,6 @@ class _recieverStatusState extends State<recieverStatus> {
                   ),
                 ))
           ],
-        )
-        // Column(
-        //   children: [
-        //     SingleChildScrollView(
-        //       child: Column(
-        //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //         children: <Widget>[
-        //           Column(
-        //             crossAxisAlignment: CrossAxisAlignment.start,
-        //             children: <Widget>[
-        //               Stack(
-        //                 alignment: Alignment.topLeft,
-        //                 children: [
-        //                   status == 1
-        //                       ? Container(
-        //                           padding: EdgeInsets.only(right: 10),
-        //                           height: 500,
-        //                           width: 600,
-        //                           decoration: BoxDecoration(
-        //                             image: DecorationImage(
-        //                               image: AssetImage(
-        //                                   "Images/ReserveStatus/OrderTrackingImage.gif"),
-        //                               fit: BoxFit.cover,
-        //                             ),
-        //                           ),
-        //                         )
-        //                       : status == 2
-        //                           ? Container(
-        //                               height: 500,
-        //                               width: 600,
-        //                               decoration: BoxDecoration(
-        //                                 image: DecorationImage(
-        //                                   image: AssetImage(
-        //                                       "Images/ReserveStatus/Chicken.avif"),
-        //                                   fit: BoxFit.cover,
-        //                                 ),
-        //                               ),
-        //                             )
-        //                           : status == 3
-        //                               ? Container(
-        //                                   width: 600,
-        //                                   height: 400,
-        //                                   child: Stack(
-        //                                     children: [
-        //                                       GoogleMap(
-        //                                         onMapCreated: _onMapCreated,
-        //                                         initialCameraPosition:
-        //                                             CameraPosition(
-        //                                           target: LatLng(
-        //                                               doubleLat, doubleLong),
-        //                                           zoom: 17,
-        //                                         ),
-        //                                         markers: {
-        //                                           Marker(
-        //                                             markerId: MarkerId(
-        //                                                 setlocation_name),
-        //                                             position: LatLng(
-        //                                                 doubleLat, doubleLong),
-        //                                           ),
-        //                                         },
-        //                                         mapType: MapType.normal,
-        //                                         onCameraMove: (CameraPosition
-        //                                             cameraposition) {
-        //                                           cameraPosition = cameraposition;
-        //                                         },
-        //                                       ),
-        //                                     ],
-        //                                   ),
-        //                                 )
-        //                               : status == 4
-        //                                   ? Container(
-        //                                       width: 400,
-        //                                       height: 400,
-        //                                       decoration: BoxDecoration(
-        //                                         image: DecorationImage(
-        //                                           image: AssetImage(
-        //                                               "Images/ReserveStatus/Done.gif"),
-        //                                           fit: BoxFit.cover,
-        //                                         ),
-        //                                       ),
-        //                                     )
-        //                                   : Container(
-        //                                       width: 600,
-        //                                       height: 500,
-        //                                       child: Center(
-        //                                         child:
-        //                                             CircularProgressIndicator(),
-        //                                       ),
-        //                                     ),
-        //                   Positioned(
-        //                     top: 40,
-        //                     left: 5,
-        //                     child: IconButton(
-        //                       onPressed: () {
-        //                         timer.cancel();
-        //                         Navigator.push(
-        //                             context,
-        //                             MaterialPageRoute(
-        //                                 builder: ((context) =>
-        //                                     NavigationbarWidget())));
-        //                       },
-        //                       icon: const Icon(
-        //                         Icons.close_rounded,
-        //                         size: 35,
-        //                         color: Color.fromARGB(255, 250, 122, 48),
-        //                       ),
-        //                     ),
-        //                   ),
-        //                   Container(
-        //                       margin: EdgeInsets.only(top: 350),
-        //                       child: Column(
-        //                         children: [
-        //                           Container(
-        //                             padding: EdgeInsets.only(
-        //                                 top: 20, left: 20, right: 20),
-        //                             child: Column(
-        //                               children: [
-        //                                 Container(
-        //                                   margin: EdgeInsets.only(bottom: 20),
-        //                                   height: 180,
-        //                                   width: 400,
-        //                                   decoration: BoxDecoration(
-        //                                     borderRadius:
-        //                                         BorderRadius.circular(10),
-        //                                     boxShadow: [
-        //                                       BoxShadow(
-        //                                         color:
-        //                                             Colors.grey.withOpacity(0.3),
-        //                                         spreadRadius: 1,
-        //                                         blurRadius: 5,
-        //                                         offset: Offset(4, 5),
-        //                                       )
-        //                                     ],
-        //                                     color: Color.fromARGB(
-        //                                         255, 255, 255, 255),
-        //                                   ),
-        //                                   child: Container(
-        //                                     padding: EdgeInsets.only(
-        //                                         top: 10, left: 15, right: 15),
-        //                                     child: Column(
-        //                                       children: [
-        //                                         Row(
-        //                                           children: [
-        //                                             Text(
-        //                                               "Order# " +
-        //                                                   productId.toString(),
-        //                                               style: TextStyle(
-        //                                                   color: Colors.grey,
-        //                                                   fontSize: 15),
-        //                                             )
-        //                                           ],
-        //                                         ),
-        //                                         SizedBox(
-        //                                           height: 5,
-        //                                         ),
-        //                                         Row(
-        //                                           children: [
-        //                                             Text(
-        //                                               status == 2
-        //                                                   ? "Preparing Order"
-        //                                                   : status == 3
-        //                                                       ? "Waiting for you to pickup"
-        //                                                       : status == 4
-        //                                                           ? "Complete"
-        //                                                           : "Waiting giver to confirm",
-        //                                               style: TextStyle(
-        //                                                   color: Color.fromARGB(
-        //                                                       255, 0, 0, 0),
-        //                                                   fontSize: 18,
-        //                                                   fontWeight:
-        //                                                       FontWeight.bold),
-        //                                             )
-        //                                           ],
-        //                                         ),
-        //                                         SizedBox(
-        //                                           height: 10,
-        //                                         ),
-        //                                         Row(
-        //                                           mainAxisAlignment:
-        //                                               MainAxisAlignment
-        //                                                   .spaceBetween,
-        //                                           children: [
-        //                                             Text(
-        //                                               "Location",
-        //                                               style: TextStyle(
-        //                                                   color: Colors.grey,
-        //                                                   fontSize: 15),
-        //                                             ),
-        //                                           ],
-        //                                         ),
-        //                                         SizedBox(
-        //                                           height: 5,
-        //                                         ),
-        //                                         Row(
-        //                                           mainAxisAlignment:
-        //                                               MainAxisAlignment
-        //                                                   .spaceBetween,
-        //                                           children: [
-        //                                             Container(
-        //                                               child: Text(
-        //                                                 () {
-        //                                                   if (setlocation_name ==
-        //                                                       "") {
-        //                                                     return "No location found, \nPleace contact giver!";
-        //                                                   } else {
-        //                                                     return setlocation_name +
-        //                                                         ", \n" +
-        //                                                         setlocation_street;
-        //                                                   }
-        //                                                 }(),
-        //                                                 style: TextStyle(
-        //                                                     color: Color.fromARGB(
-        //                                                         255, 0, 0, 0),
-        //                                                     fontSize:
-        //                                                         screenHeight /
-        //                                                             75),
-        //                                               ),
-        //                                             ),
-        //                                           ],
-        //                                         ),
-        //                                         SizedBox(
-        //                                           height: 10,
-        //                                         ),
-        //                                         Row(
-        //                                           mainAxisAlignment:
-        //                                               MainAxisAlignment
-        //                                                   .spaceBetween,
-        //                                           children: [
-        //                                             Text(
-        //                                               "Time",
-        //                                               style: TextStyle(
-        //                                                   color: Colors.grey,
-        //                                                   fontSize: 15),
-        //                                             ),
-        //                                           ],
-        //                                         ),
-        //                                         SizedBox(
-        //                                           height: 5,
-        //                                         ),
-        //                                         Row(
-        //                                           children: [
-        //                                             Text(
-        //                                               availableTime,
-        //                                               style: TextStyle(
-        //                                                   color: Color.fromARGB(
-        //                                                       255, 0, 0, 0),
-        //                                                   fontSize: 13),
-        //                                             ),
-        //                                           ],
-        //                                         )
-        //                                       ],
-        //                                     ),
-        //                                   ),
-        //                                 ),
-        //                                 Container(
-        //                                   margin: EdgeInsets.only(bottom: 20),
-        //                                   height: 70,
-        //                                   width: 400,
-        //                                   decoration: BoxDecoration(
-        //                                     borderRadius:
-        //                                         BorderRadius.circular(10),
-        //                                     boxShadow: [
-        //                                       BoxShadow(
-        //                                         color:
-        //                                             Colors.grey.withOpacity(0.3),
-        //                                         spreadRadius: 1,
-        //                                         blurRadius: 5,
-        //                                         offset: Offset(4, 5),
-        //                                       )
-        //                                     ],
-        //                                     color: Color.fromARGB(
-        //                                         255, 255, 255, 255),
-        //                                   ),
-        //                                   child: Container(
-        //                                     padding: EdgeInsets.only(
-        //                                         top: 0, left: 20, right: 10),
-        //                                     child: Row(
-        //                                       mainAxisAlignment:
-        //                                           MainAxisAlignment.spaceBetween,
-        //                                       children: [
-        //                                         CircleAvatar(
-        //                                           radius: 25,
-        //                                           backgroundImage:
-        //                                               NetworkImage(ownerPicture),
-        //                                         ),
-        //                                         Container(
-        //                                           padding:
-        //                                               EdgeInsets.only(left: 0),
-        //                                           child: Row(
-        //                                             children: [
-        //                                               Text(
-        //                                                 ownerName,
-        //                                                 style: TextStyle(
-        //                                                     fontWeight:
-        //                                                         FontWeight.bold,
-        //                                                     fontSize: 15),
-        //                                               ),
-        //                                             ],
-        //                                           ),
-        //                                         ),
-        //                                         Container(
-        //                                           padding:
-        //                                               EdgeInsets.only(left: 40),
-        //                                           child: Row(
-        //                                             children: [
-        //                                               Container(
-        //                                                 child: IconButton(
-        //                                                   onPressed: () async {
-        //                                                     await FlutterPhoneDirectCaller
-        //                                                         .callNumber(
-        //                                                             phone_number);
-        //                                                   },
-        //                                                   icon: const Icon(
-        //                                                     Icons.phone,
-        //                                                     size: 30,
-        //                                                     color: Colors.orange,
-        //                                                   ),
-        //                                                 ),
-        //                                               ),
-        //                                             ],
-        //                                           ),
-        //                                         ),
-        //                                       ],
-        //                                     ),
-        //                                   ),
-        //                                 ),
-        //                                 Container(
-        //                                   height: 180,
-        //                                   width: 400,
-        //                                   decoration: BoxDecoration(
-        //                                     borderRadius:
-        //                                         BorderRadius.circular(10),
-        //                                     boxShadow: [
-        //                                       BoxShadow(
-        //                                         color:
-        //                                             Colors.grey.withOpacity(0.3),
-        //                                         spreadRadius: 1,
-        //                                         blurRadius: 5,
-        //                                         offset: Offset(4, 5),
-        //                                       )
-        //                                     ],
-        //                                     color: Color.fromARGB(
-        //                                         255, 255, 255, 255),
-        //                                   ),
-        //                                   child: Container(
-        //                                     padding: EdgeInsets.only(
-        //                                         top: 10, left: 15, right: 15),
-        //                                     child: Column(
-        //                                       mainAxisAlignment:
-        //                                           MainAxisAlignment.spaceEvenly,
-        //                                       children: [
-        //                                         Row(
-        //                                           children: [
-        //                                             Text(
-        //                                               "Order Details",
-        //                                               style: TextStyle(
-        //                                                   color: Colors.grey,
-        //                                                   fontSize: 17),
-        //                                             )
-        //                                           ],
-        //                                         ),
-        //                                         Container(
-        //                                           child: Row(
-        //                                             mainAxisAlignment:
-        //                                                 MainAxisAlignment
-        //                                                     .spaceBetween,
-        //                                             children: [
-        //                                               Text(
-        //                                                 productName +
-        //                                                     " - " +
-        //                                                     productDetail,
-        //                                                 style: TextStyle(
-        //                                                     fontSize: 15),
-        //                                               ),
-        //                                             ],
-        //                                           ),
-        //                                         ),
-        //                                         Container(
-        //                                           padding: EdgeInsets.only(
-        //                                               top: 5, left: 0, right: 0),
-        //                                           child: Row(
-        //                                             mainAxisAlignment:
-        //                                                 MainAxisAlignment
-        //                                                     .spaceBetween,
-        //                                             children: [
-        //                                               Text(
-        //                                                 "Time",
-        //                                                 textAlign:
-        //                                                     TextAlign.center,
-        //                                                 style: TextStyle(
-        //                                                     color: Colors.grey),
-        //                                               ),
-        //                                               Text(
-        //                                                 "Categories",
-        //                                                 textAlign:
-        //                                                     TextAlign.center,
-        //                                                 style: TextStyle(
-        //                                                     color: Colors.grey),
-        //                                               ),
-        //                                               Text(
-        //                                                 "Range",
-        //                                                 textAlign:
-        //                                                     TextAlign.center,
-        //                                                 style: TextStyle(
-        //                                                     color: Colors.grey),
-        //                                               )
-        //                                             ],
-        //                                           ),
-        //                                         ),
-        //                                         Container(
-        //                                           padding: EdgeInsets.only(
-        //                                               top: 10, left: 0, right: 0),
-        //                                           child: Row(
-        //                                             mainAxisAlignment:
-        //                                                 MainAxisAlignment
-        //                                                     .spaceBetween,
-        //                                             children: [
-        //                                               Text(
-        //                                                 availableTime,
-        //                                                 textAlign:
-        //                                                     TextAlign.center,
-        //                                               ),
-        //                                               Text(category,
-        //                                                   textAlign:
-        //                                                       TextAlign.center),
-        //                                               Text("2.5 km",
-        //                                                   textAlign:
-        //                                                       TextAlign.center)
-        //                                             ],
-        //                                           ),
-        //                                         ),
-        //                                         Container(
-        //                                           padding: EdgeInsets.only(
-        //                                               top: 10, bottom: 10),
-        //                                           decoration: BoxDecoration(
-        //                                               border: Border(
-        //                                                   top: BorderSide(
-        //                                                       color: Colors.grey
-        //                                                           .withOpacity(
-        //                                                               0.5)))),
-        //                                           child: Row(
-        //                                             mainAxisAlignment:
-        //                                                 MainAxisAlignment
-        //                                                     .spaceBetween,
-        //                                             children: [
-        //                                               Text(
-        //                                                 'Total',
-        //                                                 style: TextStyle(
-        //                                                     color: Colors.black,
-        //                                                     fontWeight:
-        //                                                         FontWeight.bold),
-        //                                               ),
-        //                                               Text(
-        //                                                 '1 items',
-        //                                                 style: TextStyle(
-        //                                                     color: Colors.black,
-        //                                                     fontWeight:
-        //                                                         FontWeight.bold),
-        //                                               )
-        //                                             ],
-        //                                           ),
-        //                                         )
-        //                                       ],
-        //                                     ),
-        //                                   ),
-        //                                 ),
-        //                                 SizedBox(height: 20),
-        //                                 ElevatedButton(
-        //                                   style: ElevatedButton.styleFrom(
-        //                                     backgroundColor: Colors.red,
-        //                                     side: const BorderSide(
-        //                                         color: Colors.red, width: 2),
-        //                                     minimumSize:
-        //                                         const Size(double.infinity, 50),
-        //                                   ),
-        //                                   onPressed: () {
-        //                                     showDialog(
-        //                                       context: context,
-        //                                       builder: (BuildContext context) {
-        //                                         return AlertDialog(
-        //                                           backgroundColor: Color.fromARGB(
-        //                                               255, 255, 255, 255),
-        //                                           shape: RoundedRectangleBorder(
-        //                                               borderRadius:
-        //                                                   BorderRadius.circular(
-        //                                                       10.0)),
-        //                                           title: Text(
-        //                                             'Warning',
-        //                                             style: TextStyle(
-        //                                                 fontSize: 20,
-        //                                                 fontWeight:
-        //                                                     FontWeight.bold,
-        //                                                 color: Colors.red),
-        //                                           ),
-        //                                           content: const Text(
-        //                                               'Do you want to cancel this product?'),
-        //                                           actions: <Widget>[
-        //                                             TextButton(
-        //                                               child: const Text(
-        //                                                 'No',
-        //                                                 style: TextStyle(
-        //                                                     fontSize: 15,
-        //                                                     color: Colors.orange,
-        //                                                     fontWeight:
-        //                                                         FontWeight.bold),
-        //                                               ),
-        //                                               style: TextButton.styleFrom(
-        //                                                 backgroundColor:
-        //                                                     Colors.white,
-        //                                                 side: BorderSide(
-        //                                                   color: Colors.orange,
-        //                                                   width: 1,
-        //                                                 ),
-        //                                               ),
-        //                                               onPressed: () {
-        //                                                 Navigator.of(context)
-        //                                                     .pop();
-        //                                               },
-        //                                             ),
-        //                                             TextButton(
-        //                                               child: const Text(
-        //                                                 'Yes',
-        //                                                 style: TextStyle(
-        //                                                     fontSize: 15,
-        //                                                     color: Colors.white,
-        //                                                     fontWeight:
-        //                                                         FontWeight.bold),
-        //                                               ),
-        //                                               style: TextButton.styleFrom(
-        //                                                 backgroundColor:
-        //                                                     Colors.red,
-        //                                               ),
-        //                                               onPressed: () async {
-        //                                                 try {
-        //                                                   timer.cancel();
-        //                                                   Response reserve =
-        //                                                       await Caller.dio
-        //                                                           .post(
-        //                                                     "/reserveReciever/reserves/cancel/$productId",
-        //                                                   );
-        //                                                   Navigator.push(
-        //                                                       context,
-        //                                                       MaterialPageRoute(
-        //                                                           builder:
-        //                                                               (context) =>
-        //                                                                   (NavigationbarWidget())));
-        //                                                   print(reserve.data);
-        //                                                 } catch (e) {
-        //                                                   print(e);
-        //                                                 }
-        //                                               },
-        //                                             ),
-        //                                           ],
-        //                                         );
-        //                                       },
-        //                                     );
-        //                                   },
-        //                                   child: const Text(
-        //                                     'Cancel',
-        //                                     style: TextStyle(
-        //                                         fontWeight: FontWeight.bold,
-        //                                         fontSize: 30,
-        //                                         color: Color.fromARGB(
-        //                                             255, 255, 255, 255)),
-        //                                   ),
-        //                                 ),
-        //                               ],
-        //                             ),
-        //                           )
-        //                         ],
-        //                       ))
-        //                 ],
-        //               ),
-        //             ],
-        //           )
-        //         ],
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        );
+        ));
   }
 }

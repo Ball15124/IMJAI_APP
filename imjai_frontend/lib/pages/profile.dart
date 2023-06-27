@@ -1,20 +1,15 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:imjai_frontend/model/me.dart';
 import 'package:imjai_frontend/pages/caller.dart';
 import 'package:imjai_frontend/pages/login.dart';
-import 'package:imjai_frontend/widget/categorieswidget.dart';
 import 'package:imjai_frontend/widget/infoProfile.dart';
-import 'package:imjai_frontend/widget/navigationbarwidget.dart';
-import 'package:imjai_frontend/widget/searchwidget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({super.key});
+  const Profile({Key? key}) : super(key: key);
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -43,64 +38,63 @@ class _ProfileState extends State<Profile> {
 
   void myAlert() {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            title: Text('Please choose media to select'),
-            content: Container(
-              height: MediaQuery.of(context).size.height / 6,
-              child: Column(
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange[300]),
-                    //if user click this button, user can upload image from gallery
-                    onPressed: () {
-                      Navigator.pop(context);
-                      getImage(ImageSource.gallery);
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.image),
-                        Text(' From Gallery'),
-                      ],
-                    ),
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          title: Text('Please choose media to select'),
+          content: Container(
+            height: MediaQuery.of(context).size.height / 6,
+            child: Column(
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange[300],
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange[300]),
-                    //if user click this button. user can upload image from camera
-                    onPressed: () {
-                      Navigator.pop(context);
-                      getImage(ImageSource.camera);
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.camera),
-                        Text(' From Camera'),
-                      ],
-                    ),
+                  //if user clicks this button, user can upload image from gallery
+                  onPressed: () {
+                    Navigator.pop(context);
+                    getImage(ImageSource.gallery);
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.image),
+                      Text(' From Gallery'),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange[300],
+                  ),
+                  //if user clicks this button, user can upload image from camera
+                  onPressed: () {
+                    Navigator.pop(context);
+                    getImage(ImageSource.camera);
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.camera),
+                      Text(' From Camera'),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   String phone_number = '';
   String fname = '';
   String lastname = '';
   String email = '';
-  // String faculty = '';
-  // String department = '';
   String profileUrl = '';
   String birthdate = '';
-  // double screenHeight = 0;
-  // double screenWidth = 0;
-  // final users = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -165,7 +159,7 @@ class _ProfileState extends State<Profile> {
                         Container(
                           child: IconButton(
                             onPressed: () {
-                              Navigator.pop((context));
+                              Navigator.pop(context);
                             },
                             icon: const Icon(
                               Icons.arrow_back_ios_new_rounded,
@@ -185,7 +179,7 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                         ),
-                        Spacer()
+                        Spacer(),
                       ],
                     ),
                   ),
@@ -195,84 +189,66 @@ class _ProfileState extends State<Profile> {
                     child: Column(
                       children: <Widget>[
                         SizedBox(height: screenHeight / 45),
-                        Row(
+                        Column(
                           children: [
                             Stack(
                               children: [
                                 image != null
                                     ? CircleAvatar(
-                                        radius: 47,
+                                        radius: 90,
                                         backgroundImage:
                                             FileImage(File(image!.path)),
                                       )
-                                    // Padding(
-                                    //     padding: const EdgeInsets.symmetric(
-                                    //         horizontal: 20),
-                                    //     child: ClipRRect(
-                                    //       borderRadius:
-                                    //           BorderRadius.circular(47),
-                                    //       child: Image.file(
-                                    //         //to show image, you type like this.
-                                    //         File(image!.path),
-                                    //         fit: BoxFit.cover,
-                                    //         width: MediaQuery.of(context)
-                                    //             .size
-                                    //             .width,
-                                    //         height: 300,
-                                    //       ),
-                                    //     ),
-                                    //   )
                                     : CircleAvatar(
-                                        radius: 47,
+                                        radius: 90,
                                         backgroundColor: Colors.orange[200],
                                       ),
-                                // CircleAvatar(
-                                //   radius: 47,
-                                //   backgroundImage: AssetImage(image.toString()),
-                                // ),
                                 Positioned(
-                                  bottom: -8,
-                                  right: -10,
+                                  bottom: -5,
+                                  right: 13,
                                   child: ElevatedButton(
-                                      onPressed: () {
-                                        myAlert();
-                                      },
-                                      style: ButtonStyle(
-                                        shape: MaterialStateProperty.all(
-                                            const CircleBorder()),
-                                        minimumSize: MaterialStateProperty.all(
-                                          const Size(30,
-                                              30), // Adjust the size to make the button smaller
-                                        ),
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                const Color.fromARGB(
-                                                    255,
-                                                    237,
-                                                    158,
-                                                    2)), // <-- Button color
+                                    onPressed: () {
+                                      myAlert();
+                                    },
+                                    style: ButtonStyle(
+                                      shape: MaterialStateProperty.all(
+                                        const CircleBorder(),
                                       ),
-                                      child: const Icon(
-                                        Icons.edit,
-                                        size: 18,
-                                      )),
+                                      minimumSize: MaterialStateProperty.all(
+                                        const Size(30, 30),
+                                      ),
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                        const Color.fromARGB(
+                                          255,
+                                          237,
+                                          158,
+                                          2,
+                                        ), // <-- Button color
+                                      ),
+                                    ),
+                                    child: const Icon(
+                                      Icons.edit,
+                                      size: 18,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
                             const SizedBox(
                               width: 20,
                             ),
-                            Column(
-                              children: [
-                                Text(
-                                  fname + " " + lastname,
-                                  style: TextStyle(fontSize: 23),
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                )
-                              ],
-                            )
+                            // Column(
+                            //   children: [
+                            //     Text(
+                            //       fname + " " + lastname,
+                            //       style: TextStyle(fontSize: 23),
+                            //     ),
+                            //     const SizedBox(
+                            //       height: 20,
+                            //     )
+                            //   ],
+                            // ),
                           ],
                         ),
                         SizedBox(height: screenHeight / 65),
@@ -289,10 +265,11 @@ class _ProfileState extends State<Profile> {
                           color: Colors.black,
                         ),
                         Info(
-                            title: "Email",
-                            data: email,
-                            color: Colors.black,
-                            enable: false),
+                          title: "Email",
+                          data: email,
+                          color: Colors.black,
+                          enable: false,
+                        ),
                         Stack(
                           children: [
                             Info(
@@ -304,24 +281,31 @@ class _ProfileState extends State<Profile> {
                               controller: _controller,
                             ),
                             Positioned(
-                                bottom: 3,
-                                right: -10,
-                                child: TextButton(
-                                    onPressed: () {
-                                      toggleEditable();
-                                    },
-                                    child: Text(
-                                      isEditable ? "Done" : "Edit",
-                                      style: TextStyle(color: Colors.grey),
-                                    ))),
+                              bottom: 3,
+                              right: -10,
+                              child: TextButton(
+                                onPressed: () {
+                                  toggleEditable();
+                                },
+                                child: Text(
+                                  isEditable ? "Done" : "Edit",
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                         Info(
-                            title: "Birth Day",
-                            color: Colors.black,
-                            data: DateFormat('E, d MMM yyyy')
-                                .format(DateTime.parse(birthdate)),
-                            enable: false),
+                          title: "Birth Day",
+                          color: Colors.black,
+                          data: birthdate.isNotEmpty
+                              ? DateFormat("E, dd-MM-yyyy").format(
+                                  DateTime.parse(birthdate)
+                                      .add(Duration(hours: 8)),
+                                )
+                              : '',
+                          enable: false,
+                        ),
                         const SizedBox(
                           height: 20,
                         ),
@@ -329,22 +313,26 @@ class _ProfileState extends State<Profile> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.orange,
                             side: const BorderSide(
-                                color: Colors.orange, width: 2),
+                              color: Colors.orange,
+                              width: 2,
+                            ),
                             minimumSize: const Size(double.infinity, 50),
                           ),
                           onPressed: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Login(),
-                                ));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Login(),
+                              ),
+                            );
                           },
                           child: const Text(
                             'Logout',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                            ),
                           ),
                         ),
                       ],
@@ -352,7 +340,7 @@ class _ProfileState extends State<Profile> {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

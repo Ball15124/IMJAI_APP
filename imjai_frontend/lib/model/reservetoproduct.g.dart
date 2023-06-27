@@ -20,6 +20,9 @@ reserveToProduct _$reserveToProductFromJson(Map<String, dynamic> json) =>
           ? null
           : mainProduct
               .fromJson(json['reserved_product'] as Map<String, dynamic>),
+      reserved_users: json['reserved_users'] == null
+          ? null
+          : meProfile.fromJson(json['reserved_users'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$reserveToProductToJson(reserveToProduct instance) =>
@@ -29,4 +32,5 @@ Map<String, dynamic> _$reserveToProductToJson(reserveToProduct instance) =>
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'reserved_product': instance.reserved_product,
+      'reserved_users': instance.reserved_users,
     };

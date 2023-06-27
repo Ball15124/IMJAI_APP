@@ -103,16 +103,32 @@ class _ProductState extends State<Product> {
                         Container(
                           margin: EdgeInsets.only(top: 20),
                           child: Column(
-                              children: list_product
-                                  .map((e) => ProductList(
-                                      id: e.id,
-                                      title: e.name!,
-                                      imageUrl: e.picture_url!,
-                                      tag: e.category_id.toString(),
-                                      range: "23 km",
-                                      owner: "Not yet",
-                                      status: e.status.toString()))
-                                  .toList()),
+                            children: list_product.map((e) {
+                              String ownerName;
+                              if (e.reserved != null &&
+                                  e.reserved!.reserved_users != null &&
+                                  e.reserved!.reserved_users!.firstname !=
+                                      null &&
+                                  e.reserved!.reserved_users!.firstname!
+                                      .isNotEmpty) {
+                                ownerName =
+                                    e.reserved!.reserved_users!.firstname! +
+                                        " " +
+                                        e.reserved!.reserved_users!.lastname!;
+                              } else {
+                                ownerName = "No reserver";
+                              }
+
+                              return ProductList(
+                                  id: e.id,
+                                  title: e.name!,
+                                  imageUrl: e.picture_url!,
+                                  tag: e.category_id.toString(),
+                                  range: "23 km",
+                                  owner: ownerName,
+                                  status: e.status.toString());
+                            }).toList(),
+                          ),
                         )
                         // ProductList(title: title, imageUrl: imageUrl, tag: tag, range: range, owner: owner, status: status)
                         // ListProductWidget(),

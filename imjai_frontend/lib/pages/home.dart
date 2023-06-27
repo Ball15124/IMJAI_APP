@@ -17,7 +17,7 @@ import 'package:imjai_frontend/pages/locationHome.dart';
 import 'package:imjai_frontend/pages/profile.dart';
 import 'package:imjai_frontend/widget/categorieswidget.dart';
 import 'package:imjai_frontend/widget/listorderwidget.dart';
-
+import 'dart:math';
 import 'package:imjai_frontend/widget/navigationbarwidget.dart';
 import 'package:imjai_frontend/widget/searchwidget.dart';
 
@@ -48,6 +48,34 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     fetchData();
+  }
+
+  String calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+    const double earthRadius = 6371; // Radius of the Earth in kilometers
+
+    // Convert latitude and longitude to radians
+    double lat1Radians = degreesToRadians(lat1);
+    double lon1Radians = degreesToRadians(lon1);
+    double lat2Radians = degreesToRadians(lat2);
+    double lon2Radians = degreesToRadians(lon2);
+
+    // Calculate the differences between coordinates
+    double latDiff = lat2Radians - lat1Radians;
+    double lonDiff = lon2Radians - lon1Radians;
+
+    // Calculate the Haversine formula
+    double a = pow(sin(latDiff / 2), 2) +
+        cos(lat1Radians) * cos(lat2Radians) * pow(sin(lonDiff / 2), 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    double distance = earthRadius * c;
+
+    String formattedDistance = distance.toStringAsFixed(2);
+
+    return formattedDistance + ' km';
+  }
+
+  double degreesToRadians(double degrees) {
+    return degrees * pi / 180;
   }
 
   getLocation() async {
@@ -246,13 +274,21 @@ class _HomeState extends State<Home> {
                           child: Column(
                               children: mainproduct
                                   .map((e) => ListOrder(
-                                        id: e.id,
-                                        title: e.name!,
-                                        imageUrl: e.picture_url!,
-                                        tag: e.category_id.toString(),
-                                        owner: "Not yet",
-                                        range: "23 km",
-                                      ))
+                                      id: e.id,
+                                      title: e.name!,
+                                      imageUrl: e.picture_url!,
+                                      tag: e.category_id.toString(),
+                                      owner: e.created_by_user!.firstname! +
+                                          " " +
+                                          e.created_by_user!.lastname!,
+                                      range: calculateDistance(
+                                              doubleLat,
+                                              doubleLong,
+                                              double.parse(
+                                                  e.location_latitude!),
+                                              double.parse(
+                                                  e.location_longtitude!))
+                                          .toString()))
                                   .toList()),
                         )
                         //ListOrderWidget(),

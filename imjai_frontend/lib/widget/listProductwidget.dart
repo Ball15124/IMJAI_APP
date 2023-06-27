@@ -172,13 +172,16 @@ class ProductList extends StatelessWidget {
                         SizedBox(height: 10),
                         Text(
                           owner,
-                          style:
-                              TextStyle(fontSize: 12, color: Colors.grey[600]),
+                          style: owner != "No reserver"
+                              ? TextStyle(fontSize: 12, color: Colors.grey[600])
+                              : TextStyle(fontSize: 12, color: Colors.red),
                         ),
                         SizedBox(height: 10),
                         Text(
                           status,
-                          style: TextStyle(fontSize: 12, color: Colors.green),
+                          style: status == "Not reserved yet"
+                              ? TextStyle(fontSize: 12, color: Colors.grey)
+                              : TextStyle(fontSize: 12, color: Colors.green),
                         ),
                       ],
                     ),

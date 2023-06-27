@@ -1,4 +1,5 @@
 import 'package:imjai_frontend/model/mainproduct.dart';
+import 'package:imjai_frontend/model/me.dart';
 import 'package:imjai_frontend/widget/listorderwidget.dart';
 import 'package:json_annotation/json_annotation.dart';
 // import 'package:mamaimakhrap/model/courseRound.dart';
@@ -23,15 +24,19 @@ class reserveToProduct {
   @JsonKey(name: 'reserved_product')
   final mainProduct? reserved_product;
 
-  reserveToProduct({
-    required this.id,
-    required this.userId,
-    required this.createdAt,
-    required this.updatedAt,
-    this.reserved_product,
-    // this.courseRound,
-    // this.enrollUser
-  });
+  @JsonKey(name: 'reserved_users')
+  final meProfile? reserved_users;
+
+  reserveToProduct(
+      {required this.id,
+      required this.userId,
+      required this.createdAt,
+      required this.updatedAt,
+      this.reserved_product,
+      this.reserved_users
+      // this.courseRound,
+      // this.enrollUser
+      });
 
   factory reserveToProduct.fromJson(Map<String, dynamic> json) =>
       _$reserveToProductFromJson(json);

@@ -21,6 +21,9 @@ mainProduct _$mainProductFromJson(Map<String, dynamic> json) => mainProduct(
       created_by_user: json['created_by_user'] == null
           ? null
           : meProfile.fromJson(json['created_by_user'] as Map<String, dynamic>),
+      reserved: json['reserved'] == null
+          ? null
+          : reserveToProduct.fromJson(json['reserved'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$mainProductToJson(mainProduct instance) =>
@@ -37,4 +40,5 @@ Map<String, dynamic> _$mainProductToJson(mainProduct instance) =>
       'status': instance.status,
       'is_reserved': instance.is_reserved,
       'created_by_user': instance.created_by_user,
+      'reserved': instance.reserved,
     };

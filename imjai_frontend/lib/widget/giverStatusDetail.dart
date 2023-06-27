@@ -28,6 +28,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
   String locationLatitude = '';
   String locationLongtitude = '';
   String phone_number = '';
+  String recieverName = '';
   int status = 0;
   int productId = 0;
 
@@ -49,13 +50,33 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
         final productData = mainProduct.fromJson(response.data["product"]);
         print(productData);
         productName = productData.name!;
+        print(productName);
         phone_number = productData.created_by_user!.phone_number!;
+        print(phone_number);
         productId = productData.id;
+        print(productId);
         status = productData.status!;
+        print(status);
+        if (productData.reserved == null ||
+            productData.reserved!.reserved_users == null) {
+          recieverName = "Reciever not found!";
+        } else {
+          final reservedUsers = productData.reserved!.reserved_users;
+          if (reservedUsers!.firstname == null ||
+              reservedUsers.firstname!.isEmpty) {
+            recieverName = "Reciever not found!";
+          } else {
+            recieverName =
+                reservedUsers.firstname! + " " + reservedUsers.lastname!;
+          }
+        }
+
+        print(recieverName);
         print(phone_number);
         print(productName);
         productPicture = productData.picture_url!;
         print(productPicture);
+
         ownerName = productData.created_by_user!.firstname! +
             " " +
             productData.created_by_user!.lastname!;
@@ -369,7 +390,13 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                         child: Row(
                           children: [
                             Text(
-                              ownerName,
+                              () {
+                                if (recieverName.isNotEmpty) {
+                                  return recieverName;
+                                } else {
+                                  return "Reciever not found!";
+                                }
+                              }(),
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ),

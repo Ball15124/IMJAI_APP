@@ -1,4 +1,5 @@
 import 'package:imjai_frontend/model/me.dart';
+import 'package:imjai_frontend/model/reservetoproduct.dart';
 import 'package:imjai_frontend/widget/listorderwidget.dart';
 import 'package:json_annotation/json_annotation.dart';
 // import 'package:mamaimakhrap/model/courseRound.dart';
@@ -44,6 +45,9 @@ class mainProduct {
   @JsonKey(name: 'created_by_user')
   final meProfile? created_by_user;
 
+  @JsonKey(name: 'reserved')
+  final reserveToProduct? reserved;
+
   //  @JsonKey(name: 'available_time')
   // final String? available_time;
 
@@ -59,7 +63,9 @@ class mainProduct {
       required this.location_longtitude,
       required this.status,
       required this.is_reserved,
-      this.created_by_user
+      this.created_by_user,
+      this.reserved
+
       // this.courseRound,
       // this.enrollUser
       });

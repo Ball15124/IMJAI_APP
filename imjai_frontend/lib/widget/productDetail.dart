@@ -29,6 +29,7 @@ class _ProductDetailState extends State<ProductDetail> {
   String locationLatitude = '';
   String locationLongtitude = '';
   String phone_number = '';
+  int status = 0;
   int productId = 0;
 
   @override
@@ -65,6 +66,7 @@ class _ProductDetailState extends State<ProductDetail> {
         print(availableTime);
         category = productData.category_id.toString();
         print(category);
+        status = productData.status!;
         locationLatitude = productData.location_latitude!;
         locationLongtitude = productData.location_longtitude!;
         // Map<String, dynamic> productInfo = response.data;
@@ -240,11 +242,32 @@ class _ProductDetailState extends State<ProductDetail> {
               minimumSize: const Size(double.infinity, 50),
             ),
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: ((context) => giverStatus()),
-                      settings: RouteSettings(arguments: productId)));
+              if (status == 0) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Reciever not found!'),
+                      content: const Text(
+                          'No receiver yet , Please wait for reservation'),
+                      actions: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => giverStatus()),
+                        settings: RouteSettings(arguments: productId)));
+              }
             },
             child: const Text(
               'Check Order',

@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:imjai_frontend/model/mainproduct.dart';
 import 'package:imjai_frontend/pages/caller.dart';
 import 'package:imjai_frontend/pages/profile.dart';
+import 'package:imjai_frontend/widget/navigationbarwidget.dart';
 import 'package:imjai_frontend/widget/orderDetail.dart';
 import 'package:imjai_frontend/widget/orderStatusDetail.dart';
 
@@ -57,21 +58,26 @@ class _recieverStatusState extends State<recieverStatus> {
     locationLong = fetchLocation['location_longtitude'];
     print(locationLat);
     print(locationLong);
-    doubleLat = double.parse(locationLat);
-    doubleLong = double.parse(locationLong);
-    print(doubleLat);
-    print(doubleLong);
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(doubleLat, doubleLong);
+    if (locationLat == "") {
+      print("No location found, Please contact giver!");
+    } else {
+      doubleLat = double.parse(locationLat);
+      doubleLong = double.parse(locationLong);
+      print(doubleLat);
+      print(doubleLong);
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(doubleLat, doubleLong);
 
-    setlocation_street = placemarks.first.administrativeArea.toString() +
-        ", " +
-        placemarks.first.street.toString() +
-        ", " +
-        placemarks.first.country.toString();
-    setlocation_name = placemarks.first.name.toString();
-    print(setlocation_street);
-    print(setlocation_name);
+      setlocation_street = placemarks.first.administrativeArea.toString() +
+          ", " +
+          placemarks.first.street.toString() +
+          ", " +
+          placemarks.first.country.toString();
+      setlocation_name = placemarks.first.name.toString();
+      print(setlocation_street);
+      print(setlocation_name);
+    }
+
     // location_name = setlocation_name;
   }
 
@@ -128,6 +134,32 @@ class _recieverStatusState extends State<recieverStatus> {
 
   @override
   Widget build(BuildContext context) {
+    if (this.category == "1") {
+      category = "Meat";
+    } else if (this.category == "2") {
+      // Handle other cases if needed
+      category = "Vegetable & Fruit";
+    } else if (this.category == "3") {
+      // Handle other cases if needed
+      category = "Food";
+    } else if (this.category == "4") {
+      // Handle other cases if needed
+      category = "Flavoring";
+    } else if (this.category == "5") {
+      // Handle other cases if needed
+      category = "Drink";
+    } else if (this.category == "6") {
+      // Handle other cases if needed
+      category = "Snack";
+    } else if (this.category == "7") {
+      // Handle other cases if needed
+      category = "Dessert";
+    } else if (this.category == "8") {
+      // Handle other cases if needed
+      category = "Food Waste";
+    } else {
+      category = "No Categories";
+    }
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -324,9 +356,16 @@ class _recieverStatusState extends State<recieverStatus> {
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  setlocation_name +
-                                                      ", \n" +
-                                                      setlocation_street,
+                                                  () {
+                                                    if (setlocation_name ==
+                                                        "") {
+                                                      return "No location found, \nPleace contact giver!";
+                                                    } else {
+                                                      return setlocation_name +
+                                                          ", \n" +
+                                                          setlocation_street;
+                                                    }
+                                                  }(),
                                                   style: TextStyle(
                                                       color: Color.fromARGB(
                                                           255, 0, 0, 0),
@@ -607,7 +646,22 @@ class _recieverStatusState extends State<recieverStatus> {
                                                   style: TextButton.styleFrom(
                                                     backgroundColor: Colors.red,
                                                   ),
-                                                  onPressed: () {},
+                                                  onPressed: () async {
+                                                    try {
+                                                      Response reserve =
+                                                          await Caller.dio.post(
+                                                        "/reserveReciever/reserves/cancel/$productId",
+                                                      );
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  (NavigationbarWidget())));
+                                                      print(reserve.data);
+                                                    } catch (e) {
+                                                      print(e);
+                                                    }
+                                                  },
                                                 ),
                                               ],
                                             );

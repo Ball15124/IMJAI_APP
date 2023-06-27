@@ -12,6 +12,7 @@ class OrderStatusDetail extends StatefulWidget {
 }
 
 class _OrderStatusDetailState extends State<OrderStatusDetail> {
+  // int id;
   double screenHeight = 0;
   double screenWidth = 0;
 

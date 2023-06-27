@@ -106,7 +106,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
       // Handle other cases if needed
       category = "Dessert";
     } else if (this.category == "8") {
-      // Handle other cases if needed
+      // Handle other cases if neededF
       category = "Food Waste";
     } else {
       category = "No Categories";

@@ -17,7 +17,7 @@ class OrderDetail extends StatefulWidget {
 }
 
 class _OrderDetailState extends State<OrderDetail> {
-  late int id;
+  late int productId;
   double screenHeight = 0;
   double screenWidth = 0;
   String productName = '';
@@ -67,6 +67,7 @@ class _OrderDetailState extends State<OrderDetail> {
         print(category);
         locationLatitude = productData.location_latitude!;
         locationLongtitude = productData.location_longtitude!;
+        productId = ModalRoute.of(context)!.settings.arguments as int;
         // Map<String, dynamic> productInfo = response.data;
         // print(55555555);
         // print(productInfo);
@@ -289,11 +290,21 @@ class _OrderDetailState extends State<OrderDetail> {
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.orange,
                         ),
-                        onPressed: () {
+                        onPressed: () async {
+                          try {
+                            Response reserve = await Caller.dio.post(
+                              "/products/reserve/$productId",
+                            );
+                            print(reserve.data);
+                          } catch (e) {
+                            print(e);
+                          }
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => recieverStatus()));
+                                  builder: (context) => recieverStatus(),
+                                  settings:
+                                      RouteSettings(arguments: productId)));
                         },
                       ),
                     ],

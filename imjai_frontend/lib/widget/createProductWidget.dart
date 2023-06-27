@@ -13,6 +13,7 @@ import 'package:imjai_frontend/pages/product.dart';
 import 'package:imjai_frontend/widget/chiptag.dart';
 import 'package:imjai_frontend/widget/mapScreen.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:imjai_frontend/widget/navigationbarwidget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateProductWidget extends StatefulWidget {
@@ -102,26 +103,49 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
     SharedPreferences productTag = await SharedPreferences.getInstance();
     int productCategory = productTag.getInt('tag')!;
     print(productCategory);
-    Caller.dio
-        .post("/products", data: {
-          "product_name": proname.text,
-          "product_picture": "",
-          "product_description": description.text,
-          "product_time": time.text,
-          "category_id": productCategory,
-          "locate_latitude": productLatitude,
-          "locate_longtitude": productLongtitude,
-          "status": 0,
-          "reserved_yet": false,
-        })
-        .then((response) {})
-        // .onError((DioError error, _) {
-        //   Caller.handle(context, error);
-        // })
-        .whenComplete(() {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => (Product())));
-        });
+    if (productLatitude == "") {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Location not found!'),
+            content: const Text('Please set your product current location!'),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      Caller.dio.post("/products", data: {
+        "product_name": proname.text,
+        "product_picture": "",
+        "product_description": description.text,
+        "product_time": time.text,
+        "category_id": productCategory,
+        "locate_latitude": productLatitude,
+        "locate_longtitude": productLongtitude,
+        "status": 0,
+        "reserved_yet": false,
+      }).then((response) {
+        print(response.data);
+        productLocation.setString('productLatitude', "");
+        productLocation.setString('productLongtitude', "");
+      })
+          // .onError((DioError error, _) {
+          //   Caller.handle(context, error);
+          // })
+          .whenComplete(() {
+        Navigator.pop((context));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => (NavigationbarWidget())));
+      });
+    }
   }
 
   Widget build(BuildContext context) {
@@ -287,7 +311,6 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
                       ),
                       onPressed: () async {
                         saveInfo();
-                        Navigator.pop((context));
                       },
                       child: const Text(
                         'Post',

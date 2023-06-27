@@ -143,10 +143,7 @@ class _MapScreenState extends State<MapScreen> {
                                             .toString());
                                 SharedPreferences productLocation =
                                     await SharedPreferences.getInstance();
-                                productLocation.setString(
-                                    'productLatitude', finalLatitude);
-                                productLocation.setString(
-                                    'productLongtitude', finalLongtitude);
+
                                 setState(() {
                                   finalLatitude = cameraPosition!
                                       .target.latitude
@@ -154,6 +151,10 @@ class _MapScreenState extends State<MapScreen> {
                                   finalLongtitude = cameraPosition!
                                       .target.longitude
                                       .toString();
+                                  productLocation.setString(
+                                      'productLatitude', finalLatitude);
+                                  productLocation.setString(
+                                      'productLongtitude', finalLongtitude);
                                   print("This is your final location " +
                                       finalLatitude +
                                       ", " +

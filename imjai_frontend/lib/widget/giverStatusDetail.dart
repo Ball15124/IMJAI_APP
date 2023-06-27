@@ -416,7 +416,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                         ],
                       ),
                       SizedBox(
-                        height: 13,
+                        height: 10,
                       ),
                       Row(
                         children: [
@@ -436,7 +436,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                         ],
                       ),
                       SizedBox(
-                        height: 13,
+                        height: 10,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -448,7 +448,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                         ],
                       ),
                       SizedBox(
-                        height: 13,
+                        height: 6,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -465,7 +465,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                             }(),
                             style: TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0),
-                                fontSize: 15),
+                                fontSize: 12),
                           ),
                         ],
                       ),

@@ -176,23 +176,41 @@ class _ProfileState extends State<Profile> {
   void toggleEditable() {
     setState(() {
       isEditable = !isEditable;
-      if (!isEditable) {
-        // Save the edited text when editing is complete
-        phone_number = _controller.text;
-        final phoneNumber = _controller.text;
-        print(phoneNumber);
-        print(phone_number);
+      // Save the edited text when editing is complete
+      // phone_number = _controller.text;
+      // final phoneNumber = _controller.text;
+      // print(phoneNumber);
+      // print(phone_number);
 
-        Caller.dio.post("/me/update", data: {
-          "phone_number": phone_number,
-        }).then((response) {
-          print("Success");
-        }).catchError((error) {
-          print("Error: $error");
-        });
-        _controller.clear();
-      }
+      //   Caller.dio.post("/me/update", data: {
+      //     "phone_number": phone_number,
+      //   }).then((response) {
+      //     print("Success");
+      //   }).catchError((error) {
+      //     print("Error: $error");
+      //   });
+      //   _controller.clear();
+      // print(phone_number);
+      // Caller.dio.post("/me/update", data: {
+      //   "phone_number": phone_number,
+      // }).then((response) {
+      //   print("Success");
+      // }).catchError((error) {
+      //   print("Error: $error");
+      // });
+    });
+  }
+
+  void sendInfo() {
+    setState(() {
+      isEditable = !isEditable;
+      print("send Info");
+      // Save the edited text when editing is complete
+      phone_number = _controller.text;
+      final phoneNumber = _controller.text;
+      print(phoneNumber);
       print(phone_number);
+
       Caller.dio.post("/me/update", data: {
         "phone_number": phone_number,
       }).then((response) {
@@ -200,6 +218,15 @@ class _ProfileState extends State<Profile> {
       }).catchError((error) {
         print("Error: $error");
       });
+      // _controller.clear();
+      print(phone_number);
+      // Caller.dio.post("/me/update", data: {
+      //   "phone_number": phone_number,
+      // }).then((response) {
+      //   print("Success");
+      // }).catchError((error) {
+      //   print("Error: $error");
+      // });
     });
   }
 
@@ -364,19 +391,35 @@ class _ProfileState extends State<Profile> {
                               color: Colors.black,
                               controller: _controller,
                             ),
-                            Positioned(
-                              bottom: 3,
-                              right: -10,
-                              child: TextButton(
-                                onPressed: () {
-                                  toggleEditable();
-                                },
-                                child: Text(
-                                  isEditable ? "Done" : "Edit",
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                              ),
-                            ),
+                            isEditable == true
+                                ? Positioned(
+                                    bottom: 3,
+                                    right: -10,
+                                    child: TextButton(
+                                      onPressed: () {
+                                        print("This is phone number");
+                                        print(phone_number);
+                                        sendInfo();
+                                      },
+                                      child: Text(
+                                        "Done",
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                    ),
+                                  )
+                                : Positioned(
+                                    bottom: 3,
+                                    right: -10,
+                                    child: TextButton(
+                                      onPressed: () {
+                                        toggleEditable();
+                                      },
+                                      child: Text(
+                                        "Edit",
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                    ),
+                                  )
                           ],
                         ),
                         Info(
@@ -403,11 +446,63 @@ class _ProfileState extends State<Profile> {
                             minimumSize: const Size(double.infinity, 50),
                           ),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Login(),
-                              ),
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  title: const Text(
+                                    'Logout',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.orange),
+                                  ),
+                                  content: const Text('Do you want to Logout?'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: const Text(
+                                        'No',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.orange,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Colors.white,
+                                        side: BorderSide(
+                                          color: Colors.orange,
+                                          width: 1,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text(
+                                        'Yes',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Colors.orange,
+                                      ),
+                                      onPressed: () async {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: ((context) =>
+                                                    Login())));
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
                             );
                           },
                           child: const Text(

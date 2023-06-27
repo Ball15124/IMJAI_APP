@@ -42,6 +42,7 @@ class Info extends StatelessWidget {
                 color: color,
               )),
           enabled: enable,
+          controller: controller,
           keyboardType: text,
           style: TextStyle(
             color: color,

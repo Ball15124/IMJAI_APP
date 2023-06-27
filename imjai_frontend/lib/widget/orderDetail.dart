@@ -6,6 +6,8 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:imjai_frontend/model/mainproduct.dart';
 import 'package:imjai_frontend/pages/caller.dart';
 import 'package:imjai_frontend/pages/recieverStatus.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 class OrderDetail extends StatefulWidget {
   const OrderDetail({super.key});
@@ -25,8 +27,10 @@ class _OrderDetailState extends State<OrderDetail> {
   String availableTime = '';
   String category = '';
   String locationLatitude = '';
+
   String locationLongtitude = '';
   String phone_number = '';
+  final Uri phoneNumber = Uri.parse('tel:0970200803');
 
   @override
   void initState() {
@@ -210,12 +214,15 @@ class _OrderDetailState extends State<OrderDetail> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 50),
+                  padding: EdgeInsets.only(left: 120),
                   child: Row(
                     children: [
                       Container(
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await FlutterPhoneDirectCaller.callNumber(
+                                phone_number);
+                          },
                           icon: const Icon(
                             Icons.phone,
                             size: 30,

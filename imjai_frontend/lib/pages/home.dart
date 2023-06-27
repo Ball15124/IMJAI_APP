@@ -43,6 +43,8 @@ class _HomeState extends State<Home> {
   double doubleLong = 0;
   String setlocation_name = '';
   String setlocation_street = '';
+  final TextEditingController _searchController = TextEditingController();
+  List<mainProduct> filteredList = [];
 
   @override
   void initState() {
@@ -104,6 +106,23 @@ class _HomeState extends State<Home> {
     // location_name = setlocation_name;
   }
 
+  void filterList(String query) async {
+    // Response productResponse = await Caller.dio.get("/home/list");
+    setState(() {
+      if (query.isNotEmpty) {
+        filteredList = mainproduct
+            .where((e) => e.name.toString().contains(query))
+            .toList();
+      } else {
+        filteredList = List<mainProduct>.from(mainproduct);
+        // final List<dynamic> productRes = productResponse.data;
+        // for (var productResponse in productRes) {
+        //   filteredList.add(mainProduct.fromJson(productResponse));
+        // }
+      }
+    });
+  }
+
   void fetchData() async {
     try {
       Response response = await Caller.dio.get("/home/me");
@@ -140,6 +159,7 @@ class _HomeState extends State<Home> {
           mainproduct.add(mainProduct.fromJson(productResponse));
         }
         print(mainproduct);
+        filteredList = List<mainProduct>.from(mainproduct);
       });
     } catch (e) {
       print(e);
@@ -243,7 +263,25 @@ class _HomeState extends State<Home> {
                           },
                         ),
                         SizedBox(height: screenHeight / 65),
-                        SearchWidget(),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 5),
+                          child: TextField(
+                            controller: _searchController,
+                            onChanged: (value) => filterList(value),
+                            decoration: InputDecoration(
+                              hintText: 'Search for your interest',
+                              prefixIcon: IconButton(
+                                icon: Icon(Icons.search),
+                                onPressed: () {},
+                              ),
+                              contentPadding:
+                                  EdgeInsets.symmetric(vertical: 10),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                          ),
+                        ),
                         Container(
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,27 +308,26 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: 20),
-                          child: Column(
-                              children: mainproduct
-                                  .map((e) => ListOrder(
-                                      id: e.id,
-                                      title: e.name!,
-                                      imageUrl: e.picture_url!,
-                                      tag: e.category_id.toString(),
-                                      owner: e.created_by_user!.firstname! +
-                                          " " +
-                                          e.created_by_user!.lastname!,
-                                      range: calculateDistance(
-                                              doubleLat,
-                                              doubleLong,
-                                              double.parse(
-                                                  e.location_latitude!),
-                                              double.parse(
-                                                  e.location_longtitude!))
-                                          .toString()))
-                                  .toList()),
-                        )
+                            margin: EdgeInsets.only(top: 20),
+                            child: Column(
+                              children: filteredList.map((e) {
+                                return ListOrder(
+                                  id: e.id,
+                                  title: e.name!,
+                                  imageUrl: e.picture_url!,
+                                  tag: e.category_id.toString(),
+                                  owner: e.created_by_user!.firstname! +
+                                      " " +
+                                      e.created_by_user!.lastname!,
+                                  range: calculateDistance(
+                                    doubleLat,
+                                    doubleLong,
+                                    double.parse(e.location_latitude!),
+                                    double.parse(e.location_longtitude!),
+                                  ).toString(),
+                                );
+                              }).toList(),
+                            ))
                         //ListOrderWidget(),
                       ],
                     ),

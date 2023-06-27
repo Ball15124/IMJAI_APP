@@ -26,28 +26,28 @@ class _ListCategoriesState extends State<ListCategories> {
     fetchData();
   }
 
- void fetchData() async {
-  try {
-    final url = '/home/${widget.tag}';
-    Response response = await Caller.dio.get(url);
-    setState(() {
-      print(response.data.runtimeType); // Print the type of response data
-      print(response.data);
-      
-      if (response.data != null && response.data is List<dynamic>) {
-        final List<dynamic> responseData = response.data;
-        for (var product in responseData) {
-          categoryList.add(mainProduct.fromJson(product));
+  void fetchData() async {
+    try {
+      final url = '/home/${widget.tag}';
+      Response response = await Caller.dio.get(url);
+      setState(() {
+        print(response.data.runtimeType); // Print the type of response data
+        print(response.data);
+
+        if (response.data != null && response.data is List<dynamic>) {
+          final List<dynamic> responseData = response.data;
+          for (var product in responseData) {
+            categoryList.add(mainProduct.fromJson(product));
+          }
+        } else {
+          print("Invalid response data format");
         }
-      } else {
-        print("Invalid response data format");
-      }
-    });
-  } catch (e) {
-    print(e);
+      });
+    } catch (e) {
+      print(e);
+    }
   }
-}
-  
+
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
@@ -79,16 +79,15 @@ class _ListCategoriesState extends State<ListCategories> {
                             ),
                           ),
                         ),
-                         Center(
+                        Center(
                           child: Padding(
                             padding: EdgeInsets.only(left: 40),
                             child: Text(
-                              "Category: "+getCategoryName(widget.tag),
+                              "Category: " + getCategoryName(widget.tag),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 21,
                                 fontWeight: FontWeight.bold,
-                                
                               ),
                             ),
                           ),
@@ -98,18 +97,20 @@ class _ListCategoriesState extends State<ListCategories> {
                     ),
                   ),
                   Container(
+                    padding: EdgeInsets.only(left: 20, right: 20),
                     child: Column(
-                      children: categoryList
-                                  .map((e) => ListOrder(
-                                      id: e.id,
-                                      title: e.name!,
-                                      imageUrl: e.picture_url!,
-                                      tag: e.category_id.toString(),
-                                      range: "23 km",
-                                      owner: e.created_by_user!.firstname!+ " "+ e.created_by_user!.lastname!,
-                                      ))
-                                  .toList()
-                    ),
+                        children: categoryList
+                            .map((e) => ListOrder(
+                                  id: e.id,
+                                  title: e.name!,
+                                  imageUrl: e.picture_url!,
+                                  tag: e.category_id.toString(),
+                                  range: "23 km",
+                                  owner: e.created_by_user!.firstname! +
+                                      " " +
+                                      e.created_by_user!.lastname!,
+                                ))
+                            .toList()),
                   )
                   // ListCategoriesWidget(),
                 ],
@@ -120,6 +121,7 @@ class _ListCategoriesState extends State<ListCategories> {
       ),
     );
   }
+
   String getCategoryName(int tag) {
     switch (tag) {
       case 1:

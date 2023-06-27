@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:imjai_frontend/model/reservetoproduct.dart';
 import 'package:imjai_frontend/pages/caller.dart';
+import 'package:imjai_frontend/pages/home.dart';
 import 'package:imjai_frontend/widget/categorieswidget.dart';
 import 'package:imjai_frontend/widget/listreservewidget.dart';
 import 'package:imjai_frontend/widget/navigationbarwidget.dart';
@@ -21,6 +24,7 @@ class _ReserveState extends State<Reserve> {
 
   double screenHeight = 0;
   double screenWidth = 0;
+
   Color primary = Color.fromARGB(255, 255, 255, 255);
   List<reserveToProduct> reserved_product = [];
 
@@ -32,6 +36,29 @@ class _ReserveState extends State<Reserve> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       fetchData(context);
     });
+  }
+
+  String calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+    const double earthRadius = 6371;
+
+    double lat1Radians = degreesToRadians(lat1);
+    double lon1Radians = degreesToRadians(lon1);
+    double lat2Radians = degreesToRadians(lat2);
+    double lon2Radians = degreesToRadians(lon2);
+    double latDiff = lat2Radians - lat1Radians;
+    double lonDiff = lon2Radians - lon1Radians;
+    double a = pow(sin(latDiff / 2), 2) +
+        cos(lat1Radians) * cos(lat2Radians) * pow(sin(lonDiff / 2), 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    double distance = earthRadius * c;
+
+    String formattedDistance = distance.toStringAsFixed(2);
+
+    return formattedDistance + ' km';
+  }
+
+  double degreesToRadians(double degrees) {
+    return degrees * pi / 180;
   }
 
   void fetchData(BuildContext context) async {
@@ -112,7 +139,15 @@ class _ReserveState extends State<Reserve> {
                                             " " +
                                             e.reserved_product!.created_by_user!
                                                 .lastname!,
-                                        range: "23 km",
+                                        range: calculateDistance(
+                                            double.parse(e.reserved_users!
+                                                .location_latitude!),
+                                            double.parse(e.reserved_users!
+                                                .location_longtitude!),
+                                            double.parse(e.reserved_product!
+                                                .location_latitude!),
+                                            double.parse(e.reserved_product!
+                                                .location_longtitude!)),
                                         status: e.reserved_product!.status!
                                             .toString(),
                                       ))

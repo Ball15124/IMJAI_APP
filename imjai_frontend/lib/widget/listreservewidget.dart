@@ -173,8 +173,8 @@ class reserveList extends StatelessWidget {
                     bottomLeft: Radius.circular(10),
                   ),
                   child: Container(
-                    width: 110,
-                    height: 110,
+                    width: 130,
+                    height: 130,
                     child: Image.network(
                       imageUrl,
                       fit: BoxFit.cover,

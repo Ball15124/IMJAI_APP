@@ -1,5 +1,7 @@
 // import 'dart:ffi';
 
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +11,9 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:imjai_frontend/model/mainproduct.dart';
+import 'package:imjai_frontend/model/me.dart';
 import 'package:imjai_frontend/pages/caller.dart';
+import 'package:imjai_frontend/widget/navigationbarwidget.dart';
 import 'package:imjai_frontend/widget/orderDetail.dart';
 
 class giverStatusDetail extends StatefulWidget {
@@ -42,6 +46,8 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
   String setlocation_name = '';
   int status = 0;
   int productId = 0;
+  late Timer timer;
+  late StreamSubscription<int> _subscription;
 
   @override
   void initState() {
@@ -50,6 +56,25 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
       fetchData(context);
       // getLocation();
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    print('fetchData');
+    fetchData(context);
+    timer = Timer.periodic(new Duration(seconds: 3), (timer) {
+      fetchData(context);
+      print('refreshed');
+    });
+    // Move the code that depends on inherited widgets here
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+    timer.cancel();
   }
 
   getLocation() async {
@@ -89,13 +114,15 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
       Response response = await Caller.dio.get("/products/products/$id");
       await getLocation();
       print(response.data);
+      Response response2 = await Caller.dio.get("/me");
       setState(() {
         print("change status page");
         final productData = mainProduct.fromJson(response.data["product"]);
         print(productData);
+        // final userData = meProfile.fromJson(response2.data);
         productName = productData.name!;
         print(productName);
-        phone_number = productData.created_by_user!.phone_number!;
+        phone_number = productData.reserved!.reserved_users!.phone_number!;
         print(phone_number);
         productId = productData.id;
         print(productId);
@@ -306,6 +333,21 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                 ],
               ),
             ),
+            Positioned(
+              top: 50,
+              left: 10,
+              child: IconButton(
+                onPressed: () {
+                  timer.cancel();
+                  Navigator.pop((context));
+                },
+                icon: const Icon(
+                  Icons.close_rounded,
+                  size: 35,
+                  color: Color.fromARGB(255, 250, 122, 48),
+                ),
+              ),
+            ),
           ],
         ),
         SizedBox(
@@ -349,11 +391,11 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                       Row(
                         children: [
                           Text(
-                            (status == 1)
+                            status == 1
                                 ? "Waiting you to confirm"
-                                : (status == 2)
+                                : status == 2
                                     ? "Order Preparing"
-                                    : (status == 3)
+                                    : status == 3
                                         ? "Waiting for reciever to pick up"
                                         : "Complete",
                             style: TextStyle(
@@ -644,9 +686,23 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                                 style: TextButton.styleFrom(
                                   backgroundColor: Colors.red,
                                 ),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
+                                onPressed: () async {
+                                  try {
+                                    timer.cancel();
+                                    Response reserve = await Caller.dio.post(
+                                      "/reserveReciever/reserves/cancel/$productId",
+                                    );
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                (NavigationbarWidget())));
+                                    print(reserve.data);
+                                  } catch (e) {
+                                    print(e);
+                                  }
+                                  // Navigator.pop(context);
+                                  // Navigator.pop(context);
                                 },
                               ),
                             ],
@@ -722,6 +778,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                                       backgroundColor: Colors.orange,
                                     ),
                                     onPressed: () async {
+                                      // timer.cancel();
                                       await Caller.dio.post(
                                           "/reserveReciever/reserves/update/$productId");
                                       if (activeStep <= 3) {

@@ -55,17 +55,13 @@ class _HomeState extends State<Home> {
   String calculateDistance(double lat1, double lon1, double lat2, double lon2) {
     const double earthRadius = 6371; // Radius of the Earth in kilometers
 
-    // Convert latitude and longitude to radians
     double lat1Radians = degreesToRadians(lat1);
     double lon1Radians = degreesToRadians(lon1);
     double lat2Radians = degreesToRadians(lat2);
     double lon2Radians = degreesToRadians(lon2);
 
-    // Calculate the differences between coordinates
     double latDiff = lat2Radians - lat1Radians;
     double lonDiff = lon2Radians - lon1Radians;
-
-    // Calculate the Haversine formula
     double a = pow(sin(latDiff / 2), 2) +
         cos(lat1Radians) * cos(lat2Radians) * pow(sin(lonDiff / 2), 2);
     double c = 2 * atan2(sqrt(a), sqrt(1 - a));
@@ -87,6 +83,34 @@ class _HomeState extends State<Home> {
     locationLong = fetchLocation['location_longtitude'];
     print(locationLat);
     print(locationLong);
+
+    if (locationLat == "") {
+      locationLat = "13.651491978847098";
+      locationLong = "100.49686122075929";
+      doubleLat = double.parse(locationLat);
+      doubleLong = double.parse(locationLong);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Location have not been set yet!'),
+            content: const Text('Please set up your current location!'),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LocationHome()));
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
 
     doubleLat = double.parse(locationLat);
     doubleLong = double.parse(locationLong);
@@ -111,7 +135,7 @@ class _HomeState extends State<Home> {
     setState(() {
       if (query.isNotEmpty) {
         filteredList = mainproduct
-            .where((e) => e.name.toString().contains(query))
+            .where((e) => e.name!.toLowerCase().contains(query.toLowerCase()))
             .toList();
       } else {
         filteredList = List<mainProduct>.from(mainproduct);
@@ -255,6 +279,7 @@ class _HomeState extends State<Home> {
                             style: TextStyle(fontSize: 15),
                           ),
                           onPressed: () {
+                            // if (locationLat == "") {}
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

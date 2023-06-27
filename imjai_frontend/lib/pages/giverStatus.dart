@@ -36,20 +36,6 @@ class _giverStatusState extends State<giverStatus> {
                   Stack(
                     children: [
                       giverStatusDetail(),
-                      Positioned(
-                        top: 50,
-                        left: 10,
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.pop((context));
-                          },
-                          icon: const Icon(
-                            Icons.close_rounded,
-                            size: 35,
-                            color: Color.fromARGB(255, 250, 122, 48),
-                          ),
-                        ),
-                      ),
                     ],
                   )
                 ],

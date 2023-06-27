@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -36,6 +38,8 @@ class _recieverStatusState extends State<recieverStatus> {
   String ownerPicture = '';
   String locationLat = '';
   String locationLong = '';
+  late Timer timer;
+  late StreamSubscription<int> _subscription;
 
   @override
   void initState() {
@@ -75,6 +79,25 @@ class _recieverStatusState extends State<recieverStatus> {
     }
 
     // location_name = setlocation_name;
+  }
+
+  @override
+  void didChangeDependencies() {
+    print('fetchData');
+    fetchData(context);
+    timer = Timer.periodic(new Duration(seconds: 3), (timer) {
+      fetchData(context);
+      print('refreshed');
+    });
+    // Move the code that depends on inherited widgets here
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+    timer.cancel();
   }
 
   void fetchData(BuildContext context) async {
@@ -249,6 +272,7 @@ class _recieverStatusState extends State<recieverStatus> {
                         left: 5,
                         child: IconButton(
                           onPressed: () {
+                            timer.cancel();
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -305,7 +329,7 @@ class _recieverStatusState extends State<recieverStatus> {
                                               ],
                                             ),
                                             SizedBox(
-                                              height: 13,
+                                              height: 5,
                                             ),
                                             Row(
                                               children: [
@@ -327,7 +351,7 @@ class _recieverStatusState extends State<recieverStatus> {
                                               ],
                                             ),
                                             SizedBox(
-                                              height: 13,
+                                              height: 10,
                                             ),
                                             Row(
                                               mainAxisAlignment:
@@ -340,16 +364,39 @@ class _recieverStatusState extends State<recieverStatus> {
                                                       color: Colors.grey,
                                                       fontSize: 15),
                                                 ),
-                                                Text(
-                                                  "Time",
-                                                  style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 15),
-                                                )
                                               ],
                                             ),
                                             SizedBox(
-                                              height: 13,
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Container(
+                                                  child: Text(
+                                                    () {
+                                                      if (setlocation_name ==
+                                                          "") {
+                                                        return "No location found, \nPleace contact giver!";
+                                                      } else {
+                                                        return setlocation_name +
+                                                            ", \n" +
+                                                            setlocation_street;
+                                                      }
+                                                    }(),
+                                                    style: TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 0, 0, 0),
+                                                        fontSize:
+                                                            screenHeight / 75),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 10,
                                             ),
                                             Row(
                                               mainAxisAlignment:
@@ -357,31 +404,27 @@ class _recieverStatusState extends State<recieverStatus> {
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  () {
-                                                    if (setlocation_name ==
-                                                        "") {
-                                                      return "No location found, \nPleace contact giver!";
-                                                    } else {
-                                                      return setlocation_name +
-                                                          ", \n" +
-                                                          setlocation_street;
-                                                    }
-                                                  }(),
+                                                  "Time",
                                                   style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 0, 0, 0),
-                                                      fontSize:
-                                                          screenHeight / 75),
+                                                      color: Colors.grey,
+                                                      fontSize: 15),
                                                 ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              children: [
                                                 Text(
-                                                  ". . .",
+                                                  availableTime,
                                                   style: TextStyle(
                                                       color: Color.fromARGB(
                                                           255, 0, 0, 0),
                                                       fontSize: 13),
-                                                )
+                                                ),
                                               ],
-                                            ),
+                                            )
                                           ],
                                         ),
                                       ),
@@ -650,6 +693,7 @@ class _recieverStatusState extends State<recieverStatus> {
                                                   ),
                                                   onPressed: () async {
                                                     try {
+                                                      timer.cancel();
                                                       Response reserve =
                                                           await Caller.dio.post(
                                                         "/reserveReciever/reserves/cancel/$productId",

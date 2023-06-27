@@ -99,7 +99,7 @@ class _ProductState extends State<Product> {
                             ),
                           ],
                         ),
-                        SizedBox(height: screenHeight / 65),
+                        //SizedBox(height: screenHeight / 50),
                         Container(
                           margin: EdgeInsets.only(top: 20),
                           child: Column(
@@ -124,7 +124,7 @@ class _ProductState extends State<Product> {
                                   title: e.name!,
                                   imageUrl: e.picture_url!,
                                   tag: e.category_id.toString(),
-                                  range: "23 km",
+                                  //range: "23 km",
                                   owner: ownerName,
                                   status: e.status.toString());
                             }).toList(),

@@ -30,7 +30,7 @@ class _ListProductWidgetState extends State<ListProductWidget> {
             tag: 'Meat',
             imageUrl: 'wagyu',
             owner: 'Peter Parker',
-            range: '2.5 km',
+            // range: '2.5 km',
             status: 'Complete',
           ),
         ],
@@ -44,7 +44,6 @@ class ProductList extends StatelessWidget {
   String title;
   String imageUrl;
   String tag;
-  String range;
   String owner;
   String status;
 
@@ -54,7 +53,6 @@ class ProductList extends StatelessWidget {
     required this.title,
     required this.imageUrl,
     required this.tag,
-    required this.range,
     required this.owner,
     required this.status,
   }) : super(key: key);
@@ -163,12 +161,7 @@ class ProductList extends StatelessWidget {
                           style:
                               TextStyle(fontSize: 12, color: Colors.grey[600]),
                         ),
-                        SizedBox(height: 10),
-                        Text(
-                          range,
-                          style:
-                              TextStyle(fontSize: 12, color: Colors.grey[600]),
-                        ),
+                        //SizedBox(height: 10),
                         SizedBox(height: 10),
                         Text(
                           owner,

@@ -155,13 +155,15 @@ class _MapScreenState extends State<MapScreen> {
                                       'productLatitude', finalLatitude);
                                   productLocation.setString(
                                       'productLongtitude', finalLongtitude);
+                                  productLocation.setString(
+                                      'productLocation', locationAd);
                                   print("This is your final location " +
                                       finalLatitude +
                                       ", " +
                                       finalLongtitude);
                                   print("This is your location name " +
                                       location_Name);
-
+                                  Navigator.pop(context, locationAd);
                                   // String testLati = productLatitude
                                   //     .getString('productLatitude')!;
                                   // print(testLati);

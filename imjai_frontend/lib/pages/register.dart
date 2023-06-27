@@ -24,6 +24,7 @@ class _RegisterState extends State<Register> {
   DateTime? birthDate;
   double screenHeight = 0;
   double screenWidth = 0;
+  int userId = 0;
   Color primary = Color.fromARGB(255, 255, 255, 255);
   void getDatetime() async {
     final datePick = await showDatePicker(
@@ -44,7 +45,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    void saveInfo() async {
+    saveInfo() async {
       FocusManager.instance.primaryFocus?.unfocus();
       try {
         Response register = await Caller.dio.post(
@@ -60,6 +61,9 @@ class _RegisterState extends State<Register> {
           },
         );
         print(register.data);
+        userId = register.data['id'];
+        print("this is userId");
+        print(userId);
       } catch (e) {
         print(e);
       }
@@ -150,7 +154,7 @@ class _RegisterState extends State<Register> {
               height: 20,
             ),
             ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   String username = userCon.text;
                   String email = emailCon.text;
                   String firstname = fname.text;
@@ -165,7 +169,7 @@ class _RegisterState extends State<Register> {
                   print("Bdate : $birthdate ");
                   print("Phone : $Phonenumber ");
                   print("Password : $passWord ");
-                  saveInfo();
+                  await saveInfo();
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -230,7 +234,20 @@ class _RegisterState extends State<Register> {
                                           borderRadius:
                                               BorderRadius.circular(18.0),
                                         ))),
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      try {
+                                        Response resendEmail =
+                                            await Caller.dio.get(
+                                          "/resendEmail",
+                                          data: {
+                                            "userId": userId,
+                                          },
+                                        );
+                                        print(resendEmail.data);
+                                      } catch (e) {
+                                        print(e);
+                                      }
+                                    },
                                     child: Text(
                                       "Resend email confirmation",
                                       style: TextStyle(

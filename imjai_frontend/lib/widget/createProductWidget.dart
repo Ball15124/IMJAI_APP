@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:fluttertagselector/tag_class.dart';
-import 'package:imjai_frontend/pages/location.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:imjai_frontend/pages/location.dart' as LocationMap;
 import 'package:imjai_frontend/pages/caller.dart';
 import 'package:imjai_frontend/pages/product.dart';
 import 'package:imjai_frontend/widget/chiptag.dart';
@@ -30,6 +31,14 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
   TextEditingController time = TextEditingController();
   double screenHeight = 0;
   double screenWidth = 0;
+  String locationLat = '';
+  String locationLong = '';
+  double doubleLat = 0;
+  double doubleLong = 0;
+  String setlocation_street = '';
+  String setlocation_name = '';
+  String locationName = '';
+
   Color primary = Color.fromARGB(255, 255, 255, 255);
   XFile? image;
 
@@ -168,6 +177,37 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
             ),
           );
         });
+  }
+
+  getLocation() async {
+    final id = ModalRoute.of(context)!.settings.arguments as int;
+    Response locationRes = await Caller.dio.get("/products/location/$id");
+    Map<String, dynamic> fetchLocation = locationRes.data;
+    locationLat = fetchLocation['location_latitude'];
+    locationLong = fetchLocation['location_longtitude'];
+    print(locationLat);
+    print(locationLong);
+    if (locationLat == "") {
+      print("No location found, Please contact giver!");
+    } else {
+      doubleLat = double.parse(locationLat);
+      doubleLong = double.parse(locationLong);
+      print(doubleLat);
+      print(doubleLong);
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(doubleLat, doubleLong);
+
+      setlocation_street = placemarks.first.administrativeArea.toString() +
+          ", " +
+          placemarks.first.street.toString() +
+          ", " +
+          placemarks.first.country.toString();
+      setlocation_name = placemarks.first.name.toString();
+      print(setlocation_street);
+      print(setlocation_name);
+    }
+
+    // location_name = setlocation_name;
   }
 
   @override
@@ -368,13 +408,20 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
                 color: Colors.orange,
                 size: 20.0,
               ),
-              label: const Text(
-                'Location for your Product',
+              label: Text(
+                locationName != '' ? locationName : 'Location for your Product',
                 style: TextStyle(fontSize: 15, color: Colors.orange),
               ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Location()));
+              onPressed: () async {
+                final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => LocationMap.Location()));
+                setState(() {
+                  locationName = result;
+                  print("after pop");
+                  print(result);
+                });
               },
             ),
             SizedBox(height: screenHeight / 60),

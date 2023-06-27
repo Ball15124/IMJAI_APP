@@ -41,6 +41,9 @@ class _LoginState extends State<Login> {
       CallbackResponse cb = CallbackResponse.fromJson(token.data);
       print(cb.token);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      await prefs.remove('token');
+
       await prefs.setString('token', cb.token);
       Caller.setToken(cb.token);
       // .whenComplete(() {

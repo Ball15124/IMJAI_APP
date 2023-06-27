@@ -218,7 +218,7 @@ class _ProfileState extends State<Profile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.only(top: 60, left: 20, right: 20),
+                    padding: EdgeInsets.only(top: 50, left: 20, right: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -419,6 +419,7 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                         ),
+                        Container(height: 30),
                       ],
                     ),
                   ),

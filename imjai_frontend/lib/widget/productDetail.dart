@@ -155,7 +155,7 @@ class _ProductDetailState extends State<ProductDetail> {
                   textAlign: TextAlign.center,
                 ),
                 Text(category, textAlign: TextAlign.center),
-                Text("2.5 km", textAlign: TextAlign.center)
+                Text("2.0 km", textAlign: TextAlign.center)
               ],
             ),
           ),

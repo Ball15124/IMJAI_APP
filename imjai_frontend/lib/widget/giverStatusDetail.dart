@@ -415,10 +415,6 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                             "Location",
                             style: TextStyle(color: Colors.grey, fontSize: 15),
                           ),
-                          Text(
-                            "Time",
-                            style: TextStyle(color: Colors.grey, fontSize: 15),
-                          )
                         ],
                       ),
                       SizedBox(
@@ -441,14 +437,33 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                                 color: Color.fromARGB(255, 0, 0, 0),
                                 fontSize: 15),
                           ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Time",
+                            style: TextStyle(color: Colors.grey, fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        children: [
                           Text(
                             availableTime,
                             style: TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0),
                                 fontSize: 13),
-                          )
+                          ),
                         ],
-                      ),
+                      )
                     ],
                   ),
                 ),

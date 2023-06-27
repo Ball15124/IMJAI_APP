@@ -98,7 +98,7 @@ class _InsideProductState extends State<InsideProduct> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.only(top: 60),
+                    padding: EdgeInsets.only(top: 40),
                     color: primary,
                     child: Column(
                       children: <Widget>[

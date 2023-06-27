@@ -105,6 +105,7 @@ flutter:
       - Images/picker.png
       - Images/ReserveStatus/Chicken.avif
       - Images/ReserveStatus/Done.gif
+      - Images/ReserveStatus/cooking-min.gif
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

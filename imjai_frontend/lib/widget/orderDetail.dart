@@ -238,61 +238,64 @@ class _OrderDetailState extends State<OrderDetail> {
               ],
             ),
           ),
-          Container(
-            padding: EdgeInsets.only(top: 30),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Giver",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          Column(
+            children: [
+              Container(
+                padding: EdgeInsets.only(top: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Giver",
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 15, left: 15, right: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                CircleAvatar(
-                  radius: 25,
-                  backgroundImage: NetworkImage(ownerPicture),
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Row(
-                    children: [
-                      Text(
-                        ownerName,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 43),
-                  child: Row(
-                    children: [
-                      Container(
-                        child: IconButton(
-                          onPressed: () async {
-                            await FlutterPhoneDirectCaller.callNumber(
-                                phone_number);
-                          },
-                          icon: const Icon(
-                            Icons.phone,
-                            size: 30,
-                            color: Colors.orange,
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 15, left: 15, right: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundImage: NetworkImage(ownerPicture),
+                    ),
+                    // Container(
+                    //   padding: EdgeInsets.only(left: 10),
+                    //   child: Row(
+                    //     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     children: [
+                    Container(
+                      width: 190,
+                      child: Wrap(
+                        children: [
+                          Text(
+                            ownerName,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
                           ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      child: IconButton(
+                        onPressed: () async {
+                          await FlutterPhoneDirectCaller.callNumber(
+                              phone_number);
+                        },
+                        icon: const Icon(
+                          Icons.phone,
+                          size: 30,
+                          color: Colors.orange,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           SizedBox(height: 20),
           ElevatedButton(

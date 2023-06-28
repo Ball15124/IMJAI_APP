@@ -247,8 +247,9 @@ class _ProductDetailState extends State<ProductDetail> {
                   backgroundImage: NetworkImage(ownerPicture),
                 ),
                 Container(
+                  width: 190,
                   padding: EdgeInsets.only(left: 10),
-                  child: Row(
+                  child: Wrap(
                     children: [
                       Text(
                         ownerName,

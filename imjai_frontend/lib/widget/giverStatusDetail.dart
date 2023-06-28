@@ -527,7 +527,8 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                         width: 20,
                       ),
                       Container(
-                        child: Row(
+                        width: 190,
+                        child: Wrap(
                           children: [
                             Text(
                               () {
@@ -544,23 +545,16 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(left: 40),
-                        child: Row(
-                          children: [
-                            Container(
-                              child: IconButton(
-                                onPressed: () async {
-                                  await FlutterPhoneDirectCaller.callNumber(
-                                      phone_number);
-                                },
-                                icon: const Icon(
-                                  Icons.phone,
-                                  size: 30,
-                                  color: Colors.orange,
-                                ),
-                              ),
-                            ),
-                          ],
+                        child: IconButton(
+                          onPressed: () async {
+                            await FlutterPhoneDirectCaller.callNumber(
+                                phone_number);
+                          },
+                          icon: const Icon(
+                            Icons.phone,
+                            size: 30,
+                            color: Colors.orange,
+                          ),
                         ),
                       ),
                     ],

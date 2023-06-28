@@ -491,8 +491,9 @@ class _recieverStatusState extends State<recieverStatus> {
                                           NetworkImage(ownerPicture),
                                     ),
                                     Container(
+                                      width: 190,
                                       padding: EdgeInsets.only(left: 0),
-                                      child: Row(
+                                      child: Wrap(
                                         children: [
                                           Text(
                                             ownerName,
@@ -504,23 +505,16 @@ class _recieverStatusState extends State<recieverStatus> {
                                       ),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.only(left: 40),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            child: IconButton(
-                                              onPressed: () async {
-                                                await FlutterPhoneDirectCaller
-                                                    .callNumber(phone_number);
-                                              },
-                                              icon: const Icon(
-                                                Icons.phone,
-                                                size: 30,
-                                                color: Colors.orange,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                      child: IconButton(
+                                        onPressed: () async {
+                                          await FlutterPhoneDirectCaller
+                                              .callNumber(phone_number);
+                                        },
+                                        icon: const Icon(
+                                          Icons.phone,
+                                          size: 30,
+                                          color: Colors.orange,
+                                        ),
                                       ),
                                     ),
                                   ],

@@ -7,6 +7,7 @@ import 'package:imjai_frontend/pages/login.dart';
 import 'package:imjai_frontend/widget/infoProfile.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widget/navigationbarwidget.dart';
 
@@ -493,6 +494,10 @@ class _ProfileState extends State<Profile> {
                                         backgroundColor: Colors.orange,
                                       ),
                                       onPressed: () async {
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        await prefs.remove('token');
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(

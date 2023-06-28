@@ -25,35 +25,102 @@ class _LoginState extends State<Login> {
   final TextEditingController _passwordController = TextEditingController();
   double screenHeight = 0;
   double screenWidth = 0;
+
   Color primary = Color.fromARGB(255, 255, 255, 255);
 
   @override
   void saveInfo() async {
     FocusManager.instance.primaryFocus?.unfocus();
-    try {
-      Response token = await Caller.dio.get(
-        "/login",
-        data: {
-          "username": _usernameController.text,
-          "password": _passwordController.text,
+
+    if (_usernameController.text == "") {
+      print("username null");
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Can't find user"),
+            content: Text("User not found!"),
+            actions: [
+              TextButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
         },
       );
-      CallbackResponse cb = CallbackResponse.fromJson(token.data);
-      print(cb.token);
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
+    } else {
+      try {
+        Response token = await Caller.dio.get(
+          "/login",
+          data: {
+            "username": _usernameController.text,
+            "password": _passwordController.text,
+          },
+        );
+        print("awdawdwad");
+        print(token.data);
 
-      await prefs.remove('token');
+        if (token.statusCode != 200) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Error"),
+                content: Text("User not found"),
+                actions: [
+                  TextButton(
+                    child: Text("OK"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+          return; // Stop execution if user not found
+        } else {
+          CallbackResponse cb = CallbackResponse.fromJson(token.data);
+          print(cb.token);
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          _usernameController.clear();
+          _passwordController.clear();
+          await prefs.setString('token', cb.token);
+          Caller.setToken(cb.token);
+          print(cb.token);
 
-      await prefs.setString('token', cb.token);
-      Caller.setToken(cb.token);
-      // .whenComplete(() {
-      //   Navigator.push(
-      //       context, MaterialPageRoute(builder: (context) => (Home())));
-      // });
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const NavigationbarWidget()));
-    } catch (e) {
-      print(e);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const NavigationbarWidget()));
+          // }
+        }
+      } catch (e) {
+        if (e is DioError) {
+          if (e.response?.statusCode == 404) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text("Error"),
+                  content: Text("User not found"),
+                  actions: [
+                    TextButton(
+                      child: Text("OK"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+        }
+      }
     }
   }
 
@@ -111,10 +178,10 @@ class _LoginState extends State<Login> {
                   print('Username: $username');
                   print('Password: $password');
                   saveInfo();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const NavigationbarWidget()));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => const NavigationbarWidget()));
                 },
                 child: Text(
                   'Login',

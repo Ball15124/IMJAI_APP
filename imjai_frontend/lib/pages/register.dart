@@ -47,25 +47,222 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     saveInfo() async {
       FocusManager.instance.primaryFocus?.unfocus();
-      try {
-        Response register = await Caller.dio.post(
-          "/verifySignup",
-          data: {
-            "email": emailCon.text,
-            "username": userCon.text,
-            "password": passCon.text,
-            "phone_number": phoneCon.text,
-            "firstname": fname.text,
-            "lastname": lname.text,
-            "birthdate": birthDate.toString()
+      if (emailCon.text == "" ||
+              userCon.text == "" ||
+              passCon.text == "" ||
+              phoneCon.text == "" ||
+              fname.text == "" ||
+              lname.text == ""
+          // bdate.text == ""
+          ) {
+        print("found null");
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Error"),
+              content: Text("Please fill in all information!"),
+              actions: [
+                TextButton(
+                  child: Text("OK"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
           },
         );
-        print(register.data);
-        userId = register.data['id'];
-        print("this is userId");
-        print(userId);
-      } catch (e) {
-        print(e);
+      } else {
+        try {
+          Response register = await Caller.dio.post(
+            "/verifySignup",
+            data: {
+              "email": emailCon.text,
+              "username": userCon.text,
+              "password": passCon.text,
+              "phone_number": phoneCon.text,
+              "firstname": fname.text,
+              "lastname": lname.text,
+              "birthdate": birthDate.toString()
+            },
+          );
+          print(register.data);
+          userId = register.data['id'];
+          print("this is userId");
+          print(userId);
+
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                backgroundColor: Color.fromARGB(255, 255, 142, 50),
+                title: Column(
+                  children: [
+                    Center(
+                      child: Icon(
+                        Icons.email_rounded,
+                        color: Colors.white,
+                        size: 130,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Thank you for your\nregistration!',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Color.fromARGB(255, 255, 255, 255)),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'We’re glad you’re here !\n before you start exploring, we\njust sent you the email\nconfirmation.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Color.fromARGB(255, 255, 255, 255)),
+                    ),
+                  ],
+                ),
+                actions: [
+                  Center(
+                    child: Column(
+                      children: [
+                        TextButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Color.fromARGB(255, 238, 199, 168)),
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ))),
+                            onPressed: () async {
+                              try {
+                                Response resendEmail = await Caller.dio.get(
+                                  "/resendEmail",
+                                  data: {
+                                    "userId": userId,
+                                  },
+                                );
+                                print(resendEmail.data);
+                              } catch (e) {
+                                print(e);
+                              }
+                            },
+                            child: Text(
+                              "Resend email confirmation",
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.5),
+                                  fontSize: 18),
+                            )),
+                        TextButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.white),
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ))),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) => Login())));
+                            },
+                            child: Text(
+                              "Login",
+                              style:
+                                  TextStyle(color: Colors.orange, fontSize: 18),
+                            )),
+                      ],
+                    ),
+                  ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // )
+                ],
+              );
+            },
+          );
+        } catch (e) {
+          print(e);
+          if (e is DioError) {
+            if (e.response?.statusCode == 400) {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Error"),
+                    content: Text("User already in use!"),
+                    actions: [
+                      TextButton(
+                        child: Text("OK"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else if (e.response?.statusCode == 401) {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Error"),
+                    content: Text("Email already in use!"),
+                    actions: [
+                      TextButton(
+                        child: Text("OK"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else if (e.response?.statusCode == 500) {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Error"),
+                    content: Text("Unable to validate username!"),
+                    actions: [
+                      TextButton(
+                        child: Text("OK"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          }
+        }
       }
     }
 
@@ -170,122 +367,6 @@ class _RegisterState extends State<Register> {
                   print("Phone : $Phonenumber ");
                   print("Password : $passWord ");
                   await saveInfo();
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        backgroundColor: Color.fromARGB(255, 255, 142, 50),
-                        title: Column(
-                          children: [
-                            Center(
-                              child: Icon(
-                                Icons.email_rounded,
-                                color: Colors.white,
-                                size: 130,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Thank you for your\nregistration!',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                      color:
-                                          Color.fromARGB(255, 255, 255, 255)),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        content: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'We’re glad you’re here !\n before you start exploring, we\njust sent you the email\nconfirmation.',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  color: Color.fromARGB(255, 255, 255, 255)),
-                            ),
-                          ],
-                        ),
-                        actions: [
-                          Center(
-                            child: Column(
-                              children: [
-                                TextButton(
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                Color.fromARGB(
-                                                    255, 238, 199, 168)),
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(18.0),
-                                        ))),
-                                    onPressed: () async {
-                                      try {
-                                        Response resendEmail =
-                                            await Caller.dio.get(
-                                          "/resendEmail",
-                                          data: {
-                                            "userId": userId,
-                                          },
-                                        );
-                                        print(resendEmail.data);
-                                      } catch (e) {
-                                        print(e);
-                                      }
-                                    },
-                                    child: Text(
-                                      "Resend email confirmation",
-                                      style: TextStyle(
-                                          color: Colors.black.withOpacity(0.5),
-                                          fontSize: 18),
-                                    )),
-                                TextButton(
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                Colors.white),
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(18.0),
-                                        ))),
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: ((context) => Login())));
-                                    },
-                                    child: Text(
-                                      "Login",
-                                      style: TextStyle(
-                                          color: Colors.orange, fontSize: 18),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          // const SizedBox(
-                          //   height: 10,
-                          // )
-                        ],
-                      );
-                    },
-                  );
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(screenWidth - 30, 50),

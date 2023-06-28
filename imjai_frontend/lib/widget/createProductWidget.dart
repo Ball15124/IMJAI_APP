@@ -61,18 +61,24 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
         print('No image selected');
         return;
       }
+      print("p" + proname.text + "p");
+      // if (proname == "") {
+      //   print("no product name");
+      //   return;
+      // }
 
       // Create Dio instance
       Dio dio = Dio();
 
       // Create form data
+      String productLatitude = '';
+      String productLongtitude = '';
 
       FocusManager.instance.primaryFocus?.unfocus();
       SharedPreferences productLocation = await SharedPreferences.getInstance();
-      String productLatitude = productLocation.getString('productLatitude')!;
+      productLatitude = productLocation.getString('productLatitude')!;
       print(productLatitude);
-      String productLongtitude =
-          productLocation.getString('productLongtitude')!;
+      productLongtitude = productLocation.getString('productLongtitude')!;
       print(productLongtitude);
       SharedPreferences productTag = await SharedPreferences.getInstance();
       int productCategory = productTag.getInt('tag')!;
@@ -111,9 +117,71 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
             );
           },
         );
+      } else if (proname.text == "") {
+        print("product name null");
+
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Product Name not found!'),
+              content: const Text('Please set your product name!'),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } else if (time.text == "") {
+        print("time null");
+
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Available time not found!'),
+              content: const Text('Please set your available time!'),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } else if (productLatitude == "" || productLongtitude == "") {
+        print("product Location null");
+
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Product location not found!'),
+              content: const Text('Please set your product location!'),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
       } else {
         Response response =
             await Caller.dio.post("/image/upload", data: formData);
+        productLocation.setString('productLatitude', '');
+        productLocation.setString('productLongtitude', '');
         print("after submitted");
         print(response.data);
         if (response.statusCode == 200) {

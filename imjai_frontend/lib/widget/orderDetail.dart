@@ -301,6 +301,8 @@ class _OrderDetailState extends State<OrderDetail> {
                           } catch (e) {
                             print(e);
                           }
+                          Navigator.pop((context));
+                          Navigator.pop((context));
                           Navigator.push(
                               context,
                               MaterialPageRoute(

@@ -7,9 +7,12 @@ class CallbackResponse {
   @JsonKey(name: 'token')
   final String token;
 
-  CallbackResponse({
-    required this.token,
-  });
+  // @JsonKey(name: 'message')
+  // final String message;
+
+  CallbackResponse({required this.token
+      // required this.message
+      });
 
   factory CallbackResponse.fromJson(Map<String, dynamic> json) =>
       _$CallbackResponseFromJson(json);

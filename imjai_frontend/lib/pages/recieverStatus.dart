@@ -60,6 +60,7 @@ class _recieverStatusState extends State<recieverStatus> {
     Map<String, dynamic> fetchLocation = locationRes.data;
     locationLat = fetchLocation['location_latitude'];
     locationLong = fetchLocation['location_longtitude'];
+    print("location recieverStatus");
     print(locationLat);
     print(locationLong);
     if (locationLat == "") {
@@ -87,11 +88,12 @@ class _recieverStatusState extends State<recieverStatus> {
 
   @override
   void didChangeDependencies() {
-    print('fetchData');
+    // timer.cancel();
+    print('fetchData on recieverStatus page');
     fetchData(context);
     timer = Timer.periodic(new Duration(seconds: 3), (timer) {
       fetchData(context);
-      print('refreshed');
+      print('refreshed on recieverStatus page');
     });
     // Move the code that depends on inherited widgets here
     super.didChangeDependencies();
@@ -154,11 +156,8 @@ class _recieverStatusState extends State<recieverStatus> {
                   ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const NavigationbarWidget()));
+                      timer.cancel();
+                      Navigator.pop((context));
                     },
                     child: const Text('OK'),
                   ),
@@ -321,10 +320,8 @@ class _recieverStatusState extends State<recieverStatus> {
               child: IconButton(
                 onPressed: () {
                   timer.cancel();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => NavigationbarWidget())));
+                  // timer.cancel();
+                  Navigator.pop((context));
                 },
                 icon: const Icon(
                   Icons.close_rounded,
@@ -732,11 +729,10 @@ class _recieverStatusState extends State<recieverStatus> {
                                                         await Caller.dio.post(
                                                       "/reserveReciever/reserves/cancel/$productId",
                                                     );
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                (NavigationbarWidget())));
+                                                    timer.cancel();
+                                                    Navigator.pop((context));
+                                                    timer.cancel();
+                                                    Navigator.pop((context));
                                                     print(reserve.data);
                                                   } catch (e) {
                                                     print(e);

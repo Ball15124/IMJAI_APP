@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,11 +28,17 @@ class _OrderDetailState extends State<OrderDetail> {
   String productDetail = '';
   String availableTime = '';
   String category = '';
-  String locationLatitude = '';
+  String locationLatitude = '0';
   String ownerPicture = '';
-
-  String locationLongtitude = '';
+  String receiverLatitude = '0';
+  String receiverLongtitude = '0';
+  String locationLat = '0';
+  String locationLong = '0';
+  String locationLongtitude = '0';
   String phone_number = '';
+  int status = 0;
+  double doubleLat = 0;
+  double doubleLong = 0;
   final Uri phoneNumber = Uri.parse('tel:0970200803');
 
   @override
@@ -41,13 +49,48 @@ class _OrderDetailState extends State<OrderDetail> {
     });
   }
 
+  String calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+    const double earthRadius = 6371;
+
+    double lat1Radians = degreesToRadians(lat1);
+    double lon1Radians = degreesToRadians(lon1);
+    double lat2Radians = degreesToRadians(lat2);
+    double lon2Radians = degreesToRadians(lon2);
+    double latDiff = lat2Radians - lat1Radians;
+    double lonDiff = lon2Radians - lon1Radians;
+    double a = pow(sin(latDiff / 2), 2) +
+        cos(lat1Radians) * cos(lat2Radians) * pow(sin(lonDiff / 2), 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    double distance = earthRadius * c;
+
+    String formattedDistance = distance.toStringAsFixed(2);
+
+    return formattedDistance + ' km';
+  }
+
+  double degreesToRadians(double degrees) {
+    return degrees * pi / 180;
+  }
+
   void fetchData(BuildContext context) async {
     try {
       final id = ModalRoute.of(context)!.settings.arguments as int;
       Response response = await Caller.dio.get("/products/products/$id");
       print(response.data);
+      Response locationRes = await Caller.dio.get("/home/location");
+      Map<String, dynamic> fetchLocation = locationRes.data;
+
       setState(() {
         print(1);
+
+        locationLat = fetchLocation['location_latitude'];
+        locationLong = fetchLocation['location_longtitude'];
+        // print(locationLat);
+        // print(locationLong);
+
+        // doubleLat = double.parse(locationLat);
+        // doubleLong = double.parse(locationLong);
+
         final productData = mainProduct.fromJson(response.data["product"]);
         print(productData);
         productName = productData.name!;
@@ -56,6 +99,7 @@ class _OrderDetailState extends State<OrderDetail> {
         print(productName);
         productPicture = productData.picture_url!;
         print(productPicture);
+        status = productData.status!;
         ownerName = productData.created_by_user!.firstname! +
             " " +
             productData.created_by_user!.lastname!;
@@ -69,6 +113,9 @@ class _OrderDetailState extends State<OrderDetail> {
         print(category);
         locationLatitude = productData.location_latitude!;
         locationLongtitude = productData.location_longtitude!;
+        print(locationLatitude);
+        print(locationLongtitude);
+        // receiverLatitude =
         productId = ModalRoute.of(context)!.settings.arguments as int;
         // Map<String, dynamic> productInfo = response.data;
         // print(55555555);
@@ -155,7 +202,15 @@ class _OrderDetailState extends State<OrderDetail> {
                   textAlign: TextAlign.center,
                 ),
                 Text(category, textAlign: TextAlign.center),
-                Text("2.5 km", textAlign: TextAlign.center)
+                Text(
+                    status < 1
+                        ? calculateDistance(
+                            double.parse(locationLatitude),
+                            double.parse(locationLongtitude),
+                            double.parse(locationLat),
+                            double.parse(locationLong))
+                        : "Waiting for \n reserve",
+                    textAlign: TextAlign.center)
               ],
             ),
           ),

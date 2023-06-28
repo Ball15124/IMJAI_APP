@@ -49,25 +49,22 @@ class _CreateproductState extends State<Createproduct> {
                             ),
                           ),
                         ),
-                        const Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 75),
-                            child: Text(
-                              "Create",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
                         SizedBox(height: screenHeight / 35),
                       ],
                     ),
                   ),
+                  Center(
+                    child: Text(
+                      "Create",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: screenHeight / 95),
                   CreateProductWidget(),
-                  SizedBox(height: screenHeight / 30),
                 ],
               ),
             )

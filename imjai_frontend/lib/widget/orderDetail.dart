@@ -217,7 +217,7 @@ class _OrderDetailState extends State<OrderDetail> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 110),
+                  padding: EdgeInsets.only(left: 43),
                   child: Row(
                     children: [
                       Container(

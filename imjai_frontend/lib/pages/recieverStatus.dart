@@ -757,6 +757,9 @@ class _recieverStatusState extends State<recieverStatus> {
                                               255, 255, 255, 255)),
                                     ),
                                   ),
+                            Container(
+                              height: 40,
+                            ),
                           ],
                         ),
                       )

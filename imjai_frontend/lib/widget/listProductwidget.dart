@@ -30,7 +30,6 @@ class _ListProductWidgetState extends State<ListProductWidget> {
             tag: 'Meat',
             imageUrl: 'wagyu',
             owner: 'Peter Parker',
-            // range: '2.5 km',
             status: 'Complete',
           ),
         ],

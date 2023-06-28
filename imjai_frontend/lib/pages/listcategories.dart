@@ -62,12 +62,11 @@ class _ListCategoriesState extends State<ListCategories> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.only(top: 60, left: 10),
+                    padding: EdgeInsets.only(top: 60, left: 20),
                     color: primary,
                     child: Row(
                       children: <Widget>[
                         Container(
-                          margin: const EdgeInsets.only(left: 10, bottom: 4),
                           child: IconButton(
                             onPressed: () {
                               Navigator.pop((context));
@@ -79,23 +78,20 @@ class _ListCategoriesState extends State<ListCategories> {
                             ),
                           ),
                         ),
-                        Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 40),
-                            child: Text(
-                              "Category: " + getCategoryName(widget.tag),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 21,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: screenHeight / 35),
                       ],
                     ),
                   ),
+                  Center(
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      getCategoryName(widget.tag),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: screenHeight / 35),
                   Container(
                     padding: EdgeInsets.only(left: 20, right: 20),
                     child: Column(

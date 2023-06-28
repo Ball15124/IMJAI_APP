@@ -450,6 +450,9 @@ class _CreateProductWidgetState extends State<CreateProductWidget> {
                 ],
               ),
             ),
+            Container(
+              height: 40,
+            )
           ],
         ),
       ),

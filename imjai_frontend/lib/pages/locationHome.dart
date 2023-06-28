@@ -38,32 +38,35 @@ class _LocationHomeState extends State<LocationHome> {
                     child: Row(
                       children: <Widget>[
                         Container(
-                          margin: const EdgeInsets.only(left: 10, bottom: 4),
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.pop((context));
-                            },
-                            icon: const Icon(
-                              Icons.arrow_back_ios_new_rounded,
-                              size: 35,
-                              color: Colors.orange,
-                            ),
-                          ),
-                        ),
-                        const Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 65),
-                            child: Text(
-                              "Location",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
+                          color: primary,
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                child: IconButton(
+                                  onPressed: () {
+                                    Navigator.pop((context));
+                                  },
+                                  icon: const Icon(
+                                    Icons.arrow_back_ios_new_rounded,
+                                    size: 35,
+                                    color: Colors.orange,
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      "Location",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   SizedBox(height: screenHeight / 35),

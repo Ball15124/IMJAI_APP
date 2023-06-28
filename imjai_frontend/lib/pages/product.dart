@@ -124,7 +124,6 @@ class _ProductState extends State<Product> {
                                   title: e.name!,
                                   imageUrl: e.picture_url!,
                                   tag: e.category_id.toString(),
-                                  //range: "23 km",
                                   owner: ownerName,
                                   status: e.status.toString());
                             }).toList(),

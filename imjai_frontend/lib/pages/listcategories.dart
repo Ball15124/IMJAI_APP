@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:imjai_frontend/model/mainproduct.dart';
@@ -17,6 +19,8 @@ class ListCategories extends StatefulWidget {
 class _ListCategoriesState extends State<ListCategories> {
   double screenHeight = 0;
   double screenWidth = 0;
+  String locationLat = '';
+  String locationLong = '';
   Color primary = Color.fromARGB(255, 255, 255, 255);
   List<mainProduct> categoryList = [];
 
@@ -26,10 +30,36 @@ class _ListCategoriesState extends State<ListCategories> {
     fetchData();
   }
 
+  String calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+    const double earthRadius = 6371; // Radius of the Earth in kilometers
+
+    double lat1Radians = degreesToRadians(lat1);
+    double lon1Radians = degreesToRadians(lon1);
+    double lat2Radians = degreesToRadians(lat2);
+    double lon2Radians = degreesToRadians(lon2);
+
+    double latDiff = lat2Radians - lat1Radians;
+    double lonDiff = lon2Radians - lon1Radians;
+    double a = pow(sin(latDiff / 2), 2) +
+        cos(lat1Radians) * cos(lat2Radians) * pow(sin(lonDiff / 2), 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    double distance = earthRadius * c;
+
+    String formattedDistance = distance.toStringAsFixed(2);
+
+    return formattedDistance + ' km';
+  }
+
+  double degreesToRadians(double degrees) {
+    return degrees * pi / 180;
+  }
+
   void fetchData() async {
     try {
       final url = '/home/${widget.tag}';
       Response response = await Caller.dio.get(url);
+      Response locationRes = await Caller.dio.get("/home/location");
+
       setState(() {
         print(response.data.runtimeType); // Print the type of response data
         print(response.data);
@@ -39,6 +69,9 @@ class _ListCategoriesState extends State<ListCategories> {
           for (var product in responseData) {
             categoryList.add(mainProduct.fromJson(product));
           }
+          Map<String, dynamic> fetchLocation = locationRes.data;
+          locationLat = fetchLocation['location_latitude'];
+          locationLong = fetchLocation['location_longtitude'];
         } else {
           print("Invalid response data format");
         }
@@ -101,7 +134,12 @@ class _ListCategoriesState extends State<ListCategories> {
                                   title: e.name!,
                                   imageUrl: e.picture_url!,
                                   tag: e.category_id.toString(),
-                                  range: "23 km",
+                                  range: calculateDistance(
+                                    double.parse(locationLat),
+                                    double.parse(locationLong),
+                                    double.parse(e.location_latitude!),
+                                    double.parse(e.location_longtitude!),
+                                  ),
                                   owner: e.created_by_user!.firstname! +
                                       " " +
                                       e.created_by_user!.lastname!,

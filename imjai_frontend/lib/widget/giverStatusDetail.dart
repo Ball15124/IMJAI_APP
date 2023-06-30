@@ -146,6 +146,29 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
         final productData = mainProduct.fromJson(response.data["product"]);
         print(productData);
         // final userData = meProfile.fromJson(response2.data);
+
+        productName = productData.name!;
+        print(productName);
+        phone_number = productData.reserved!.reserved_users!.phone_number!;
+        print(phone_number);
+        productId = productData.id;
+        print(productId);
+        ownerPicture = productData.reserved!.reserved_users!.profile_url!;
+        status = productData.status!;
+        print(status);
+        if (productData.reserved == null ||
+            productData.reserved!.reserved_users == null) {
+          recieverName = "Reciever not found!";
+        } else {
+          final reservedUsers = productData.reserved!.reserved_users;
+          if (reservedUsers!.firstname == null ||
+              reservedUsers.firstname!.isEmpty) {
+            recieverName = "Reciever not found!";
+          } else {
+            recieverName =
+                reservedUsers.firstname! + " " + reservedUsers.lastname!;
+          }
+        }
         if (status == 0) {
           timer.cancel();
           showDialog(
@@ -168,28 +191,6 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
               );
             },
           );
-        }
-        productName = productData.name!;
-        print(productName);
-        phone_number = productData.reserved!.reserved_users!.phone_number!;
-        print(phone_number);
-        productId = productData.id;
-        print(productId);
-        ownerPicture = productData.reserved!.reserved_users!.profile_url!;
-        status = productData.status!;
-        print(status);
-        if (productData.reserved == null ||
-            productData.reserved!.reserved_users == null) {
-          recieverName = "Reciever not found!";
-        } else {
-          final reservedUsers = productData.reserved!.reserved_users;
-          if (reservedUsers!.firstname == null ||
-              reservedUsers.firstname!.isEmpty) {
-            recieverName = "Reciever not found!";
-          } else {
-            recieverName =
-                reservedUsers.firstname! + " " + reservedUsers.lastname!;
-          }
         }
 
         print(recieverName);

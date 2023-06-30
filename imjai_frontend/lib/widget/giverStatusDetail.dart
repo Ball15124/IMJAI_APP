@@ -675,96 +675,106 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
               ),
               SizedBox(height: 15),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: status < 4
+                    ? MainAxisAlignment.spaceEvenly
+                    : MainAxisAlignment.center,
                 children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                      side: const BorderSide(color: Colors.orange, width: 2),
-                      minimumSize: const Size(150, 60),
-                    ),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                  status < 4
+                      ? ElevatedButton(
+                          style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                            title: Text(
-                              'Warning',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.red),
-                            ),
-                            content: const Text(
-                                'Do you want to cancel this product?'),
-                            actions: <Widget>[
-                              TextButton(
-                                child: const Text(
-                                  'No',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.orange,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                style: TextButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  side: BorderSide(
-                                    color: Colors.orange,
-                                    width: 1,
+                                borderRadius: BorderRadius.circular(10)),
+                            backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                            side: const BorderSide(
+                                color: Colors.orange, width: 2),
+                            minimumSize: const Size(150, 60),
+                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  backgroundColor:
+                                      Color.fromARGB(255, 255, 255, 255),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  title: Text(
+                                    'Warning',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.red),
                                   ),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              TextButton(
-                                child: const Text(
-                                  'Yes',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                style: TextButton.styleFrom(
-                                  backgroundColor: Colors.red,
-                                ),
-                                onPressed: () async {
-                                  try {
-                                    timer.cancel();
-                                    Response reserve = await Caller.dio.post(
-                                      "/reserveReciever/reserves/cancel/$productId",
-                                    );
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                (NavigationbarWidget())));
-                                    print(reserve.data);
-                                  } catch (e) {
-                                    print(e);
-                                  }
-                                  // Navigator.pop(context);
-                                  // Navigator.pop(context);
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.orange),
-                    ),
-                  ),
+                                  content: const Text(
+                                      'Do you want to cancel this product?'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: const Text(
+                                        'No',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.orange,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Colors.white,
+                                        side: BorderSide(
+                                          color: Colors.orange,
+                                          width: 1,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text(
+                                        'Yes',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Colors.red,
+                                      ),
+                                      onPressed: () async {
+                                        try {
+                                          timer.cancel();
+                                          Response reserve =
+                                              await Caller.dio.post(
+                                            "/reserveReciever/reserves/cancel/$productId",
+                                          );
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      (NavigationbarWidget())));
+                                          print(reserve.data);
+                                        } catch (e) {
+                                          print(e);
+                                        }
+                                        // Navigator.pop(context);
+                                        // Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.orange),
+                          ),
+                        )
+                      : Container(
+                          width: 0,
+                        ),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -901,7 +911,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                         }
                       },
                       child: Text(
-                        activeStep == 3 ? 'Complete' : "Confirm",
+                        status == 4 ? 'Complete' : "Confirm",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,

@@ -146,6 +146,29 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
         final productData = mainProduct.fromJson(response.data["product"]);
         print(productData);
         // final userData = meProfile.fromJson(response2.data);
+        if (status == 0) {
+          timer.cancel();
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Order Cancelled'),
+                content: const Text(
+                    'Sorry, the receiver have cancelled your order.'),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      timer.cancel();
+                      Navigator.pop((context));
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
         productName = productData.name!;
         print(productName);
         phone_number = productData.reserved!.reserved_users!.phone_number!;
@@ -527,7 +550,7 @@ class _giverStatusDetailState extends State<giverStatusDetail> {
                         width: 20,
                       ),
                       Container(
-                        width: 190,
+                        width: 180,
                         child: Wrap(
                           children: [
                             Text(
